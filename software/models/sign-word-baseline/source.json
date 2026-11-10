@@ -1,0 +1,64 @@
+{
+  "repository": "https://github.com/wuli-git/gesture_languish_recognize",
+  "commit": "b3c5a4d8b1a02b55ed6890d9e2512ca8e2c9d13d",
+  "license": "Apache-2.0",
+  "standardValidated": false,
+  "files": [
+    {
+      "path": "models/sign-word-baseline/LICENSE",
+      "source": "https://cdn.jsdelivr.net/gh/wuli-git/gesture_languish_recognize@b3c5a4d8b1a02b55ed6890d9e2512ca8e2c9d13d/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "gitBlob": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64"
+    },
+    {
+      "path": ".runtime-logs/sign-source/dynamic_recognizer.py",
+      "source": "https://cdn.jsdelivr.net/gh/wuli-git/gesture_languish_recognize@b3c5a4d8b1a02b55ed6890d9e2512ca8e2c9d13d/dynamic_recognizer.py",
+      "bytes": 4968,
+      "sha256": "ac491c61ca3fffd2fb47b13eb3c335de2cd21f732e80c8332bff1d7c1ef6fed6",
+      "gitBlob": "c306e7444b743a519331a6d7b0ecff417ae401f5"
+    },
+    {
+      "path": ".runtime-logs/sign-source/extract_dynamic_dataset.py",
+      "source": "https://cdn.jsdelivr.net/gh/wuli-git/gesture_languish_recognize@b3c5a4d8b1a02b55ed6890d9e2512ca8e2c9d13d/extract_dynamic_dataset.py",
+      "bytes": 5095,
+      "sha256": "220603a9c2921fa7910cf884adf1037eba6d254e449c4620c691d2b5e625b84e",
+      "gitBlob": "c9e2bb802c0882ace88c1eb0beff79304c404d74"
+    },
+    {
+      "path": ".runtime-logs/sign-source/app.py",
+      "source": "https://cdn.jsdelivr.net/gh/wuli-git/gesture_languish_recognize@b3c5a4d8b1a02b55ed6890d9e2512ca8e2c9d13d/app.py",
+      "bytes": 11501,
+      "sha256": "b555c9a5823a52411c06688e921da062eb0756fe441d313033ac7917130adf7d",
+      "gitBlob": "0c17695df0c387a9aed9a14fb32b76c297953d8c"
+    },
+    {
+      "path": ".runtime-logs/sign-source/dynamic_gesture_classifier.py",
+      "source": "https://cdn.jsdelivr.net/gh/wuli-git/gesture_languish_recognize@b3c5a4d8b1a02b55ed6890d9e2512ca8e2c9d13d/model/dynamic_gesture_classifier/dynamic_gesture_classifier.py",
+      "bytes": 1606,
+      "sha256": "cb82b7b303b601d9f5149e27849e29fa57e1d0dd68af01f8c07b424d00916fe3",
+      "gitBlob": "cc4672cf66c51f2b625907902356cd3aae9e3829"
+    },
+    {
+      "path": "models/sign-word-baseline/dynamic_gesture_classifier.tflite",
+      "source": "https://cdn.jsdelivr.net/gh/wuli-git/gesture_languish_recognize@b3c5a4d8b1a02b55ed6890d9e2512ca8e2c9d13d/model/dynamic_gesture_classifier/dynamic_gesture_classifier.tflite",
+      "bytes": 985708,
+      "sha256": "b40fe857716d9567a032674c84235bebcdbd35ceb3931f09003bf3b3ffb55665",
+      "gitBlob": "3839df1a6c01a0d351fecc8974e10e2f0a494318"
+    },
+    {
+      "path": "models/sign-word-baseline/dynamic_gesture_label.csv",
+      "source": "https://cdn.jsdelivr.net/gh/wuli-git/gesture_languish_recognize@b3c5a4d8b1a02b55ed6890d9e2512ca8e2c9d13d/model/dynamic_gesture_classifier/dynamic_gesture_label.csv",
+      "bytes": 85,
+      "sha256": "6506f9567f8222a566ab18f2a7b1c181c90ebfce2f1a781986363a4991a7ede3",
+      "gitBlob": "9b7192fe197cf3e873d94d465c1d97b92a3777b3"
+    },
+    {
+      "path": ".runtime-logs/sign-source/dynamic_gesture_dataset.csv",
+      "source": "https://cdn.jsdelivr.net/gh/wuli-git/gesture_languish_recognize@b3c5a4d8b1a02b55ed6890d9e2512ca8e2c9d13d/model/dynamic_gesture_classifier/dynamic_gesture_dataset.csv",
+      "bytes": 4240836,
+      "sha256": "7840b899f9b118701cfa7bcb0708912fa42682bcccdb8ec45dc87f7156738b5a",
+      "gitBlob": "057a3f41061c52d7496d5e9237eba65b993a1a75"
+    }
+  ]
+}

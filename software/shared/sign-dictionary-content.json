@@ -1,0 +1,414 @@
+{
+  "schemaVersion": 1,
+  "mode": "user_requested_illustrated_reference",
+  "robots": {
+    "url": "https://shouyu.bmcx.com/robots.txt",
+    "retrievedAt": "2026-10-19T01:49:20+00:00",
+    "sha256": "16ceb5ee3e0dc13aa9adf31a3ebbe45a1d965b8c2b9f72eaf84e5911e140ed95",
+    "text": "User-agent: *\nAllow: /"
+  },
+  "entries": [
+    {
+      "dictionaryId": "csl.ref.bmcx.95",
+      "term": "联系",
+      "description": "双手拇、食指捏成小圆圈，互相连环，同时左右微动，象征彼此联系。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "879561d900631a3d6d82b0c45179e7dee796b58ff5236c3e46edfe7c70544ae0",
+      "sourceUrl": "https://shouyu.bmcx.com/95__shouyud/",
+      "sourcePageSha256": "e5db0098134122c4a8949e61630bbc05fe8d4c14fb7ac563bc769e48188b7db5",
+      "retrievedAt": "2026-10-19T01:40:51+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/1/aef249a52c4df764.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.48",
+      "term": "现在",
+      "description": "一手平伸，掌心向上，横于腰部，上下颠动两下。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "28d1e18c82d445980c22532852eb9ba5d2eb1fee385e82fcc578e68e66ea18a1",
+      "sourceUrl": "https://shouyu.bmcx.com/48__shouyud/",
+      "sourcePageSha256": "16c7f24c76baf4a657655ae7112b17dd745d0802dfb721542877aa04cb1109a6",
+      "retrievedAt": "2026-10-19T01:40:53+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/8/f22e561c5a65543b.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.1848",
+      "term": "姓名",
+      "description": "一手食指沿另一手中、无名、小指尖向下划动（中指表示“姓”、无名、小指表示“名”）。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "0155668cf4e47bb568d19695f0a57f728ee7cb7e6f62ac1645b6801dd36b8b3d",
+      "sourceUrl": "https://shouyu.bmcx.com/1848__shouyud/",
+      "sourcePageSha256": "25c0b1ec677d3dc71248e34b2e8aaf7bd465393d1dd8cab2a5dab140ba63a430",
+      "retrievedAt": "2026-10-19T01:40:55+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/4/8aaffbf645b4a577.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.1016",
+      "term": "分钟",
+      "description": "（一）一手食指书空“，”一下，表示分的记时符号。（二）同“当时”手势（一手伸了拇、食指，拇指尖抵住另一手掌心，食指向下移动，表示钟表的指针转动。）。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "4d9b65b74e05f1e17d72d115ebb34fd52173b724c342999dc24a197af5a81016",
+      "sourceUrl": "https://shouyu.bmcx.com/1016__shouyud/",
+      "sourcePageSha256": "1f21471c3ba226a8eef91cadc1a0f8ed0ec08a8382ae8c51a58355760dcf9ef4",
+      "retrievedAt": "2026-10-19T01:49:22+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/0/3657023fcca5f784.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.1849",
+      "term": "年龄",
+      "description": "（一）一手食指沿另一手拳背骨关节凸起处向下划，即“年”手势。（二）一手指尖向上，五指分开，指尖颤动几下，表示多少。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "a6079e738ef1f1a43c615acecee0d9c8a00c52bb46a5539573bdbcf222286064",
+      "sourceUrl": "https://shouyu.bmcx.com/1849__shouyud/",
+      "sourcePageSha256": "b39766b9617beeddeb7e21087f316baa0cb7a48b7d019a8d1ae29325c5aa634e",
+      "retrievedAt": "2026-10-19T01:49:24+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/e/b8c099bf0eb20367.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.51",
+      "term": "星期",
+      "description": "左手食指直立不动。右手打“七”手势在左手食指尖上点一下，表示七天即一星期之意（如二个星期，则右手打“七”手势在左手食、中指尖上分别点一下，余类推）。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "4cff4e337d14d3bd757e49322df4d3c5f21e53ada378f17ac5f35fccd8a84365",
+      "sourceUrl": "https://shouyu.bmcx.com/51__shouyud/",
+      "sourcePageSha256": "5ca047fa8bc4e79aff398d44e5d68be997bf75cb1e55454d0599a2cebb6b2d4f",
+      "retrievedAt": "2026-10-19T01:49:26+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/b/0352296d3f3a4c7f.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.1851",
+      "term": "地址",
+      "description": "（一）一手食指向下指，即“地”手势。（二）一手食指沿另一手中、无名、小指尖向下划动，组合为“地名”。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "0ddd5312e951664d9c82559503ec83a126047f921f89f573bdca8ac5acf48ce9",
+      "sourceUrl": "https://shouyu.bmcx.com/1851__shouyud/",
+      "sourcePageSha256": "83c6b3d7b4cf40200a8daf129d5c333af52be86098a8aa506051802e4e6b65cc",
+      "retrievedAt": "2026-10-19T01:49:29+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/2/fa8536d002927fce.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.45",
+      "term": "不久",
+      "description": "（一）一手伸直，左右摆动几下。（二）一手打手指字母“J”的指式，并向前微移。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "d2cd7a3121d7ad91600ce1bf799928dbf27e53c9b9970de15a30eee01ea4b020",
+      "sourceUrl": "https://shouyu.bmcx.com/45__shouyud/",
+      "sourcePageSha256": "9b716f4dfeda1f5f1307b979fe256fa900146acdca54f30fdd674b7beb817dea",
+      "retrievedAt": "2026-10-19T01:49:30+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/8/27bb6f5a8da8b3b9.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.98",
+      "term": "抱歉",
+      "description": "（一）一手五指并拢，举于额际，先做“敬礼”手势，然后下放改伸小指，在胸部点几下，表示向人致歉并自责之意。（二）双手抱拳作揖，脸露抱歉表情。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "744526d94575d2b1b63f8e6beb0df93247c910ab32213bf5a2eacd609dcee20d",
+      "sourceUrl": "https://shouyu.bmcx.com/98__shouyud/",
+      "sourcePageSha256": "a673e9cc5846f635b8cef6cd36c1c8b6a314646f3a5dc7840988913298be4865",
+      "retrievedAt": "2026-10-19T01:49:32+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/d/7b0ea642da267035.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.46",
+      "term": "机会",
+      "description": "（一）手指字母“J”的指式。（二）双手五指微曲，从两侧向中间并拢。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "799ff00be329fc72b6ede62a8f3caff589df35921356cff39637746f779217f3",
+      "sourceUrl": "https://shouyu.bmcx.com/46__shouyud/",
+      "sourcePageSha256": "a8e28b04388ff72a7dafbaff72574e4b102cdfa6f5f194ef860eafaff15ee3db",
+      "retrievedAt": "2026-10-19T01:49:34+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/5/c05c25d2cedccbc3.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.96",
+      "term": "保留",
+      "description": "双手伸开，掌心向下，一手轻拍另一手背，并向下一沉，表示留下来的意思。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "f72261d5804ca9c547452b76a82e08ae69391652d7c0602b1cca3a1e9a71c2f2",
+      "sourceUrl": "https://shouyu.bmcx.com/96__shouyud/",
+      "sourcePageSha256": "9b1094d24a6d9dadb223213a7f47655a566537df740028afd5c608399afc54b4",
+      "retrievedAt": "2026-10-19T01:49:36+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/3/65b860a696564666.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.47",
+      "term": "前夕",
+      "description": "（一）同“初期”手势（双手直立，掌心相对间距约20厘米，表示一段时间。）（二）同“当时”手势（一手伸出拇、食指，拇指尖抵住另一手掌心，食指向下移动，表示钟表的指针转动。）",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "659d8e02673ad5facccb25e002b645049f0cddc6abb61e239123b40889785a4c",
+      "sourceUrl": "https://shouyu.bmcx.com/47__shouyud/",
+      "sourcePageSha256": "490e42496fc331f8d310bf2df17516f6937fcb8b7dc01135479f425c228be1f9",
+      "retrievedAt": "2026-10-19T01:49:38+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/9/bcd24839a59383d5.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.97",
+      "term": "适应",
+      "description": "双手伸拇、食指，食指尖互碰一下，拇指仍翘着，表示“合适”“正好”之意。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "f3c7bcd06f7017c9d7b7b961e437d3dd9ef815dace9c0bc67f26bce41fbf5fbf",
+      "sourceUrl": "https://shouyu.bmcx.com/97__shouyud/",
+      "sourcePageSha256": "4af316dd85f1bc744167912f2598f17073b5c295ffa5272a31f413efae8b053a",
+      "retrievedAt": "2026-10-19T01:49:40+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/1/8ac632e5053b13fa.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.49",
+      "term": "朝代",
+      "description": "（一）手指字母“CH”的指式。（二）同“时代”手势（二）。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "678cfe30593e12e504c5985373c4652caee6ed3cca63e10dca934bc46e81d5cf",
+      "sourceUrl": "https://shouyu.bmcx.com/49__shouyud/",
+      "sourcePageSha256": "b2c8540b9796f6f72ce180c10d9dd58131eddc3b0c9733cfbee675d56c7d5b17",
+      "retrievedAt": "2026-10-19T01:49:42+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/6/32c5a3a50f39a244.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.99",
+      "term": "来得及",
+      "description": "（一）同“按时”手势（二）。（二）一手握拳，伸出拇指。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "05f49293908250243a2f20bb8dea6f68fdff8ae073613e9f3f53edbd76ee653d",
+      "sourceUrl": "https://shouyu.bmcx.com/99__shouyud/",
+      "sourcePageSha256": "c928c50cc1a153068ecbd8c784d4fa2f112e5aa483757b3213ca5ab04c80b9c5",
+      "retrievedAt": "2026-10-19T01:49:44+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/e/faac8585b78e8933.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.50",
+      "term": "秋天",
+      "description": "右手伸食指在左拳无名指骨节处点一下，表示第三个季节。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "792b1912e3d6957e43f1ae9c659b03e875518122dcd1331ad0479d829a2c216b",
+      "sourceUrl": "https://shouyu.bmcx.com/50__shouyud/",
+      "sourcePageSha256": "95f86b4df28e3956806c298c78d04cdb6a2f661b102875ebdc0e67b4c62f1292",
+      "retrievedAt": "2026-10-19T01:49:46+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/e/ef162ca36caaf82e.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.1856",
+      "term": "访问",
+      "description": "（一）一手伸拇、小指绕一圈，象征走访。（二）一手食指从嘴部向前点两下，表示“询问”。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "d91884b623c5e458815228afec30fa7031cfd82e7528a705f73690d65574fe68",
+      "sourceUrl": "https://shouyu.bmcx.com/1856__shouyud/",
+      "sourcePageSha256": "fea65c4b0b14b2c9b4aa186011f0b344be37a88e84f02a5b1deee4000987f0b1",
+      "retrievedAt": "2026-10-19T01:49:48+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/4/4ce5baad94e07cb0.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.52",
+      "term": "暂时",
+      "description": "（一）双手伸食指，指面相对，相距约两寸。（二）一手伸出拇、食两指，拇指尖抵住另一手掌心，食指向下转动，象征钟表的时针在转动。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "4b9c5f714caeb160b3b610c4f77006ba5aeb927809b6acffb60983e121f8bea3",
+      "sourceUrl": "https://shouyu.bmcx.com/52__shouyud/",
+      "sourcePageSha256": "1b23036b6def21fb293614d65cfb179189a92c1f0a7f607ca83730f12031f577",
+      "retrievedAt": "2026-10-19T01:49:50+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/c/ac403c0d05d44e0a.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.1852",
+      "term": "会客",
+      "description": "（一）两手各伸出拇、小指，由两旁向中间靠近，象征两个人会见。（二）双手伸拇指互碰几下，表示朋友、客人。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "831162b3124b1823833812aec2b8685894fe5b863379347537140e80e17913a2",
+      "sourceUrl": "https://shouyu.bmcx.com/1852__shouyud/",
+      "sourcePageSha256": "cb4169d13a512ad968d2aa149d10be1c0de10c9bae8a0af244306fb733324a71",
+      "retrievedAt": "2026-10-19T01:49:52+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/3/d66c301839710060.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.ref.bmcx.53",
+      "term": "秋季",
+      "description": "右手伸食指在左拳无名指骨节处点一下，表示第三个季节。",
+      "descriptionOrigin": "source_verbatim",
+      "descriptionSha256": "792b1912e3d6957e43f1ae9c659b03e875518122dcd1331ad0479d829a2c216b",
+      "sourceUrl": "https://shouyu.bmcx.com/53__shouyud/",
+      "sourcePageSha256": "352522b5083512c13b5107fe4b46da064314780d9ee3be8f2d4bd25f403e42a7",
+      "retrievedAt": "2026-10-19T01:49:54+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_requested_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/8/f03c40c8558d3230.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.yes",
+      "term": "是",
+      "description": "一手食、中指相搭，并点动一下。",
+      "descriptionOrigin": "user_provided",
+      "descriptionSha256": "68f840a2d0d0d5455960b2e0154edcfcc498311ba6e2fde57c3e4cb22a9bbbbc",
+      "sourceUrl": "https://d.bmcx.com/shouyu/_file/c/ed9305275555e84d.png",
+      "retrievedAt": "2026-10-19T01:49:55+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_provided_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/c/ed9305275555e84d.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.you",
+      "term": "你",
+      "description": "一手食指指向对方。",
+      "descriptionOrigin": "existing_project_definition",
+      "sourceUrl": "https://d.bmcx.com/shouyu/_file/4/77111de7e16f4117.png",
+      "retrievedAt": "2026-10-19T01:49:57+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_provided_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/4/77111de7e16f4117.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.me",
+      "term": "我",
+      "description": "一手食指指自己。",
+      "descriptionOrigin": "existing_project_definition",
+      "sourceUrl": "https://d.bmcx.com/shouyu/_file/3/37ef29c190c45c34.png",
+      "retrievedAt": "2026-10-19T01:49:59+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_provided_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/3/37ef29c190c45c34.png"
+      ]
+    },
+    {
+      "dictionaryId": "csl.love",
+      "term": "爱",
+      "description": "左手在胸前竖起拇指，其余四指自然弯曲握拳；右手五指自然伸直并拢，掌心朝向左拇指，从指尖顺着指背向下轻抚，配合柔和、怜爱的表情。",
+      "descriptionOrigin": "existing_project_definition",
+      "sourceUrl": "https://d.bmcx.com/shouyu/_file/9/e164a2e0a23953e2.png",
+      "retrievedAt": "2026-10-19T01:50:01+00:00",
+      "parserVersion": "bmcx-illustrated-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "acquisition": "user_provided_reference",
+      "imageUrls": [
+        "https://d.bmcx.com/shouyu/_file/9/e164a2e0a23953e2.png"
+      ]
+    }
+  ],
+  "localImageStorage": "removed_by_user"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "stable-action-handoff-v1",
+  "quietSeconds": 0.2,
+  "preRollSeconds": 0.35,
+  "overlapGraceSeconds": 0.4,
+  "maxPendingSeconds": 4,
+  "review": "experimental_known_actions_only",
+  "handConfigurationSeconds": 0.1
+}

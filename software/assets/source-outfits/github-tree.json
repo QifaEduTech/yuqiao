@@ -1,0 +1,2333 @@
+{
+  "sha": "92118047e35fd678096eb861751dc58f75c67132",
+  "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/92118047e35fd678096eb861751dc58f75c67132",
+  "tree": [
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "882d41b17e5dea00e9216fbc394fc00915842aa9",
+      "size": 35,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/882d41b17e5dea00e9216fbc394fc00915842aa9"
+    },
+    {
+      "path": "finalized_clothes",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "57977f443a89efb182a261abbe5f6397ce488a56",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/57977f443a89efb182a261abbe5f6397ce488a56"
+    },
+    {
+      "path": "finalized_clothes/Denim_Jacket",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "75cda16398d2053b35f81b7ef73fe2a2ef9de922",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/75cda16398d2053b35f81b7ef73fe2a2ef9de922"
+    },
+    {
+      "path": "finalized_clothes/Denim_Jacket/denim_jacket.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "83c31a9c4e933af4ac476215239ff179b8f6b42a",
+      "size": 250782,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/83c31a9c4e933af4ac476215239ff179b8f6b42a"
+    },
+    {
+      "path": "finalized_clothes/Denim_Jacket/denim_jacket.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4e102f509dc59840722d451d249ee23add3313f6",
+      "size": 869,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/4e102f509dc59840722d451d249ee23add3313f6"
+    },
+    {
+      "path": "finalized_clothes/Denim_Jacket/denim_jacket.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6954b2784579b7a5402a6f9299ae33eab2fd45ca",
+      "size": 82701,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/6954b2784579b7a5402a6f9299ae33eab2fd45ca"
+    },
+    {
+      "path": "finalized_clothes/Denim_Jacket/denim_jacket.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "314364d1f3ff327de693b8451e05c6cc969f8ee7",
+      "size": 116308,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/314364d1f3ff327de693b8451e05c6cc969f8ee7"
+    },
+    {
+      "path": "finalized_clothes/Denim_Jacket/denim_jacket.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9d7b6febe01bf54abe0e0026c4e7c08e24dd1cc8",
+      "size": 304409,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/9d7b6febe01bf54abe0e0026c4e7c08e24dd1cc8"
+    },
+    {
+      "path": "finalized_clothes/Denim_Jacket/denim_jacket.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4a3ed3bf7277e98f8014595e26edbfd3c228b9ad",
+      "size": 7785072,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/4a3ed3bf7277e98f8014595e26edbfd3c228b9ad"
+    },
+    {
+      "path": "finalized_clothes/Denim_Jacket/denim_jacket.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "003756e543b8a31a381fa33a98fcbf9c05f33623",
+      "size": 26804,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/003756e543b8a31a381fa33a98fcbf9c05f33623"
+    },
+    {
+      "path": "finalized_clothes/Denim_Jacket/denim_jacket_normals.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fe0a8dbd0e17ade75381a164da1b39a490602627",
+      "size": 6771846,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/fe0a8dbd0e17ade75381a164da1b39a490602627"
+    },
+    {
+      "path": "finalized_clothes/EMT_Uniform_Jacket",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "bb545b878d75e1eb2b54f2b27a66583ec94f7f4a",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/bb545b878d75e1eb2b54f2b27a66583ec94f7f4a"
+    },
+    {
+      "path": "finalized_clothes/EMT_Uniform_Jacket/rescueteam_jacket.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d47178fccf5e1d9bf65522eaec72b614ac694664",
+      "size": 772753,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/d47178fccf5e1d9bf65522eaec72b614ac694664"
+    },
+    {
+      "path": "finalized_clothes/EMT_Uniform_Jacket/rescueteam_jacket_male.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd39606e93af2985d7902682fa20c2f65066d9ec",
+      "size": 752455,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/fd39606e93af2985d7902682fa20c2f65066d9ec"
+    },
+    {
+      "path": "finalized_clothes/EMT_Uniform_Jacket/rescueteam_jacket_male.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f0df0b1742d313b79540cbd263c2e43fe0591e4b",
+      "size": 776,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/f0df0b1742d313b79540cbd263c2e43fe0591e4b"
+    },
+    {
+      "path": "finalized_clothes/EMT_Uniform_Jacket/rescueteam_jacket_male.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bf699110e7ba808b89114f949fe2b74ea2b86099",
+      "size": 264225,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/bf699110e7ba808b89114f949fe2b74ea2b86099"
+    },
+    {
+      "path": "finalized_clothes/EMT_Uniform_Jacket/rescueteam_jacket_male.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "84cd9f8fe8b20b671710f12a9d9f70386bd1ea24",
+      "size": 358008,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/84cd9f8fe8b20b671710f12a9d9f70386bd1ea24"
+    },
+    {
+      "path": "finalized_clothes/EMT_Uniform_Jacket/rescueteam_jacket_male.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aef8871cdf76d5fa48097b9b5da269378c4be411",
+      "size": 966344,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/aef8871cdf76d5fa48097b9b5da269378c4be411"
+    },
+    {
+      "path": "finalized_clothes/EMT_Uniform_Jacket/rescueteam_jacket_male.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "75aa3e842945fe8d369971ecc4559195702f562a",
+      "size": 15868,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/75aa3e842945fe8d369971ecc4559195702f562a"
+    },
+    {
+      "path": "finalized_clothes/Elvs_50s_Blouse_and_Skirt1",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "512cfee4ea75432ff6f3363f94e6072a028f0048",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/512cfee4ea75432ff6f3363f94e6072a028f0048"
+    },
+    {
+      "path": "finalized_clothes/Elvs_50s_Blouse_and_Skirt1/50sdress.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5919ad3a1e6765348c20b73e4ddffc24ca0c2c67",
+      "size": 1989533,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/5919ad3a1e6765348c20b73e4ddffc24ca0c2c67"
+    },
+    {
+      "path": "finalized_clothes/Elvs_50s_Blouse_and_Skirt1/50sdress.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ef7310fd1b2e4d65887ea7b752d402caad6752a5",
+      "size": 771,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/ef7310fd1b2e4d65887ea7b752d402caad6752a5"
+    },
+    {
+      "path": "finalized_clothes/Elvs_50s_Blouse_and_Skirt1/50sdress.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e081b29592481309de34768756cda75ecf8e3e07",
+      "size": 521574,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/e081b29592481309de34768756cda75ecf8e3e07"
+    },
+    {
+      "path": "finalized_clothes/Elvs_50s_Blouse_and_Skirt1/50sdress.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "78ff4cc0a5b24890da4a2211d402d3a808f6a674",
+      "size": 1497329,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/78ff4cc0a5b24890da4a2211d402d3a808f6a674"
+    },
+    {
+      "path": "finalized_clothes/Elvs_50s_Blouse_and_Skirt1/50sdress.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cd24e4ac6604a7e0c8669a3aee578132b0f00df9",
+      "size": 4062699,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/cd24e4ac6604a7e0c8669a3aee578132b0f00df9"
+    },
+    {
+      "path": "finalized_clothes/Elvs_50s_Blouse_and_Skirt1/50sdress.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "11155e96682b2f67e82184d76eda57d73210eddc",
+      "size": 1880919,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/11155e96682b2f67e82184d76eda57d73210eddc"
+    },
+    {
+      "path": "finalized_clothes/Elvs_50s_Blouse_and_Skirt1/50sdress.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a8659928aa4a62c0f329cab57e2aa4793e9b04ab",
+      "size": 13844,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/a8659928aa4a62c0f329cab57e2aa4793e9b04ab"
+    },
+    {
+      "path": "finalized_clothes/Elvs_50s_Blouse_and_Skirt1/50sdress_norm.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0e3c6eeb693439e35aac875050a52b9321d6123b",
+      "size": 2084008,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/0e3c6eeb693439e35aac875050a52b9321d6123b"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crochet_Baby_Doll1",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "78516e7adf20b3655849d8a5af2aa167ce5df47b",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/78516e7adf20b3655849d8a5af2aa167ce5df47b"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crochet_Baby_Doll1/babydoll_elvruff1a.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cdc7be1e532922de021b9e6c7cabc84d5db98b70",
+      "size": 1558192,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/cdc7be1e532922de021b9e6c7cabc84d5db98b70"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crochet_Baby_Doll1/babydoll_elvruff1a.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "75c7f0217c69b25cffbdef562166b83a47ea8204",
+      "size": 879,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/75c7f0217c69b25cffbdef562166b83a47ea8204"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crochet_Baby_Doll1/babydoll_elvruff1a.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6f3b9f9954c397e51e8530a83d99dcb8d287dc28",
+      "size": 505416,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/6f3b9f9954c397e51e8530a83d99dcb8d287dc28"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crochet_Baby_Doll1/babydoll_elvruff1a.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "44eab59d86ba6822564f95c07bfdc5fbfb236194",
+      "size": 1063630,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/44eab59d86ba6822564f95c07bfdc5fbfb236194"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crochet_Baby_Doll1/babydoll_elvruff1a.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3df156a1148cb04452725995e5f5e044b1389413",
+      "size": 2868669,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/3df156a1148cb04452725995e5f5e044b1389413"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crochet_Baby_Doll1/babydoll_elvruff1a.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b96742ef6febc1116ad59b852522a19073010906",
+      "size": 7781,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/b96742ef6febc1116ad59b852522a19073010906"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crochet_Baby_Doll1/normals.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a3c4113a75f68532efdedcc6f7064a8b3d4313a5",
+      "size": 3714183,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/a3c4113a75f68532efdedcc6f7064a8b3d4313a5"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crochet_Baby_Doll1/ruffbabydolltex7b.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "76833d7d269179bbeef94477b3a9332d0bcb483a",
+      "size": 3491676,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/76833d7d269179bbeef94477b3a9332d0bcb483a"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crude_Feather_Duster",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "3c29cf14aa31a36218bcfadc1767f3c3a686ab90",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/3c29cf14aa31a36218bcfadc1767f3c3a686ab90"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crude_Feather_Duster/dustertex1.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f01dc4925c2eba285c5941caee4e4495ec73483e",
+      "size": 846589,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/f01dc4925c2eba285c5941caee4e4495ec73483e"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crude_Feather_Duster/dustertexnormals.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "80d93021c428c8cb6beff58972722bc70cf45347",
+      "size": 1420763,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/80d93021c428c8cb6beff58972722bc70cf45347"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crude_Feather_Duster/elv_fduster1.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dc057b601810e1d09e17059ad49e86032c6e521f",
+      "size": 87598,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/dc057b601810e1d09e17059ad49e86032c6e521f"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crude_Feather_Duster/elv_fduster1.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "99abcd957eda8fcec91b784a1706cdc492466ca1",
+      "size": 32440,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/99abcd957eda8fcec91b784a1706cdc492466ca1"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crude_Feather_Duster/elv_fduster1.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "11269e896db7e3262ce02c27644e1cc49de06a87",
+      "size": 32448,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/11269e896db7e3262ce02c27644e1cc49de06a87"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crude_Feather_Duster/elv_fduster1.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fe437a11727cb0cf35fd88d9c6e8165af4228c25",
+      "size": 70402,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/fe437a11727cb0cf35fd88d9c6e8165af4228c25"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crude_Feather_Duster/elv_fduster1.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dc84e8e2cfdb98c54bc1d1ef976e3e53c2386806",
+      "size": 7150,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/dc84e8e2cfdb98c54bc1d1ef976e3e53c2386806"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Crude_Feather_Duster/elv_fduster1a.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9afadd7fe36272ff13fb2708706e2af890581e87",
+      "size": 859,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/9afadd7fe36272ff13fb2708706e2af890581e87"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_Top_1_Butterfly",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "29e2eefafb256f0302a61c92985c272258b6322e",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/29e2eefafb256f0302a61c92985c272258b6322e"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_Top_1_Butterfly/elvs_butterflydiscotop1.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2a6e25fddacdaaac0393b0126da040269da055ca",
+      "size": 157398,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/2a6e25fddacdaaac0393b0126da040269da055ca"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_Top_1_Butterfly/elvs_butterflydiscotop1.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fe6ef1567938a916ee991ebc2d94cd987aefb3f7",
+      "size": 858,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/fe6ef1567938a916ee991ebc2d94cd987aefb3f7"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_Top_1_Butterfly/elvs_butterflydiscotop1.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d891ccab425d9a58b28bea6aa1ac29370b63ba2f",
+      "size": 57725,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/d891ccab425d9a58b28bea6aa1ac29370b63ba2f"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_Top_1_Butterfly/elvs_butterflydiscotop1.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "40b4eb2aa327ea2cb46b196d97d8253ca211d31e",
+      "size": 138256,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/40b4eb2aa327ea2cb46b196d97d8253ca211d31e"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_Top_1_Butterfly/elvs_butterflydiscotop1.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5abd0a86ca3a0d82599ab80ea28f0adc77856fec",
+      "size": 290423,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/5abd0a86ca3a0d82599ab80ea28f0adc77856fec"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_Top_1_Butterfly/elvs_butterflydiscotop1.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "386fec2414c1111620f28427a67941b9709627be",
+      "size": 14400,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/386fec2414c1111620f28427a67941b9709627be"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_Top_1_Butterfly/glitterbutterflytoptex1.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "47538c185558f81a5af830870c410a9b2584c3a4",
+      "size": 3152045,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/47538c185558f81a5af830870c410a9b2584c3a4"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_Top_1_Butterfly/normals.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c2ebc12982c464863e44f504269a518d464e00f9",
+      "size": 3396368,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/c2ebc12982c464863e44f504269a518d464e00f9"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_pant1_Double_Ruffles",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "26e7a026cc3634801fa036ca914b1f3d2912e743",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/26e7a026cc3634801fa036ca914b1f3d2912e743"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_pant1_Double_Ruffles/elvs_disco_pant_druffles.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "df9ed238e6e72af8f31329d9a937e8c05ba7f7c1",
+      "size": 453438,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/df9ed238e6e72af8f31329d9a937e8c05ba7f7c1"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_pant1_Double_Ruffles/elvs_disco_pant_druffles.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bf1a68166909de9fa1078733bd39a6110cfad4ea",
+      "size": 861,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/bf1a68166909de9fa1078733bd39a6110cfad4ea"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_pant1_Double_Ruffles/elvs_disco_pant_druffles.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3bcf04bb7ffec14e12217cfb15b821a03df51c52",
+      "size": 154484,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/3bcf04bb7ffec14e12217cfb15b821a03df51c52"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_pant1_Double_Ruffles/elvs_disco_pant_druffles.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ea4f388b92922c45658377550cf8dc4ab1a1fbec",
+      "size": 405125,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/ea4f388b92922c45658377550cf8dc4ab1a1fbec"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_pant1_Double_Ruffles/elvs_disco_pant_druffles.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dddb500536ee6639b75e06233ae712230da1a7d0",
+      "size": 912203,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/dddb500536ee6639b75e06233ae712230da1a7d0"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_pant1_Double_Ruffles/elvs_disco_pant_druffles.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8517cf67028e06f79c150e47dd46b98a8ef5cb5e",
+      "size": 13831,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/8517cf67028e06f79c150e47dd46b98a8ef5cb5e"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_pant1_Double_Ruffles/normals.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9e813e36fa8438385dc8fdecf3ccbd03104eb41e",
+      "size": 1101534,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/9e813e36fa8438385dc8fdecf3ccbd03104eb41e"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Disco_pant1_Double_Ruffles/texture1.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8d4f16bfea5acac38a5f431e54bf7ed9850dae7e",
+      "size": 1085744,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/8d4f16bfea5acac38a5f431e54bf7ed9850dae7e"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Goddess_Dress8",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "35a23d323638ddd8dee256dda95b863f0cb168cd",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/35a23d323638ddd8dee256dda95b863f0cb168cd"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Goddess_Dress8/elvs_goddessdress8.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "27890b2b0499dc47343be730cd717953330bdff6",
+      "size": 2048049,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/27890b2b0499dc47343be730cd717953330bdff6"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Goddess_Dress8/elvs_goddessdress8.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "940cad4a63a9dbab6558784ae632ff61ee72bb7d",
+      "size": 836,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/940cad4a63a9dbab6558784ae632ff61ee72bb7d"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Goddess_Dress8/elvs_goddessdress8.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d1e6799f84ffeb290bbd6d7fc10ee4887689364c",
+      "size": 598699,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/d1e6799f84ffeb290bbd6d7fc10ee4887689364c"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Goddess_Dress8/elvs_goddessdress8.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3d13c3584e699ba4db2d8141371e1c06e4909e1b",
+      "size": 1833525,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/3d13c3584e699ba4db2d8141371e1c06e4909e1b"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Goddess_Dress8/elvs_goddessdress8.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4c05cfa8e0ac2ab14fa9d665ceda87d4ba482f50",
+      "size": 4290588,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/4c05cfa8e0ac2ab14fa9d665ceda87d4ba482f50"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Goddess_Dress8/elvs_goddessdress8.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eab2e4eee13ae2542daeb1d69ccbfeedc5a8539c",
+      "size": 14894,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/eab2e4eee13ae2542daeb1d69ccbfeedc5a8539c"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Goddess_Dress8/goddessdress8tex3.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "01876c295e39a7310661f1acb066d2e46a9a81ca",
+      "size": 2936279,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/01876c295e39a7310661f1acb066d2e46a9a81ca"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Goddess_Dress8/normals.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2c493028ea1611dfb161dd2284488a4b8f838ab3",
+      "size": 2874111,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/2c493028ea1611dfb161dd2284488a4b8f838ab3"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Gored_Elephant_Pants1",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "246226aa71681f928271ac7fd05058459d5d467e",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/246226aa71681f928271ac7fd05058459d5d467e"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Gored_Elephant_Pants1/elvs_gored_elephantpant1.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "94be00a32d074335b8e88e2f7c3dfdae1df51c2d",
+      "size": 420798,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/94be00a32d074335b8e88e2f7c3dfdae1df51c2d"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Gored_Elephant_Pants1/elvs_gored_elephantpant1.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "adbd6a953f6c7afd78dd672b9626bc09f2051fde",
+      "size": 851,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/adbd6a953f6c7afd78dd672b9626bc09f2051fde"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Gored_Elephant_Pants1/elvs_gored_elephantpant1.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a7270267124cf1bb1633e7aaed24835034f6dd3c",
+      "size": 147263,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/a7270267124cf1bb1633e7aaed24835034f6dd3c"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Gored_Elephant_Pants1/elvs_gored_elephantpant1.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ba350db04df7a26aece19fae0e40bac2d4e08696",
+      "size": 375891,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/ba350db04df7a26aece19fae0e40bac2d4e08696"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Gored_Elephant_Pants1/elvs_gored_elephantpant1.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c46cafacdeae33c8103a1e32564496e5ff425180",
+      "size": 837829,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/c46cafacdeae33c8103a1e32564496e5ff425180"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Gored_Elephant_Pants1/elvs_gored_elephantpant1.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "14e6a8a43e2e1f8f21231a9edcab4e5b25b7c34d",
+      "size": 12683,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/14e6a8a43e2e1f8f21231a9edcab4e5b25b7c34d"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Gored_Elephant_Pants1/gelephanttex2.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0553e85c67d0c62fc2fbf9e2999f89623ac1bfe5",
+      "size": 7143453,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/0553e85c67d0c62fc2fbf9e2999f89623ac1bfe5"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Gored_Elephant_Pants1/normals1.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "238c61c4a0b171e1b3759c900ec013c9e2c174da",
+      "size": 8455908,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/238c61c4a0b171e1b3759c900ec013c9e2c174da"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Knee_length_Halter_dress1",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "55fb39b68b1ae326c7aab2c849df29d4cc3be69d",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/55fb39b68b1ae326c7aab2c849df29d4cc3be69d"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Knee_length_Halter_dress1/elvs_short_halterdress1.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "751f7efb8c3029f068fb50b61f3204b9befbb74c",
+      "size": 341162,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/751f7efb8c3029f068fb50b61f3204b9befbb74c"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Knee_length_Halter_dress1/elvs_short_halterdress1.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f2450a738e25847ce770be21206c921ba351bcd4",
+      "size": 884,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/f2450a738e25847ce770be21206c921ba351bcd4"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Knee_length_Halter_dress1/elvs_short_halterdress1.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "15619f113d8b0abba58284bea0ee544d0e49f430",
+      "size": 124298,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/15619f113d8b0abba58284bea0ee544d0e49f430"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Knee_length_Halter_dress1/elvs_short_halterdress1.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e0e5ea49b63c7e5ebf3a362a640aaec7ba2885a8",
+      "size": 270995,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/e0e5ea49b63c7e5ebf3a362a640aaec7ba2885a8"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Knee_length_Halter_dress1/elvs_short_halterdress1.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7030aec36fa568cafe420d311e10d6d86b760935",
+      "size": 584449,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/7030aec36fa568cafe420d311e10d6d86b760935"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Knee_length_Halter_dress1/elvs_short_halterdress1.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e941365a2d21463468ad6ade6e5187ebcef6f8d9",
+      "size": 11747,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/e941365a2d21463468ad6ade6e5187ebcef6f8d9"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Knee_length_Halter_dress1/shortiehalternormals.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cb465eccf870bb5361672a5a35c705cbb9451976",
+      "size": 2289500,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/cb465eccf870bb5361672a5a35c705cbb9451976"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Knee_length_Halter_dress1/shortiehaltertex2.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cdb3b92d80d20cbf764837541e26f13051286fd8",
+      "size": 2193551,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/cdb3b92d80d20cbf764837541e26f13051286fd8"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Male_Boho_top1",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a278c862f3ca6db4fe97da480c4f355d4509ad08",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/a278c862f3ca6db4fe97da480c4f355d4509ad08"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Male_Boho_top1/bohotop1.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "072cba6c5101b2f52391384ece22a6168910def4",
+      "size": 269895,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/072cba6c5101b2f52391384ece22a6168910def4"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Male_Boho_top1/mens_boho_top1elv.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "33ffcdc8955503f23e1b8de1e89a59b3c5682814",
+      "size": 120137,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/33ffcdc8955503f23e1b8de1e89a59b3c5682814"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Male_Boho_top1/mens_boho_top1elv.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "caf08985f9eaa37765c51053aa4b4c04afffff89",
+      "size": 797,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/caf08985f9eaa37765c51053aa4b4c04afffff89"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Male_Boho_top1/mens_boho_top1elv.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1505b75578cf829684d67677d486fcb2a94582f2",
+      "size": 48231,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/1505b75578cf829684d67677d486fcb2a94582f2"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Male_Boho_top1/mens_boho_top1elv.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0cc65f9853bfe126c6347d8994ec42263a0ac673",
+      "size": 63812,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/0cc65f9853bfe126c6347d8994ec42263a0ac673"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Male_Boho_top1/mens_boho_top1elv.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f37c3972b48d90db886d5cc7e1a03567b7b785b6",
+      "size": 142985,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/f37c3972b48d90db886d5cc7e1a03567b7b785b6"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Male_Boho_top1/mens_boho_top1elv.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5aec833efdad2995a7ae45e296c7d43de92d977c",
+      "size": 9639,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/5aec833efdad2995a7ae45e296c7d43de92d977c"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Multi_Bangle_Bracelet1",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "e18ce05f500294e58f340e105e62ea4ca5d7473a",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/e18ce05f500294e58f340e105e62ea4ca5d7473a"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Multi_Bangle_Bracelet1/bangle2_normals.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d77d26e214178a1e8f92c798a0f3549fdeec95f7",
+      "size": 393029,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/d77d26e214178a1e8f92c798a0f3549fdeec95f7"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Multi_Bangle_Bracelet1/bangle2_tex1.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d6a7902563553877e5d627483eec2bb82b907135",
+      "size": 342217,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/d6a7902563553877e5d627483eec2bb82b907135"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Multi_Bangle_Bracelet1/multi_bangle1elv.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8c18985ed31556b04c9581511ea7ab9d2b694220",
+      "size": 726952,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/8c18985ed31556b04c9581511ea7ab9d2b694220"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Multi_Bangle_Bracelet1/multi_bangle1elv.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a849778f8eded64f123ccc6b978fca87858d2154",
+      "size": 859,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/a849778f8eded64f123ccc6b978fca87858d2154"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Multi_Bangle_Bracelet1/multi_bangle1elv.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a3d7d27117b753fa8d40c719fc8cc1a6c87d6bac",
+      "size": 195336,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/a3d7d27117b753fa8d40c719fc8cc1a6c87d6bac"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Multi_Bangle_Bracelet1/multi_bangle1elv.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3d9f1d7b784385cf06235690697b7554aa10bc3c",
+      "size": 323322,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/3d9f1d7b784385cf06235690697b7554aa10bc3c"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Multi_Bangle_Bracelet1/multi_bangle1elv.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1475c5f3cfb613f65f046fe8531ec68407887ff8",
+      "size": 906914,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/1475c5f3cfb613f65f046fe8531ec68407887ff8"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Multi_Bangle_Bracelet1/multi_bangle1elv.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "13d550aeece95f906fad542e622caa3bcbf732e5",
+      "size": 10681,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/13d550aeece95f906fad542e622caa3bcbf732e5"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Pleated_Plaid_Miniskirt1",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "e134b0a3addc3b16daaba40d86945579f3aea074",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/e134b0a3addc3b16daaba40d86945579f3aea074"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Pleated_Plaid_Miniskirt1/pleated_skirtelv1.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9bc3ff13c88d41a49a1e550d34a953df6fc0b770",
+      "size": 800109,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/9bc3ff13c88d41a49a1e550d34a953df6fc0b770"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Pleated_Plaid_Miniskirt1/pleated_skirtelv1.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "60f8599cd47a0cc52b8dde08a8d4abe546c9c2dd",
+      "size": 819,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/60f8599cd47a0cc52b8dde08a8d4abe546c9c2dd"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Pleated_Plaid_Miniskirt1/pleated_skirtelv1.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1de0b95c933cf2d1edf4bfa607f315f6f0662700",
+      "size": 1412162,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/1de0b95c933cf2d1edf4bfa607f315f6f0662700"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Pleated_Plaid_Miniskirt1/pleated_skirtelv1.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "254cdfb5acf14051b3a3123e504ff3c720aedb56",
+      "size": 21778,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/254cdfb5acf14051b3a3123e504ff3c720aedb56"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Pleated_Plaid_Miniskirt1/ruffskirttex1.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1e10d2563fbaa0821a228368dec86f3e553aa25d",
+      "size": 1554356,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/1e10d2563fbaa0821a228368dec86f3e553aa25d"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Sailor_Moon_Dress",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "9dc59550c7c2b5e5f82a0cfdf138011cd6f99481",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/9dc59550c7c2b5e5f82a0cfdf138011cd6f99481"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Sailor_Moon_Dress/elvs_sailormoon1.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ce2edd0206a61894e661469e3976c3aaf7ccd894",
+      "size": 1055739,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/ce2edd0206a61894e661469e3976c3aaf7ccd894"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Sailor_Moon_Dress/elvs_sailormoon1.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b29a49796158c3b4e2da154372c60db2208efe2",
+      "size": 1080,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/5b29a49796158c3b4e2da154372c60db2208efe2"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Sailor_Moon_Dress/elvs_sailormoon1.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2dd5ad2b3975280a5c66087c643d359b59d58c7e",
+      "size": 309991,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/2dd5ad2b3975280a5c66087c643d359b59d58c7e"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Sailor_Moon_Dress/elvs_sailormoon1.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e6227195df89f2b02997adc083a0c7c09d101ded",
+      "size": 928408,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/e6227195df89f2b02997adc083a0c7c09d101ded"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Sailor_Moon_Dress/elvs_sailormoon1.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "99a67d42dcca0e644bf440101d30f0d173cf4349",
+      "size": 2247755,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/99a67d42dcca0e644bf440101d30f0d173cf4349"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Sailor_Moon_Dress/elvs_sailormoon1.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b899b9cc58e582b87aa946940bcf2a916726103c",
+      "size": 10796,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/b899b9cc58e582b87aa946940bcf2a916726103c"
+    },
+    {
+      "path": "finalized_clothes/Elvs_Sailor_Moon_Dress/samoontexture1.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eab300fdd1daee9eeefd3c172eb73b8a26ac5c88",
+      "size": 166604,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/eab300fdd1daee9eeefd3c172eb73b8a26ac5c88"
+    },
+    {
+      "path": "finalized_clothes/F_Lusekofta",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f59aae2f9d1535fff617f1249e9dfdfac10f9573",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/f59aae2f9d1535fff617f1249e9dfdfac10f9573"
+    },
+    {
+      "path": "finalized_clothes/F_Lusekofta/F_Lusekofta.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a6a7324a387e270e57777e2da5c8cfbb1b720825",
+      "size": 29450295,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/a6a7324a387e270e57777e2da5c8cfbb1b720825"
+    },
+    {
+      "path": "finalized_clothes/F_Lusekofta/F_Lusekofta_METAL.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "91a5a58a2200ed732e720cb1eca2509f12f3d295",
+      "size": 152539,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/91a5a58a2200ed732e720cb1eca2509f12f3d295"
+    },
+    {
+      "path": "finalized_clothes/F_Lusekofta/F_Lusekofta_NRM.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e8d3b18259fd1eed7229a81fe47bd366d0297748",
+      "size": 28642201,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/e8d3b18259fd1eed7229a81fe47bd366d0297748"
+    },
+    {
+      "path": "finalized_clothes/F_Lusekofta/F_Lusekofta_SPEC.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6517febc0eef195e13cc02060c11a9ea70381cca",
+      "size": 12733796,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/6517febc0eef195e13cc02060c11a9ea70381cca"
+    },
+    {
+      "path": "finalized_clothes/F_Lusekofta/f_lusekofta.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8ce1ebe46facdfa6887ffdc6869ba17dfdcc2a3e",
+      "size": 97937,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/8ce1ebe46facdfa6887ffdc6869ba17dfdcc2a3e"
+    },
+    {
+      "path": "finalized_clothes/F_Lusekofta/f_lusekofta.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1b205448437d270fe52acacb185bda6a2504bdc5",
+      "size": 607,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/1b205448437d270fe52acacb185bda6a2504bdc5"
+    },
+    {
+      "path": "finalized_clothes/F_Lusekofta/f_lusekofta.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "66e523b3e39ac61a9ea59e3788a78fe08df82886",
+      "size": 28088,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/66e523b3e39ac61a9ea59e3788a78fe08df82886"
+    },
+    {
+      "path": "finalized_clothes/F_Lusekofta/f_lusekofta.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "be7d42dd8e9e9b51dd0599a04a49de3b4e4f618b",
+      "size": 44262,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/be7d42dd8e9e9b51dd0599a04a49de3b4e4f618b"
+    },
+    {
+      "path": "finalized_clothes/F_Lusekofta/f_lusekofta.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3d96abe481be091e3beaa46b2ceb04d143c37e45",
+      "size": 108837,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/3d96abe481be091e3beaa46b2ceb04d143c37e45"
+    },
+    {
+      "path": "finalized_clothes/F_Lusekofta/f_lusekofta.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e9820b6a9288cff8693e76aa3bc52e76e6fd7238",
+      "size": 12461,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/e9820b6a9288cff8693e76aa3bc52e76e6fd7238"
+    },
+    {
+      "path": "finalized_clothes/Harvey_jackolantern",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "1f61040400bec9273ff484bb3d52dec6fba53f15",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/1f61040400bec9273ff484bb3d52dec6fba53f15"
+    },
+    {
+      "path": "finalized_clothes/Harvey_jackolantern/harvey_jackolantern.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "26b4b18b0ede94274188b5770deaa428ae6680f4",
+      "size": 453767,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/26b4b18b0ede94274188b5770deaa428ae6680f4"
+    },
+    {
+      "path": "finalized_clothes/Harvey_jackolantern/harvey_jackolantern.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "75d3d309fafa1213273eed94753a1222e7c06327",
+      "size": 489,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/75d3d309fafa1213273eed94753a1222e7c06327"
+    },
+    {
+      "path": "finalized_clothes/Harvey_jackolantern/harvey_jackolantern.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6da0a9b55f6292273ddd60f53966682c8b4e911e",
+      "size": 147925,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/6da0a9b55f6292273ddd60f53966682c8b4e911e"
+    },
+    {
+      "path": "finalized_clothes/Harvey_jackolantern/harvey_jackolantern.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cf3247f322c2bcd6f1ad21818c603fd5c6387ecb",
+      "size": 207306,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/cf3247f322c2bcd6f1ad21818c603fd5c6387ecb"
+    },
+    {
+      "path": "finalized_clothes/Harvey_jackolantern/harvey_jackolantern.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "efb47d3917d52438092a06ed9eb5a957157d5413",
+      "size": 551053,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/efb47d3917d52438092a06ed9eb5a957157d5413"
+    },
+    {
+      "path": "finalized_clothes/Harvey_jackolantern/harvey_jackolantern.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5299707abdbe5ba461872eecf1dda5b6d3b3ad19",
+      "size": 27550,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/5299707abdbe5ba461872eecf1dda5b6d3b3ad19"
+    },
+    {
+      "path": "finalized_clothes/Harvey_jackolantern/jackolantern.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f8d145e687889fb9b54f2a951266de136359a865",
+      "size": 609701,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/f8d145e687889fb9b54f2a951266de136359a865"
+    },
+    {
+      "path": "finalized_clothes/Knitted_Sweater_01",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "1ab704581573e3a3416e372029bdc96242261984",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/1ab704581573e3a3416e372029bdc96242261984"
+    },
+    {
+      "path": "finalized_clothes/Knitted_Sweater_01/Knitted_Sweater_01.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "61c10cc412cb9def51a69631ed185ad5a0a559ba",
+      "size": 4204983,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/61c10cc412cb9def51a69631ed185ad5a0a559ba"
+    },
+    {
+      "path": "finalized_clothes/Knitted_Sweater_01/Knitted_Sweater_01_NRM.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "47968582531a6b3c2e75b5f6c15577dd23404eb0",
+      "size": 5861175,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/47968582531a6b3c2e75b5f6c15577dd23404eb0"
+    },
+    {
+      "path": "finalized_clothes/Knitted_Sweater_01/Knitted_Sweater_01_SPEC.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "831688eb1552b497d7bdc8e316ed14f27bafe01b",
+      "size": 1565723,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/831688eb1552b497d7bdc8e316ed14f27bafe01b"
+    },
+    {
+      "path": "finalized_clothes/Knitted_Sweater_01/knitted_sweater_01.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ce5fff7d5e4d61c260cddb8d473d2c4b27e7ed1a",
+      "size": 82032,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/ce5fff7d5e4d61c260cddb8d473d2c4b27e7ed1a"
+    },
+    {
+      "path": "finalized_clothes/Knitted_Sweater_01/knitted_sweater_01.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4433e9ce65bbb7fe095ec232643c7d748038c287",
+      "size": 586,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/4433e9ce65bbb7fe095ec232643c7d748038c287"
+    },
+    {
+      "path": "finalized_clothes/Knitted_Sweater_01/knitted_sweater_01.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f2bae97f0cbb78f1779ad96865daa4d6b5ccb094",
+      "size": 29648,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/f2bae97f0cbb78f1779ad96865daa4d6b5ccb094"
+    },
+    {
+      "path": "finalized_clothes/Knitted_Sweater_01/knitted_sweater_01.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ff7c605a06c11ed186a91e9d7628bdf01596ec6c",
+      "size": 45639,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/ff7c605a06c11ed186a91e9d7628bdf01596ec6c"
+    },
+    {
+      "path": "finalized_clothes/Knitted_Sweater_01/knitted_sweater_01.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "558fd772fa186b256789b84e2ca00f764a97b4fb",
+      "size": 106522,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/558fd772fa186b256789b84e2ca00f764a97b4fb"
+    },
+    {
+      "path": "finalized_clothes/Knitted_Sweater_01/knitted_sweater_01.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1fe77052b18b1763059e909113a8af1d61de1f11",
+      "size": 13605,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/1fe77052b18b1763059e909113a8af1d61de1f11"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "87c4ca53a70af1e9d0882782e41889879e802ac3",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/87c4ca53a70af1e9d0882782e41889879e802ac3"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/M_Trousers_02.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4da49fd6a212b5b5449611ca7d42cc3d3ca2051a",
+      "size": 897126,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/4da49fd6a212b5b5449611ca7d42cc3d3ca2051a"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/M_Trousers_02_NRM.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e7b5a6bea80a594a168f147bff1fcd0d7027b587",
+      "size": 3644365,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/e7b5a6bea80a594a168f147bff1fcd0d7027b587"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/M_Trousers_02_SPEC.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bc674b6d6822a84e5f6f7bc45b6dd20cabd05b56",
+      "size": 1521336,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/bc674b6d6822a84e5f6f7bc45b6dd20cabd05b56"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/m_trousers_02.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "39025e3e5da6145159987bf1c1cc5c5649d5d7bc",
+      "size": 502082,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/39025e3e5da6145159987bf1c1cc5c5649d5d7bc"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/m_trousers_02.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f5adc6f8b07df91562479c37521ef1687d8d78af",
+      "size": 615,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/f5adc6f8b07df91562479c37521ef1687d8d78af"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/m_trousers_02.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "093a066ad36da07735d7353f739804df6607e3bf",
+      "size": 191033,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/093a066ad36da07735d7353f739804df6607e3bf"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/m_trousers_02.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "41d5e1e2e4aa3e0808de28fe06d3c848d8edc2e1",
+      "size": 276685,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/41d5e1e2e4aa3e0808de28fe06d3c848d8edc2e1"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/m_trousers_02.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b5ccc4833b977ca322420af9561846d71be8fc89",
+      "size": 614555,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/b5ccc4833b977ca322420af9561846d71be8fc89"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/m_trousers_02.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ef0b9c097c5d8e190a9b73a16e5f34e097e3018b",
+      "size": 5682,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/ef0b9c097c5d8e190a9b73a16e5f34e097e3018b"
+    },
+    {
+      "path": "finalized_clothes/Magic_sceptre",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f7891cd6bdb7cd0adebb153aa811db876d7aa486",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/f7891cd6bdb7cd0adebb153aa811db876d7aa486"
+    },
+    {
+      "path": "finalized_clothes/Magic_sceptre/magic_sceptre.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f268607e85ef099f9d562ccdb8e6d0173e477c36",
+      "size": 95347,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/f268607e85ef099f9d562ccdb8e6d0173e477c36"
+    },
+    {
+      "path": "finalized_clothes/Magic_sceptre/magic_sceptre.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "74e90873239eb0308551fe2261199dad8ada3713",
+      "size": 221,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/74e90873239eb0308551fe2261199dad8ada3713"
+    },
+    {
+      "path": "finalized_clothes/Magic_sceptre/magic_sceptre.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "64921787db14af3470500adb015ca465a9785cbd",
+      "size": 33805,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/64921787db14af3470500adb015ca465a9785cbd"
+    },
+    {
+      "path": "finalized_clothes/Magic_sceptre/magic_sceptre.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d1e51021c56c6ab340ff0f115eb0788b525b1b85",
+      "size": 42480,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/d1e51021c56c6ab340ff0f115eb0788b525b1b85"
+    },
+    {
+      "path": "finalized_clothes/Magic_sceptre/magic_sceptre.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "49af01e234a1a74238575cc10b0f9dedf869e068",
+      "size": 106606,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/49af01e234a1a74238575cc10b0f9dedf869e068"
+    },
+    {
+      "path": "finalized_clothes/Magic_sceptre/magic_sceptre.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e4d3989a2f091cb0363d134982b5140226ae7a42",
+      "size": 52902,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/e4d3989a2f091cb0363d134982b5140226ae7a42"
+    },
+    {
+      "path": "finalized_clothes/Magic_sceptre/sceptre_texture.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4562c0b576af0400d262cf5dbcf0420d6cb901b2",
+      "size": 854170,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/4562c0b576af0400d262cf5dbcf0420d6cb901b2"
+    },
+    {
+      "path": "finalized_clothes/Maria_Skirt",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d4cbe90e7e334b9aa314eec4ffb8ee6b8a680f8b",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/d4cbe90e7e334b9aa314eec4ffb8ee6b8a680f8b"
+    },
+    {
+      "path": "finalized_clothes/Maria_Skirt/mariaskirt.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "103f923755be315e60e27b2c82826b46c0a97b43",
+      "size": 66048,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/103f923755be315e60e27b2c82826b46c0a97b43"
+    },
+    {
+      "path": "finalized_clothes/Maria_Skirt/mariaskirt.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6224f113c0d6fdba7f2247f6e5a30543ec96f933",
+      "size": 861,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/6224f113c0d6fdba7f2247f6e5a30543ec96f933"
+    },
+    {
+      "path": "finalized_clothes/Maria_Skirt/mariaskirt.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "25b6e8c7b0403682318b55137169fd02afaad3e9",
+      "size": 28517,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/25b6e8c7b0403682318b55137169fd02afaad3e9"
+    },
+    {
+      "path": "finalized_clothes/Maria_Skirt/mariaskirt.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f8820235bc47f7eb74162353f4fc0f1c45566d15",
+      "size": 33968,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/f8820235bc47f7eb74162353f4fc0f1c45566d15"
+    },
+    {
+      "path": "finalized_clothes/Maria_Skirt/mariaskirt.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4e9c9fc6d1e040e1a274b375aff86cf7a249ecd1",
+      "size": 74010,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/4e9c9fc6d1e040e1a274b375aff86cf7a249ecd1"
+    },
+    {
+      "path": "finalized_clothes/Maria_Skirt/mariaskirt.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "77a87f147e16e4073e9fb0fb9fd431c99f229ca9",
+      "size": 6579,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/77a87f147e16e4073e9fb0fb9fd431c99f229ca9"
+    },
+    {
+      "path": "finalized_clothes/Maria_Skirt/mariaskirt_normals.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ff3360c3b4d97f072b37c4a00cc22d21c46cfc6b",
+      "size": 2480258,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/ff3360c3b4d97f072b37c4a00cc22d21c46cfc6b"
+    },
+    {
+      "path": "finalized_clothes/Mars_Suit",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "cceb7572a1799ed1a5bb72b24028ecb8d78bed49",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/cceb7572a1799ed1a5bb72b24028ecb8d78bed49"
+    },
+    {
+      "path": "finalized_clothes/Mars_Suit/Mars-Suit_bmp.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d00a1e0ff512d9d9333319cc513f48c89a791cad",
+      "size": 235501,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/d00a1e0ff512d9d9333319cc513f48c89a791cad"
+    },
+    {
+      "path": "finalized_clothes/Mars_Suit/Mars-Suit_diff.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "30b79e37d633fd029fcc8c3097eafe7485e81908",
+      "size": 2646448,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/30b79e37d633fd029fcc8c3097eafe7485e81908"
+    },
+    {
+      "path": "finalized_clothes/Mars_Suit/Mars-Suit_e.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e25a0e3649a1f50cb5e0203094edb4b873eff349",
+      "size": 621666,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/e25a0e3649a1f50cb5e0203094edb4b873eff349"
+    },
+    {
+      "path": "finalized_clothes/Mars_Suit/Mars-Suit_n.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "132b016c98625bc13ca671edd6b50a31b662f36a",
+      "size": 2128061,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/132b016c98625bc13ca671edd6b50a31b662f36a"
+    },
+    {
+      "path": "finalized_clothes/Mars_Suit/Mars-Suit_r.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7b710f97cd607358900de49020230a19d3c60d52",
+      "size": 663926,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/7b710f97cd607358900de49020230a19d3c60d52"
+    },
+    {
+      "path": "finalized_clothes/Mars_Suit/mars_suit.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2acf9d3dbc2a13ee7211c124ec668f799bb5d66d",
+      "size": 126282,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/2acf9d3dbc2a13ee7211c124ec668f799bb5d66d"
+    },
+    {
+      "path": "finalized_clothes/Mars_Suit/mars_suit.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3d035f8f9aeda455dd107d1170567d0908eb9be5",
+      "size": 922,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/3d035f8f9aeda455dd107d1170567d0908eb9be5"
+    },
+    {
+      "path": "finalized_clothes/Mars_Suit/mars_suit.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "08a4b52deb15c6a3ffa920cecba4586e6394048e",
+      "size": 34508,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/08a4b52deb15c6a3ffa920cecba4586e6394048e"
+    },
+    {
+      "path": "finalized_clothes/Mars_Suit/mars_suit.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b470d274b5df36343cca6cc5f1ecdc38e3dd32a3",
+      "size": 57431,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/b470d274b5df36343cca6cc5f1ecdc38e3dd32a3"
+    },
+    {
+      "path": "finalized_clothes/Mars_Suit/mars_suit.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "850f10514183ce6d0f38fd1b7ff99e94404e3940",
+      "size": 144105,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/850f10514183ce6d0f38fd1b7ff99e94404e3940"
+    },
+    {
+      "path": "finalized_clothes/Mars_Suit/mars_suit.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4ac1b13da80dbec3f94265b97139d4bb1dc41236",
+      "size": 45320,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/4ac1b13da80dbec3f94265b97139d4bb1dc41236"
+    },
+    {
+      "path": "finalized_clothes/Middle_Length_Qipao",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "61f6afa6ef12f4254ee2789ef8076c0465a5fc45",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/61f6afa6ef12f4254ee2789ef8076c0465a5fc45"
+    },
+    {
+      "path": "finalized_clothes/Middle_Length_Qipao/qipao.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0e9de3f945b80f5e2b8d652f4d7e8277ef0398db",
+      "size": 264369,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/0e9de3f945b80f5e2b8d652f4d7e8277ef0398db"
+    },
+    {
+      "path": "finalized_clothes/Middle_Length_Qipao/qipao.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d86e2cac2f28d59a6ec7164a8062d124edd3447e",
+      "size": 833,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/d86e2cac2f28d59a6ec7164a8062d124edd3447e"
+    },
+    {
+      "path": "finalized_clothes/Middle_Length_Qipao/qipao.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "26c0fb0ff4e37ef80c4f157309fe18d2f5b322ee",
+      "size": 89036,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/26c0fb0ff4e37ef80c4f157309fe18d2f5b322ee"
+    },
+    {
+      "path": "finalized_clothes/Middle_Length_Qipao/qipao.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8a6a4ea9c9d99d334e5227322c31564e2a89786b",
+      "size": 126464,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/8a6a4ea9c9d99d334e5227322c31564e2a89786b"
+    },
+    {
+      "path": "finalized_clothes/Middle_Length_Qipao/qipao.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7b3697791e65b6f9c5b7f726208508798e55e8ca",
+      "size": 338654,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/7b3697791e65b6f9c5b7f726208508798e55e8ca"
+    },
+    {
+      "path": "finalized_clothes/Middle_Length_Qipao/qipao.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "22135f16b295e20c78cd1a95dffdf1a61215cb85",
+      "size": 4536055,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/22135f16b295e20c78cd1a95dffdf1a61215cb85"
+    },
+    {
+      "path": "finalized_clothes/Middle_Length_Qipao/qipao.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ee7a574a7b94e051a64714ba371ca2014b8c9e67",
+      "size": 30585,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/ee7a574a7b94e051a64714ba371ca2014b8c9e67"
+    },
+    {
+      "path": "finalized_clothes/Middle_Length_Qipao/qipao_normals.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5a219125568dfc523e74c7c77bdaa209599ce434",
+      "size": 4349418,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/5a219125568dfc523e74c7c77bdaa209599ce434"
+    },
+    {
+      "path": "finalized_clothes/Retro_top",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "bb472ea45b398516bccc7a96aebc4c1fc5435114",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/bb472ea45b398516bccc7a96aebc4c1fc5435114"
+    },
+    {
+      "path": "finalized_clothes/Retro_top/vintagetop.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "854e5220acbfaa7bd7dfa6b280003d1bb62c1f76",
+      "size": 115406,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/854e5220acbfaa7bd7dfa6b280003d1bb62c1f76"
+    },
+    {
+      "path": "finalized_clothes/Retro_top/vintagetop.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d52eb213ec7fed4e8996e573e84643229036eb18",
+      "size": 855,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/d52eb213ec7fed4e8996e573e84643229036eb18"
+    },
+    {
+      "path": "finalized_clothes/Retro_top/vintagetop.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f66be3b58617d0a8e98b7a0519b535fd97f464cb",
+      "size": 37785,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/f66be3b58617d0a8e98b7a0519b535fd97f464cb"
+    },
+    {
+      "path": "finalized_clothes/Retro_top/vintagetop.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c655c5cab061777d37cc24ba92ea8b3ac58f8c43",
+      "size": 54498,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/c655c5cab061777d37cc24ba92ea8b3ac58f8c43"
+    },
+    {
+      "path": "finalized_clothes/Retro_top/vintagetop.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "838f306f8e2e55c117392bc9ac4c51797a368199",
+      "size": 130695,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/838f306f8e2e55c117392bc9ac4c51797a368199"
+    },
+    {
+      "path": "finalized_clothes/Retro_top/vintagetop.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8c187dfd282651137c24d5fa40a2e0e038371fc4",
+      "size": 627315,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/8c187dfd282651137c24d5fa40a2e0e038371fc4"
+    },
+    {
+      "path": "finalized_clothes/Retro_top/vintagetop.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3a8bf7dc804564a40ffe5bd4c40066f1692cfd08",
+      "size": 21683,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/3a8bf7dc804564a40ffe5bd4c40066f1692cfd08"
+    },
+    {
+      "path": "finalized_clothes/Retro_top/vintagetop_normals.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d43fcf979ea08a7831320533268cad5dff603888",
+      "size": 571826,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/d43fcf979ea08a7831320533268cad5dff603888"
+    },
+    {
+      "path": "finalized_clothes/Sheeta_from_Laputa",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "9341037e115d9a945b13e6f9f2898ae9434fdfa0",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/9341037e115d9a945b13e6f9f2898ae9434fdfa0"
+    },
+    {
+      "path": "finalized_clothes/Sheeta_from_Laputa/Laputa_Sheeta.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dc71a7d7056e0d744626258c1d547196bd8b166a",
+      "size": 133631,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/dc71a7d7056e0d744626258c1d547196bd8b166a"
+    },
+    {
+      "path": "finalized_clothes/Sheeta_from_Laputa/Laputa_Sheeta.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "51405b5789c435728025a461e80e387d36303151",
+      "size": 1486,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/51405b5789c435728025a461e80e387d36303151"
+    },
+    {
+      "path": "finalized_clothes/Sheeta_from_Laputa/Laputa_Sheeta.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "83bcc98200efd7bf48f661bb48b6b1f56e4d8fd8",
+      "size": 41047,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/83bcc98200efd7bf48f661bb48b6b1f56e4d8fd8"
+    },
+    {
+      "path": "finalized_clothes/Sheeta_from_Laputa/Laputa_Sheeta.mhw",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "334298c2910015d41fa607f44d2016bc176f1698",
+      "size": 157977,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/334298c2910015d41fa607f44d2016bc176f1698"
+    },
+    {
+      "path": "finalized_clothes/Sheeta_from_Laputa/Laputa_Sheeta.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d83baf060efe0f6571231fd1ea7addc819fe8d66",
+      "size": 68035,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/d83baf060efe0f6571231fd1ea7addc819fe8d66"
+    },
+    {
+      "path": "finalized_clothes/Sheeta_from_Laputa/Laputa_Sheeta.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7d639e1531d3f4cfdf45a67e6ccc473c0601d280",
+      "size": 171272,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/7d639e1531d3f4cfdf45a67e6ccc473c0601d280"
+    },
+    {
+      "path": "finalized_clothes/Sheeta_from_Laputa/Laputa_Sheeta.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "91f751afc9e51e568945afc442ac560400169291",
+      "size": 10265,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/91f751afc9e51e568945afc442ac560400169291"
+    },
+    {
+      "path": "finalized_clothes/Sheeta_from_Laputa/Laputa_Sheeta_diffuse.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cf648bc0d55985b5348610bdb84f46a550b163a4",
+      "size": 1366031,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/cf648bc0d55985b5348610bdb84f46a550b163a4"
+    },
+    {
+      "path": "finalized_clothes/Sheeta_from_Laputa/Laputa_Sheeta_metallic.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3c3df91053a502038b91474fa44c9fbd10960cf7",
+      "size": 216536,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/3c3df91053a502038b91474fa44c9fbd10960cf7"
+    },
+    {
+      "path": "finalized_clothes/Sheeta_from_Laputa/Laputa_Sheeta_normal.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "caf72b4fce24572f6c3d9476855bb32ae3c9da9e",
+      "size": 1977101,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/caf72b4fce24572f6c3d9476855bb32ae3c9da9e"
+    },
+    {
+      "path": "finalized_clothes/Sheeta_from_Laputa/Laputa_Sheeta_roughness.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5df33f6e0b667b161c316ea353a17ab7fc8cbd15",
+      "size": 857130,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/5df33f6e0b667b161c316ea353a17ab7fc8cbd15"
+    },
+    {
+      "path": "finalized_clothes/Short_Bow",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f7a620900a0787b96595e7c7412e448848809d69",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/f7a620900a0787b96595e7c7412e448848809d69"
+    },
+    {
+      "path": "finalized_clothes/Short_Bow/bow.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "afb2851a93eb39c714111e4da07949dc303aa59e",
+      "size": 43183,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/afb2851a93eb39c714111e4da07949dc303aa59e"
+    },
+    {
+      "path": "finalized_clothes/Short_Bow/bow.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b810c35a3c6d49acc4efc6628f92c84797f1bfd3",
+      "size": 709,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/b810c35a3c6d49acc4efc6628f92c84797f1bfd3"
+    },
+    {
+      "path": "finalized_clothes/Short_Bow/bow.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "82d25951ebebce94c5637af92a2045273d512227",
+      "size": 18567,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/82d25951ebebce94c5637af92a2045273d512227"
+    },
+    {
+      "path": "finalized_clothes/Short_Bow/bow.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0cf75c23657914853e8146126db52e082fc4171e",
+      "size": 24295,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/0cf75c23657914853e8146126db52e082fc4171e"
+    },
+    {
+      "path": "finalized_clothes/Short_Bow/bow.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "08d50ede2ce9b78c99f72f008b1461f2b6fee615",
+      "size": 50359,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/08d50ede2ce9b78c99f72f008b1461f2b6fee615"
+    },
+    {
+      "path": "finalized_clothes/Short_Bow/bow.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "361fa5e214ae0336bffc85ab4b2c00d999665090",
+      "size": 2414,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/361fa5e214ae0336bffc85ab4b2c00d999665090"
+    },
+    {
+      "path": "finalized_clothes/Short_Bow/bow_diffuse.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "adcfb0141379dcc547779c0fdf816b2ffc4a8a35",
+      "size": 652468,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/adcfb0141379dcc547779c0fdf816b2ffc4a8a35"
+    },
+    {
+      "path": "finalized_clothes/Short_Bow/bow_normal.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "586230e3af14fbf4f54e539b8d21623316df9ef3",
+      "size": 1069092,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/586230e3af14fbf4f54e539b8d21623316df9ef3"
+    },
+    {
+      "path": "finalized_clothes/Suitcase",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "18f069ee9365a45b2ecc7d89fbf49360453efadb",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/18f069ee9365a45b2ecc7d89fbf49360453efadb"
+    },
+    {
+      "path": "finalized_clothes/Suitcase/suitcase.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "97922f8be756a47e4dfb18a7d436d678ade074fa",
+      "size": 9744,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/97922f8be756a47e4dfb18a7d436d678ade074fa"
+    },
+    {
+      "path": "finalized_clothes/Suitcase/suitcase.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "22766b4df102cb054d7f7d95852b95ee69a53f7f",
+      "size": 521,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/22766b4df102cb054d7f7d95852b95ee69a53f7f"
+    },
+    {
+      "path": "finalized_clothes/Suitcase/suitcase.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1c3f777f33f75340e80dbba6965570d3cbd634ae",
+      "size": 7760,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/1c3f777f33f75340e80dbba6965570d3cbd634ae"
+    },
+    {
+      "path": "finalized_clothes/Suitcase/suitcase.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aeba2d89611e8cbd1b90e0a5de92cdae02bf47c7",
+      "size": 8101,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/aeba2d89611e8cbd1b90e0a5de92cdae02bf47c7"
+    },
+    {
+      "path": "finalized_clothes/Suitcase/suitcase.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "01d37e0d2470bd5ac83ea9a9b81d5f22848c0ef1",
+      "size": 14527,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/01d37e0d2470bd5ac83ea9a9b81d5f22848c0ef1"
+    },
+    {
+      "path": "finalized_clothes/Suitcase/suitcase.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e4fdc6d56db533c17fd774cf42ae5d19bbe649df",
+      "size": 706613,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/e4fdc6d56db533c17fd774cf42ae5d19bbe649df"
+    },
+    {
+      "path": "finalized_clothes/Suitcase/suitcase_01_diffuse.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "229801973cbce93730913a05a3c8c7162a8bae0c",
+      "size": 808550,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/229801973cbce93730913a05a3c8c7162a8bae0c"
+    },
+    {
+      "path": "finalized_clothes/Suitcase/suitcase_01_normal.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "76278696334a3a2e8d2a281752825124e62b78a1",
+      "size": 1667908,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/76278696334a3a2e8d2a281752825124e62b78a1"
+    },
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f0e951514438e8a4fb90667b2b581570baf2b092",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/f0e951514438e8a4fb90667b2b581570baf2b092"
+    },
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked/T-shirt_basic-bump.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ffa52d5cd93caaef8c2369c531ccdd142c338684",
+      "size": 181491,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/ffa52d5cd93caaef8c2369c531ccdd142c338684"
+    },
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked/T-shirt_basic.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8bbf972a6d5fed31d27ca1227b546839f0deab59",
+      "size": 861166,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/8bbf972a6d5fed31d27ca1227b546839f0deab59"
+    },
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked/t_shirt_basic_tucked.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c6b40bd5724a8a89d231bc635e3bae9b4350aee6",
+      "size": 94278,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/c6b40bd5724a8a89d231bc635e3bae9b4350aee6"
+    },
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked/t_shirt_basic_tucked.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0e6b70f03ab984c5b30b37c429aa64c11c9de1cd",
+      "size": 509,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/0e6b70f03ab984c5b30b37c429aa64c11c9de1cd"
+    },
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked/t_shirt_basic_tucked.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8e80a700166f45abae68189dcda9eadf5b19202c",
+      "size": 37900,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/8e80a700166f45abae68189dcda9eadf5b19202c"
+    },
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked/t_shirt_basic_tucked.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "41c6b6a5c64f2d6e1a4b476028bf2e6730c03ba5",
+      "size": 48685,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/41c6b6a5c64f2d6e1a4b476028bf2e6730c03ba5"
+    },
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked/t_shirt_basic_tucked.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e9d22d4bff796ac0302d53cf3445651a476e363d",
+      "size": 109974,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/e9d22d4bff796ac0302d53cf3445651a476e363d"
+    },
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked/t_shirt_basic_tucked.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "02c2595f8e067a8a0da1f6b3ebe994df10921bce",
+      "size": 8115,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/02c2595f8e067a8a0da1f6b3ebe994df10921bce"
+    },
+    {
+      "path": "finalized_clothes/Winter_coat",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "78e16a8407edef87cae8ed7cffa45bfddb57b19e",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/78e16a8407edef87cae8ed7cffa45bfddb57b19e"
+    },
+    {
+      "path": "finalized_clothes/Winter_coat/coat.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f7bcfd635099e9cf813e2e348dcf8d4a7364e486",
+      "size": 248070,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/f7bcfd635099e9cf813e2e348dcf8d4a7364e486"
+    },
+    {
+      "path": "finalized_clothes/Winter_coat/coat.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ac50eecad27799ebf20883b215b5fdf20b928ea6",
+      "size": 634,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/ac50eecad27799ebf20883b215b5fdf20b928ea6"
+    },
+    {
+      "path": "finalized_clothes/Winter_coat/coat.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7a6edab8e639e3a751c63cc4a5df00b3d392b909",
+      "size": 85825,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/7a6edab8e639e3a751c63cc4a5df00b3d392b909"
+    },
+    {
+      "path": "finalized_clothes/Winter_coat/coat.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d22f8e1d637c90abb2068896839af1d3d1a00492",
+      "size": 124296,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/d22f8e1d637c90abb2068896839af1d3d1a00492"
+    },
+    {
+      "path": "finalized_clothes/Winter_coat/coat.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "57e477c967d3771380000dabc2441966615925c4",
+      "size": 317757,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/57e477c967d3771380000dabc2441966615925c4"
+    },
+    {
+      "path": "finalized_clothes/Winter_coat/coat.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6c697e697ed338ded770b34abd179058f7064d14",
+      "size": 6366679,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/6c697e697ed338ded770b34abd179058f7064d14"
+    },
+    {
+      "path": "finalized_clothes/Winter_coat/coat.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d980d6204dfa921c522e7e83b9f5985f4bef3101",
+      "size": 19685,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/d980d6204dfa921c522e7e83b9f5985f4bef3101"
+    },
+    {
+      "path": "finalized_clothes/bag_on_head",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d838ac8a698ad54889ab4433f6370e6dfa0e0cfc",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/d838ac8a698ad54889ab4433f6370e6dfa0e0cfc"
+    },
+    {
+      "path": "finalized_clothes/bag_on_head/pillow_man.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6d555afcb35ecc3e1f861abcbfcd18d92b462806",
+      "size": 386859,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/6d555afcb35ecc3e1f861abcbfcd18d92b462806"
+    },
+    {
+      "path": "finalized_clothes/bag_on_head/pillow_man.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c04f009bca7316a036a3bd0a418741c6015dcccd",
+      "size": 486,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/c04f009bca7316a036a3bd0a418741c6015dcccd"
+    },
+    {
+      "path": "finalized_clothes/bag_on_head/pillow_man.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6799ff8d71d4ebeff141e8315535065f917e97b7",
+      "size": 136733,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/6799ff8d71d4ebeff141e8315535065f917e97b7"
+    },
+    {
+      "path": "finalized_clothes/bag_on_head/pillow_man.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a5942e101bff0e0f05251c1e2cb246a0e5d48d8b",
+      "size": 154343,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/a5942e101bff0e0f05251c1e2cb246a0e5d48d8b"
+    },
+    {
+      "path": "finalized_clothes/bag_on_head/pillow_man.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b293a49e76e9fe75707d3ce7ae899efaf0bdf389",
+      "size": 463949,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/b293a49e76e9fe75707d3ce7ae899efaf0bdf389"
+    },
+    {
+      "path": "finalized_clothes/bag_on_head/pillow_man.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6f1024f19ae1856cf3d4301a1f1257f821a0d0c1",
+      "size": 86687,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/6f1024f19ae1856cf3d4301a1f1257f821a0d0c1"
+    },
+    {
+      "path": "finalized_clothes/bag_on_head/pillow_man.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "df2889d337c96f1b7f1b48e66c7520b30907c3cc",
+      "size": 9200,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/df2889d337c96f1b7f1b48e66c7520b30907c3cc"
+    },
+    {
+      "path": "finalized_clothes/electric_guitar",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "443f515b8037bcab09449384a48983b862c42dbb",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/443f515b8037bcab09449384a48983b862c42dbb"
+    },
+    {
+      "path": "finalized_clothes/electric_guitar/electricguitar.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7b418fec4f2545ce04cd709ab3dc049a4e794a62",
+      "size": 315427,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/7b418fec4f2545ce04cd709ab3dc049a4e794a62"
+    },
+    {
+      "path": "finalized_clothes/electric_guitar/electricguitar.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "57a190036379252fa12d579d5b39987311123a6c",
+      "size": 688,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/57a190036379252fa12d579d5b39987311123a6c"
+    },
+    {
+      "path": "finalized_clothes/electric_guitar/electricguitar.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "54596bdb872661ef922b723557993de5f277097b",
+      "size": 80967,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/54596bdb872661ef922b723557993de5f277097b"
+    },
+    {
+      "path": "finalized_clothes/electric_guitar/electricguitar.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "93156200c4402b3b36368cb943d5ab4220a97887",
+      "size": 114405,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/93156200c4402b3b36368cb943d5ab4220a97887"
+    },
+    {
+      "path": "finalized_clothes/electric_guitar/electricguitar.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2b345fed0a4e544296c07e05cd72f066e5d990cd",
+      "size": 352235,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/2b345fed0a4e544296c07e05cd72f066e5d990cd"
+    },
+    {
+      "path": "finalized_clothes/electric_guitar/electricguitar.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "20abd2af4e81a4b6d46b42b09b618674a4093a3d",
+      "size": 2358021,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/20abd2af4e81a4b6d46b42b09b618674a4093a3d"
+    },
+    {
+      "path": "finalized_clothes/electric_guitar/electricguitar.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "975bb984ab4f3726dfbebd1cd482c4055944fd39",
+      "size": 10866,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/975bb984ab4f3726dfbebd1cd482c4055944fd39"
+    },
+    {
+      "path": "finalized_clothes/male_elegantsuit01",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "378f1e97e11a56bdbd3893b7724828eafe94d035",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/378f1e97e11a56bdbd3893b7724828eafe94d035"
+    },
+    {
+      "path": "finalized_clothes/male_elegantsuit01/male_elegantsuit01.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9b3515287c590f291bbc56ee2465b93ee2117727",
+      "size": 515810,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/9b3515287c590f291bbc56ee2465b93ee2117727"
+    },
+    {
+      "path": "finalized_clothes/male_elegantsuit01/male_elegantsuit01.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0519a48a779781b270ff7ee1b640c0af36707500",
+      "size": 1293,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/0519a48a779781b270ff7ee1b640c0af36707500"
+    },
+    {
+      "path": "finalized_clothes/male_elegantsuit01/male_elegantsuit01.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c00f791218837e4a372ecdfdd003dac348caafcb",
+      "size": 185669,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/c00f791218837e4a372ecdfdd003dac348caafcb"
+    },
+    {
+      "path": "finalized_clothes/male_elegantsuit01/male_elegantsuit01.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "60b80cad29f9052aac93721117f6891d423cb919",
+      "size": 273741,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/60b80cad29f9052aac93721117f6891d423cb919"
+    },
+    {
+      "path": "finalized_clothes/male_elegantsuit01/male_elegantsuit01.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e85a6474ea11d546821012727c065dc96a94c5fd",
+      "size": 633330,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/e85a6474ea11d546821012727c065dc96a94c5fd"
+    },
+    {
+      "path": "finalized_clothes/male_elegantsuit01/male_elegantsuit01.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f416dc45af6cd413a1e1dae8bee32038ac820e45",
+      "size": 9646,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/f416dc45af6cd413a1e1dae8bee32038ac820e45"
+    },
+    {
+      "path": "finalized_clothes/male_elegantsuit01/male_elegantsuit01_diffuse.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8d62920a06a0bb5a7e0059ec693f12e632dabc42",
+      "size": 1945326,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/8d62920a06a0bb5a7e0059ec693f12e632dabc42"
+    },
+    {
+      "path": "finalized_clothes/tennis_racket",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "99ba7c692a848087a46c8a5ca2eee9a72968af4b",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/99ba7c692a848087a46c8a5ca2eee9a72968af4b"
+    },
+    {
+      "path": "finalized_clothes/tennis_racket/tennisracket.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cea1de4ffb1477ffc1fa5a58fcb7f67d9cbe99d2",
+      "size": 82393,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/cea1de4ffb1477ffc1fa5a58fcb7f67d9cbe99d2"
+    },
+    {
+      "path": "finalized_clothes/tennis_racket/tennisracket.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aecad9b60cc8a7e0601ae8f96ec3d29818b76494",
+      "size": 704,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/aecad9b60cc8a7e0601ae8f96ec3d29818b76494"
+    },
+    {
+      "path": "finalized_clothes/tennis_racket/tennisracket.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2552caf2edd20b7c5e5e98dbea9e3b10666767b4",
+      "size": 30739,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/2552caf2edd20b7c5e5e98dbea9e3b10666767b4"
+    },
+    {
+      "path": "finalized_clothes/tennis_racket/tennisracket.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3944b3eb5ea7743ce9471b1d507e9b7d4d12829c",
+      "size": 38076,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/3944b3eb5ea7743ce9471b1d507e9b7d4d12829c"
+    },
+    {
+      "path": "finalized_clothes/tennis_racket/tennisracket.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "405b049e9e870fbde8b5101c73dc3625b9226b9d",
+      "size": 88265,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/405b049e9e870fbde8b5101c73dc3625b9226b9d"
+    },
+    {
+      "path": "finalized_clothes/tennis_racket/tennisracket.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "09b558760b0c6d1ba7bcc90f4a885179b9cd2000",
+      "size": 192171,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/09b558760b0c6d1ba7bcc90f4a885179b9cd2000"
+    },
+    {
+      "path": "finalized_clothes/tennis_racket/tennisracket.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b2bf0e6de79b8c2f145db87be1d349ba69a73563",
+      "size": 26679,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/b2bf0e6de79b8c2f145db87be1d349ba69a73563"
+    },
+    {
+      "path": "finalized_clothes/uniform_jacket_train_driver",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b95b866f4e9cf4bd71eeb67783263e33c8843838",
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/trees/b95b866f4e9cf4bd71eeb67783263e33c8843838"
+    },
+    {
+      "path": "finalized_clothes/uniform_jacket_train_driver/uniform_jacket.mhclo",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fecb3d6282acdcc933aac7c1d7e014d096b9ed11",
+      "size": 174414,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/fecb3d6282acdcc933aac7c1d7e014d096b9ed11"
+    },
+    {
+      "path": "finalized_clothes/uniform_jacket_train_driver/uniform_jacket.mhmat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ce2d6254ae29956053b06fc00d58394a12c48a91",
+      "size": 878,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/ce2d6254ae29956053b06fc00d58394a12c48a91"
+    },
+    {
+      "path": "finalized_clothes/uniform_jacket_train_driver/uniform_jacket.mhpxy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a1137bb089ab6eb279c31e7148d46d1685f9b09f",
+      "size": 59222,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/a1137bb089ab6eb279c31e7148d46d1685f9b09f"
+    },
+    {
+      "path": "finalized_clothes/uniform_jacket_train_driver/uniform_jacket.npz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "525df5b3077daf2a9bb173f6d5116913680a3d78",
+      "size": 88306,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/525df5b3077daf2a9bb173f6d5116913680a3d78"
+    },
+    {
+      "path": "finalized_clothes/uniform_jacket_train_driver/uniform_jacket.obj",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "55844cdf4d4c3cba0d23fa1d5d5168f126e35803",
+      "size": 215652,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/55844cdf4d4c3cba0d23fa1d5d5168f126e35803"
+    },
+    {
+      "path": "finalized_clothes/uniform_jacket_train_driver/uniform_jacket.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "52c26eb69d7822a6cf5642e00743573c5f430889",
+      "size": 4928808,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/52c26eb69d7822a6cf5642e00743573c5f430889"
+    },
+    {
+      "path": "finalized_clothes/uniform_jacket_train_driver/uniform_jacket.thumb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e0c3a53032a6a52214da702ee20757a17fb5b803",
+      "size": 22246,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/e0c3a53032a6a52214da702ee20757a17fb5b803"
+    },
+    {
+      "path": "finalized_clothes/uniform_jacket_train_driver/uniform_jacket_normals.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "64c8d6f9f69ea85a3442e8279b476e92e710faeb",
+      "size": 3669646,
+      "url": "https://api.github.com/repos/k3yg4n/glamcam-makehuman-clothing-assets/git/blobs/64c8d6f9f69ea85a3442e8279b476e92e710faeb"
+    }
+  ],
+  "truncated": false
+}

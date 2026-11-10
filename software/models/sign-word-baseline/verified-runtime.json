@@ -1,0 +1,1 @@
+{"engine": "MediaPipe Hands + LiteRT", "input_shape": [1, 30, 126], "output_shape": [1, 10], "standard_validated": false}

@@ -1,0 +1,6 @@
+{
+  "version": "rest-space-preview-2",
+  "channels": { "eyeBlinkLeft": 0.65, "eyeBlinkRight": 0.65, "browInnerUp": 0.25, "mouthSmileLeft": 0.3, "mouthSmileRight": 0.3 },
+  "motions": { "love": { "eyeBlinkLeft": 0.08, "eyeBlinkRight": 0.08, "browInnerUp": 0.06, "mouthSmileLeft": 0.16, "mouthSmileRight": 0.16 } },
+  "note": "Conservative preview blend; not captured facial signing. All targets must be rest-space deltas."
+}

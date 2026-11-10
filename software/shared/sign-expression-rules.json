@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "version": "expression-rules-1",
+  "rules": [
+    {"id":"greeting","inputs":["你好呀","你好啊"],"output":"你好","note":"省去问候中的语气词。"},
+    {"id":"thanks","inputs":["感谢","谢谢啊","谢谢呀"],"output":"谢谢","note":"用已有的“谢谢”表达感谢。"},
+    {"id":"thanks-you","inputs":["感谢你","谢谢你呀","谢谢你啊"],"output":"谢谢你","note":"用“谢谢 → 你”表达对对方的感谢。"},
+    {"id":"strong-thanks","inputs":["非常感谢","真的很感谢","真的非常感谢","太感谢了"],"output":"谢谢","note":"感谢程度暂未单独表现，拟用“谢谢”表达，请核对是否满足原意。"},
+    {"id":"strong-thanks-you","inputs":["非常感谢你","真的很感谢你","真的非常感谢你","太感谢你了"],"output":"谢谢你","note":"保留感谢的对象；感谢程度暂未单独表现，请核对是否满足原意。"},
+    {"id":"apology","inputs":["抱歉","对不起啊"],"output":"对不起","note":"用已有的“对不起”表达道歉。"},
+    {"id":"farewell","inputs":["拜拜","再见啦"],"output":"再见","note":"用已有的“再见”表达告别。"}
+  ]
+}

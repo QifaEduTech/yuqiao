@@ -1,0 +1,381 @@
+{
+  "schemaVersion": 1,
+  "site": "https://shouyu.bmcx.com",
+  "mode": "metadata_only",
+  "entries": [
+    {
+      "sourceId": "bmcx.95",
+      "term": "联系",
+      "category": "社交",
+      "canonicalUrl": "https://shouyu.bmcx.com/95__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E7%A4%BE%E4%BA%A4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/1/aef249a52c4df764.png"
+      ],
+      "retrievedAt": "2026-10-19T01:04:55+00:00",
+      "pageSha256": "e5db0098134122c4a8949e61630bbc05fe8d4c14fb7ac563bc769e48188b7db5",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.48",
+      "term": "现在",
+      "category": "时间",
+      "canonicalUrl": "https://shouyu.bmcx.com/48__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E6%97%B6%E9%97%B4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/8/f22e561c5a65543b.png"
+      ],
+      "retrievedAt": "2026-10-19T01:04:57+00:00",
+      "pageSha256": "16c7f24c76baf4a657655ae7112b17dd745d0802dfb721542877aa04cb1109a6",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.1848",
+      "term": "姓名",
+      "category": "社交",
+      "canonicalUrl": "https://shouyu.bmcx.com/1848__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E7%A4%BE%E4%BA%A4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/4/8aaffbf645b4a577.png"
+      ],
+      "retrievedAt": "2026-10-19T01:04:59+00:00",
+      "pageSha256": "25c0b1ec677d3dc71248e34b2e8aaf7bd465393d1dd8cab2a5dab140ba63a430",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.1016",
+      "term": "分钟",
+      "category": "时间",
+      "canonicalUrl": "https://shouyu.bmcx.com/1016__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E6%97%B6%E9%97%B4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/0/3657023fcca5f784.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:01+00:00",
+      "pageSha256": "1f21471c3ba226a8eef91cadc1a0f8ed0ec08a8382ae8c51a58355760dcf9ef4",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.1849",
+      "term": "年龄",
+      "category": "社交",
+      "canonicalUrl": "https://shouyu.bmcx.com/1849__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E7%A4%BE%E4%BA%A4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/e/b8c099bf0eb20367.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:03+00:00",
+      "pageSha256": "b39766b9617beeddeb7e21087f316baa0cb7a48b7d019a8d1ae29325c5aa634e",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.51",
+      "term": "星期",
+      "category": "时间",
+      "canonicalUrl": "https://shouyu.bmcx.com/51__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E6%97%B6%E9%97%B4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/b/0352296d3f3a4c7f.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:05+00:00",
+      "pageSha256": "5ca047fa8bc4e79aff398d44e5d68be997bf75cb1e55454d0599a2cebb6b2d4f",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.1851",
+      "term": "地址",
+      "category": "社交",
+      "canonicalUrl": "https://shouyu.bmcx.com/1851__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E7%A4%BE%E4%BA%A4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/2/fa8536d002927fce.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:07+00:00",
+      "pageSha256": "83c6b3d7b4cf40200a8daf129d5c333af52be86098a8aa506051802e4e6b65cc",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.45",
+      "term": "不久",
+      "category": "时间",
+      "canonicalUrl": "https://shouyu.bmcx.com/45__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E6%97%B6%E9%97%B4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/8/27bb6f5a8da8b3b9.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:09+00:00",
+      "pageSha256": "9b716f4dfeda1f5f1307b979fe256fa900146acdca54f30fdd674b7beb817dea",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.98",
+      "term": "抱歉",
+      "category": "社交",
+      "canonicalUrl": "https://shouyu.bmcx.com/98__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E7%A4%BE%E4%BA%A4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/d/7b0ea642da267035.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:11+00:00",
+      "pageSha256": "a673e9cc5846f635b8cef6cd36c1c8b6a314646f3a5dc7840988913298be4865",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.46",
+      "term": "机会",
+      "category": "时间",
+      "canonicalUrl": "https://shouyu.bmcx.com/46__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E6%97%B6%E9%97%B4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/5/c05c25d2cedccbc3.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:13+00:00",
+      "pageSha256": "a8e28b04388ff72a7dafbaff72574e4b102cdfa6f5f194ef860eafaff15ee3db",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.96",
+      "term": "保留",
+      "category": "社交",
+      "canonicalUrl": "https://shouyu.bmcx.com/96__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E7%A4%BE%E4%BA%A4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/3/65b860a696564666.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:15+00:00",
+      "pageSha256": "9b1094d24a6d9dadb223213a7f47655a566537df740028afd5c608399afc54b4",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.47",
+      "term": "前夕",
+      "category": "时间",
+      "canonicalUrl": "https://shouyu.bmcx.com/47__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E6%97%B6%E9%97%B4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/9/bcd24839a59383d5.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:17+00:00",
+      "pageSha256": "490e42496fc331f8d310bf2df17516f6937fcb8b7dc01135479f425c228be1f9",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.97",
+      "term": "适应",
+      "category": "社交",
+      "canonicalUrl": "https://shouyu.bmcx.com/97__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E7%A4%BE%E4%BA%A4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/1/8ac632e5053b13fa.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:19+00:00",
+      "pageSha256": "4af316dd85f1bc744167912f2598f17073b5c295ffa5272a31f413efae8b053a",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.49",
+      "term": "朝代",
+      "category": "时间",
+      "canonicalUrl": "https://shouyu.bmcx.com/49__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E6%97%B6%E9%97%B4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/6/32c5a3a50f39a244.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:21+00:00",
+      "pageSha256": "b2c8540b9796f6f72ce180c10d9dd58131eddc3b0c9733cfbee675d56c7d5b17",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.99",
+      "term": "来得及",
+      "category": "社交",
+      "canonicalUrl": "https://shouyu.bmcx.com/99__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E7%A4%BE%E4%BA%A4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/e/faac8585b78e8933.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:23+00:00",
+      "pageSha256": "c928c50cc1a153068ecbd8c784d4fa2f112e5aa483757b3213ca5ab04c80b9c5",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.50",
+      "term": "秋天",
+      "category": "时间",
+      "canonicalUrl": "https://shouyu.bmcx.com/50__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E6%97%B6%E9%97%B4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/e/ef162ca36caaf82e.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:25+00:00",
+      "pageSha256": "95f86b4df28e3956806c298c78d04cdb6a2f661b102875ebdc0e67b4c62f1292",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.1856",
+      "term": "访问",
+      "category": "社交",
+      "canonicalUrl": "https://shouyu.bmcx.com/1856__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E7%A4%BE%E4%BA%A4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/4/4ce5baad94e07cb0.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:27+00:00",
+      "pageSha256": "fea65c4b0b14b2c9b4aa186011f0b344be37a88e84f02a5b1deee4000987f0b1",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.52",
+      "term": "暂时",
+      "category": "时间",
+      "canonicalUrl": "https://shouyu.bmcx.com/52__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E6%97%B6%E9%97%B4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/c/ac403c0d05d44e0a.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:29+00:00",
+      "pageSha256": "1b23036b6def21fb293614d65cfb179189a92c1f0a7f607ca83730f12031f577",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.1852",
+      "term": "会客",
+      "category": "社交",
+      "canonicalUrl": "https://shouyu.bmcx.com/1852__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E7%A4%BE%E4%BA%A4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/3/d66c301839710060.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:31+00:00",
+      "pageSha256": "cb4169d13a512ad968d2aa149d10be1c0de10c9bae8a0af244306fb733324a71",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    },
+    {
+      "sourceId": "bmcx.53",
+      "term": "秋季",
+      "category": "时间",
+      "canonicalUrl": "https://shouyu.bmcx.com/53__shouyud/",
+      "discoveredFrom": "https://shouyu.bmcx.com/%E6%97%B6%E9%97%B4_1__shouyul/",
+      "referenceImageUrls": [
+        "https://d.bmcx.com/shouyu/_file/8/f03c40c8558d3230.png"
+      ],
+      "retrievedAt": "2026-10-19T01:05:33+00:00",
+      "pageSha256": "352522b5083512c13b5107fe4b46da064314780d9ee3be8f2d4bd25f403e42a7",
+      "parserVersion": "bmcx-metadata-1",
+      "rightsStatus": "reuse_unconfirmed",
+      "review": "not_reviewed",
+      "contentMode": "metadata_only",
+      "descriptionImported": false,
+      "mediaDownloaded": false
+    }
+  ],
+  "robots": {
+    "url": "https://shouyu.bmcx.com/robots.txt",
+    "retrievedAt": "2026-10-19T01:19:54+00:00",
+    "sha256": "16ceb5ee3e0dc13aa9adf31a3ebbe45a1d965b8c2b9f72eaf84e5911e140ed95",
+    "text": "User-agent: *\nAllow: /"
+  },
+  "rights": {
+    "status": "reuse_unconfirmed",
+    "copyrightNotice": "All Rights Reserved",
+    "apiPage": "https://www.bmcx.com/api/",
+    "apiFinding": "网页嵌入接口说明；未发现图文复制／再分发／训练授权",
+    "checkedOn": "2026-10-19"
+  },
+  "parserVersion": "bmcx-metadata-1"
+}

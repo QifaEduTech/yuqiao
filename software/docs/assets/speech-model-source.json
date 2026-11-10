@@ -1,0 +1,38 @@
+{
+  "source": "https://huggingface.co/csukuangfj/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17",
+  "mirror": "https://hf-mirror.com",
+  "files": [
+    {
+      "type": "file",
+      "oid": "b5aafcccf5cfd5f7293c710bd6588dc6544eef2b",
+      "size": 71,
+      "path": "LICENSE"
+    },
+    {
+      "type": "file",
+      "oid": "e0066cc153e9efed3c626d59ce4d6ded3c945f00",
+      "size": 239233841,
+      "lfs": {
+        "oid": "c71f0ce00bec95b07744e116345e33d8cbbe08cef896382cf907bf4b51a2cd51",
+        "size": 239233841,
+        "pointerSize": 134
+      },
+      "xetHash": "c45ba1d6a13329c4aca1dc118cabdc643ca09cb8192abb979648dd68f9917323",
+      "path": "model.int8.onnx"
+    },
+    {
+      "type": "file",
+      "oid": "24a2bfc5c039f9d97db2cf1f2461699b582e0a90",
+      "size": 178988,
+      "path": "test_wavs/zh.wav"
+    },
+    {
+      "type": "file",
+      "oid": "2cfc92fc2ff26aaa690b7c01fd96b41109413881",
+      "size": 315894,
+      "path": "tokens.txt"
+    }
+  ],
+  "acquired": "2026-10-11",
+  "use": "local Chinese ASR; not sign recognition"
+}

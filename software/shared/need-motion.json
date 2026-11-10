@@ -1,0 +1,14 @@
+{
+  "id": "need-inward-projection-v1",
+  "review": "development_only_not_calibrated",
+  "productionEligible": false,
+  "maxGapSeconds": 0.2,
+  "minimumFrames": 12,
+  "minimumSpanSeconds": 0.45,
+  "minUpNormal": 0.55,
+  "minPalmWidth": 0.015,
+  "endpointSeconds": 0.15,
+  "minimumRelativeDecrease": 0.2,
+  "minimumDirectionalConsistency": 0.6,
+  "maxNormalRotationDegrees": 35
+}

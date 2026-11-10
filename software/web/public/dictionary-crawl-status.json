@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "stage": "stopped_by_user",
+  "startedAt": "2026-10-19T02:52:50+00:00",
+  "updatedAt": "2026-10-19T03:37:41+00:00",
+  "detail": "用户已取消配图下载；保留文字与来源，制作动作时按需查看原站。",
+  "categoriesTotal": 54,
+  "categoriesVisited": 54,
+  "pagesDiscovered": 294,
+  "pagesDone": 294,
+  "pagesFailed": 0,
+  "termsDiscovered": 5233,
+  "termsIllustrated": 353,
+  "termsReadyToPublish": 400,
+  "sourceMissingDescription": 0,
+  "sourceMissingImages": 47,
+  "imagesDiscovered": 5148,
+  "imagesDone": 0,
+  "imagesFailed": 0,
+  "retrying": 0,
+  "publication": {
+    "at": "2026-10-19T03:20:42.991Z",
+    "added": 0,
+    "updated": 4,
+    "total": 5243,
+    "sourceTerms": 5233,
+    "conflicts": []
+  },
+  "imageCollectionCancelled": true,
+  "localImagesRetained": false
+}

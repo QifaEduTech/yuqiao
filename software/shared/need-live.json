@@ -1,0 +1,16 @@
+{
+  "id": "need-live-development-v1",
+  "productionEligible": false,
+  "maxWindowSeconds": 4,
+  "maxSamples": 140,
+  "minSamples": 12,
+  "minSpanSeconds": 0.45,
+  "predictIntervalSeconds": 0.12,
+  "threshold": 0.5,
+  "minPredictions": 3,
+  "stableSeconds": 0.24,
+  "missingEndSeconds": 0.6,
+  "maxSupportAgeSeconds": 1.5,
+  "maxSegmentSeconds": 12,
+  "resetGapSeconds": 1
+}

@@ -1,0 +1,14 @@
+{
+  "id": "me-body-video-tcn-development-v1",
+  "version": "experimental-v1",
+  "featureProtocol": "hands-and-shoulder-relative-178-v1",
+  "artifactSha256": "84172577adb346295fdd14e607c3b29d806fff8e3534ba73efba0b595d9f7dc7",
+  "weightsSha256": "a8a9fa1178a052fba7ef521277b7b085b6c29289e2148836b1ccb67e4f2454d3",
+  "threshold": 0.5,
+  "numpyParityMaxError": 5.700220373494602e-08,
+  "productionEligible": false,
+  "liveEnabled": true,
+  "requiredEvidence": "me-body-pointing-development-v3",
+  "review": "user_requested_live_trial_after_development_replay",
+  "liveAdapter": "me-live-trial-v1"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "need-directional-tcn-development-v1",
+  "version": "experimental-v1",
+  "featureProtocol": "hands-153-plus-causal-projection-171-v1",
+  "artifactSha256": "281e6eae73ac880d4524fef2e71a5132c1ee7182a0ba5139651d4c5e23bee29b",
+  "weightsSha256": "16974f345e551f8fead9739d9bb77b36b4dfbd373398b1d74cdbea1eaa9af309",
+  "threshold": 0.5,
+  "review": "experimental_live_trial_pending_user_check",
+  "productionEligible": false,
+  "requiredMotionGuard": "need-required-image-motion-v1",
+  "numpyParityMaxError": 1.287751700829176e-07,
+  "liveTrialEnabled": true,
+  "evaluationReport": "docs/assets/need-three-actions-live-2026-10-20.json",
+  "requiredMotionSourceSha256": "07b28ed155cdb708a5820f5eab383fd54578f202e059ac672c38fb313cab5d6b"
+}

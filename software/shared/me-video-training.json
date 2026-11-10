@@ -1,0 +1,16 @@
+{
+  "id": "me-body-video-tcn-development-v1",
+  "target": "csl.me",
+  "featureProtocol": "hands-and-shoulder-relative-178-v1",
+  "dimensions": 178,
+  "epochs": 120,
+  "patience": 15,
+  "seed": 20261021,
+  "learningRate": 0.001,
+  "threshold": 0.5,
+  "maxSamples": 128,
+  "maxFrames": 384,
+  "maxDurationSeconds": 12,
+  "minEffectiveFps": 20,
+  "productionEligible": false
+}

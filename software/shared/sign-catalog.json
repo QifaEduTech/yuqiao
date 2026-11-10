@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "four-signs-v1",
+  "scope": "四词功能原型；暂不训练或扩词",
+  "recognitionModel": {
+    "id": "mediapipe-conv1d-baseline",
+    "version": "b3c5a4d8b1a02b55ed6890d9e2512ca8e2c9d13d",
+    "sha256": "b40fe857716d9567a032674c84235bebcdbd35ceb3931f09003bf3b3ffb55665",
+    "labels": [
+      "你好",
+      "再见",
+      "对不起",
+      "没关系",
+      "谢谢",
+      "上课",
+      "下课",
+      "不舒服",
+      "厉害",
+      "多少钱"
+    ],
+    "features": {
+      "id": "mp-hands-xyz-wrist-maxabs-left-right-v1",
+      "sequenceLength": 30,
+      "dimensions": 126,
+      "mirrored": true
+    }
+  },
+  "entries": [
+    {
+      "id": "csl.hello",
+      "text": "你好",
+      "speechText": "你好",
+      "recognitionIndex": 0,
+      "recognitionReview": "user_trial_passed",
+      "playback": {
+        "status": "missing",
+        "asset": null,
+        "version": null,
+        "review": "not_reviewed"
+      }
+    },
+    {
+      "id": "csl.goodbye",
+      "text": "再见",
+      "speechText": "再见",
+      "recognitionIndex": 1,
+      "recognitionReview": "user_trial_passed",
+      "playback": {
+        "status": "missing",
+        "asset": null,
+        "version": null,
+        "review": "not_reviewed"
+      }
+    },
+    {
+      "id": "csl.sorry",
+      "text": "对不起",
+      "speechText": "对不起",
+      "recognitionIndex": 2,
+      "recognitionReview": "user_trial_passed",
+      "playback": {
+        "status": "missing",
+        "asset": null,
+        "version": null,
+        "review": "not_reviewed"
+      }
+    },
+    {
+      "id": "csl.thanks",
+      "text": "谢谢",
+      "speechText": "谢谢",
+      "recognitionIndex": 4,
+      "recognitionReview": "user_trial_passed",
+      "playback": {
+        "status": "authored_unverified",
+        "asset": "shared/sign-motions/csl.thanks.json",
+        "version": "authored-1",
+        "review": "not_reviewed",
+        "verifiedBy": null
+      }
+    }
+  ],
+  "capabilities": {
+    "singleActionClassification": "experimental",
+    "multipleActionsInOneVideo": "not_connected",
+    "defaultSpeech": "connected",
+    "signPlayback": "missing_validated_assets",
+    "personalVoice": "connected"
+  }
+}

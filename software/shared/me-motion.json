@@ -1,0 +1,17 @@
+{
+  "id": "me-body-pointing-development-v3",
+  "status": "development_only",
+  "minShoulderVisibility": 0.6,
+  "minShoulderSpan": 0.08,
+  "chestOffsetShoulderSpans": 0.3,
+  "minIndexAngleDegrees": 140,
+  "maxOtherFingerMeanDegrees": 125,
+  "maxTipDistanceShoulderSpans": 0.65,
+  "minPointingCosine": 0.55,
+  "minFrames": 5,
+  "minSupportSeconds": 0.16,
+  "maxGapSeconds": 0.12,
+  "maxWristStepShoulderSpans": 0.8,
+  "minRecedingIndexFraction": 0.65,
+  "minIndexRayPalmRatio": 0.2
+}

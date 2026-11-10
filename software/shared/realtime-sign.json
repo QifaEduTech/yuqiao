@@ -1,0 +1,28 @@
+{
+  "protocol": 2,
+  "targetSignId": "csl.thanks",
+  "targetText": "谢谢",
+  "frameIntervalMs": 30,
+  "maxImageEdge": 640,
+  "maxJpegBytes": 262144,
+  "maxWindowSeconds": 4,
+  "maxSamples": 140,
+  "minHandSamples": 12,
+  "minSpanSeconds": 1.2,
+  "resetGapSeconds": 1,
+  "missingResetSeconds": 0.6,
+  "predictIntervalSeconds": 0.35,
+  "minFeatureMotion": 0.002,
+  "thumbEvidenceMaxAgeSeconds": 1.2,
+  "events": {
+    "minPredictions": 3,
+    "stableSeconds": 0.7,
+    "maxSupportAgeSeconds": 1.5,
+    "maxSegmentSeconds": 12,
+    "maxDisplayedEvents": 30
+  },
+  "sessionIdleMs": 20000,
+  "frameTimeoutMs": 5000,
+  "startupTimeoutMs": 30000,
+  "review": "experimental_uncalibrated"
+}

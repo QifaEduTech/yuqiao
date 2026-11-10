@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-10-19",
+  "mode": "on_demand_source_reference",
+  "downloadImages": false,
+  "displayReferenceImages": false,
+  "reason": "用户要求停止配图采集并删除本机手势参考图，后续制作动作时按需浏览来源网站。"
+}

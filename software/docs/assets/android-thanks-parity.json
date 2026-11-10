@@ -1,0 +1,11 @@
+{
+  "verifiedOn": "2026-10-26",
+  "sourceSha256": "b40fe857716d9567a032674c84235bebcdbd35ceb3931f09003bf3b3ffb55665",
+  "artifactSha256": "b57ade51d9b5541960bd9fc980de202cc64503201f5fc9ff12c5a7e7a1a0bef9",
+  "syntheticCases": 18,
+  "outputComparisons": 180,
+  "maxError": 2.980232238769531e-7,
+  "trained": false,
+  "sourceVideosRead": 0,
+  "recognitionAccuracy": null
+}

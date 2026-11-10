@@ -1,0 +1,17 @@
+{
+  "id": "thumb-flexion-evidence-v2",
+  "review": "development_only_uncalibrated",
+  "maxTrackingGapSeconds": 0.2,
+  "minRunSamples": 8,
+  "minRunSeconds": 0.7,
+  "baselineLookbackSeconds": 0.75,
+  "minBaselineSamples": 4,
+  "minBaselineSpanSeconds": 0.08,
+  "minIpBendDegrees": 20,
+  "minIpChangeDegrees": 15,
+  "shoulderChangeFraction": 0.5,
+  "minSupportSamples": 2,
+  "minSupportSpanSeconds": 0.025,
+  "maxSupportGapSeconds": 0.12,
+  "classifierSampleIntervalSeconds": 0.1
+}

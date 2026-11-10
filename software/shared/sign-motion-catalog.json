@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "rig": "anny-makehuman",
+  "purpose": "Independent preview action library. Adding an action does not train or expand recognition.",
+  "entries": [
+    {
+      "id": "csl.thanks",
+      "label": "谢谢",
+      "reviewRequired": true,
+      "asset": "anny/csl.thanks.json",
+      "version": "user-description-3"
+    },
+    {
+      "id": "csl.hello",
+      "label": "你好",
+      "reviewRequired": true,
+      "asset": "anny/csl.hello.json",
+      "version": "user-description-1"
+    },
+    {
+      "id": "csl.goodbye",
+      "label": "再见",
+      "reviewRequired": true,
+      "asset": "anny/csl.goodbye.json",
+      "version": "user-description-1"
+    },
+    {
+      "id": "csl.sorry",
+      "label": "对不起",
+      "reviewRequired": true,
+      "asset": "anny/csl.sorry.json",
+      "version": "user-description-3"
+    },
+    {
+      "id": "csl.me",
+      "label": "我",
+      "reviewRequired": true,
+      "asset": "anny/csl.me.json",
+      "version": "user-description-1"
+    },
+    {
+      "id": "csl.love",
+      "label": "爱",
+      "reviewRequired": true,
+      "asset": "anny/csl.love.json",
+      "version": "user-description-2"
+    },
+    {
+      "id": "csl.you",
+      "label": "你",
+      "reviewRequired": true,
+      "asset": "anny/csl.you.json",
+      "version": "user-description-1"
+    },
+    {
+      "id": "csl.i_love_you",
+      "label": "我爱你",
+      "reviewRequired": true,
+      "asset": "anny/csl.i_love_you.json",
+      "version": "composed-2"
+    },
+    {
+      "id": "csl.good",
+      "label": "好",
+      "reviewRequired": true,
+      "asset": "anny/csl.good.json",
+      "version": "user-description-1"
+    },
+    {
+      "id": "csl.yes",
+      "label": "是",
+      "reviewRequired": true,
+      "asset": "anny/csl.yes.json",
+      "version": "user-description-2"
+    },
+    {
+      "id": "csl.not",
+      "label": "不是",
+      "reviewRequired": true,
+      "asset": "anny/csl.not.json",
+      "version": "user-description-1"
+    },
+    {
+      "id": "csl.ref.bmcx.1874",
+      "label": "需要",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.1874.json",
+      "version": "user-description-1"
+    },
+    {
+      "id": "csl.ref.bmcx.1900",
+      "label": "帮助",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.1900.json",
+      "version": "source-reference-1"
+    },
+    {
+      "id": "csl.ref.bmcx.1932",
+      "label": "请",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.1932.json",
+      "version": "source-reference-1"
+    },
+    {
+      "id": "csl.ref.bmcx.1938",
+      "label": "等候",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.1938.json",
+      "version": "source-reference-1"
+    }
+  ]
+}

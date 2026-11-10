@@ -1,0 +1,16 @@
+{
+  "id": "help-bilateral-geometry-v1",
+  "review": "development_only_needs_new_capture_groups",
+  "maxTrackingGapSeconds": 0.2,
+  "minBothHandFrames": 12,
+  "minSpanSeconds": 1.0,
+  "maxFingerBendDegrees": 40,
+  "minSeparationPalmLengths": 0.5,
+  "maxWristJumpImageWidths": 0.25,
+  "minOpenFraction": 0.7,
+  "minScaleExcursion": 0.15,
+  "minScaleCorrelation": 0.6,
+  "supportSeconds": 0.1,
+  "cycleWindowSeconds": 1.2,
+  "productionEligible": false
+}

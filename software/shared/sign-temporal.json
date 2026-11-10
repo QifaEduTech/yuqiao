@@ -1,0 +1,16 @@
+{
+  "id": "mp-hands-timed-nearest-30-v1",
+  "review": "development_only",
+  "featureId": "mp-hands-xyz-wrist-maxabs-left-right-v1",
+  "sequenceLength": 30,
+  "dimensions": 126,
+  "maxActionSeconds": 12,
+  "maxBufferedSamples": 160,
+  "maxCaptureGapSeconds": 1,
+  "maxNearestSeconds": 0.25,
+  "minHandSamples": 12,
+  "minHandSpanSeconds": 1.2,
+  "minHandCoverage": 0.6,
+  "maxInternalMissingSeconds": 0.6,
+  "minFeatureMotion": 0.002
+}

@@ -1,0 +1,26 @@
+{
+  "thanks": {
+    "text": "谢谢",
+    "signId": "csl.thanks",
+    "method": "classifier_and_thumb_motion",
+    "trial": true
+  },
+  "help": {
+    "text": "帮助",
+    "signId": "csl.ref.bmcx.1900",
+    "method": "video_tcn_and_bilateral_motion",
+    "trial": true
+  },
+  "need": {
+    "text": "需要",
+    "signId": "csl.ref.bmcx.1874",
+    "method": "video_tcn_and_required_image_motion",
+    "trial": true
+  },
+  "me": {
+    "text": "我",
+    "signId": "csl.me",
+    "method": "video_tcn_and_body_pointing",
+    "trial": true
+  }
+}

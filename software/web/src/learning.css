@@ -1,0 +1,23 @@
+.learning-brand{display:flex;align-items:center;gap:12px;color:#246b5a;text-decoration:none;white-space:nowrap}.learning-brand strong{font-size:23px}.learning-brand span{font-size:12px;color:#6b8076}
+.learning-toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px}.learning-vocabulary{display:flex;gap:8px;flex-wrap:wrap}.learning-vocabulary span{border:1px solid #d6e4dc;border-radius:20px;padding:7px 15px;background:#f4f8f5;font-size:12px;color:#48705a}
+.learning-page .stage{min-height:590px}.learning-page .interaction-panel{min-width:0}.learning-page .capture-controls{flex-wrap:wrap}.learning-page .record-review-panel textarea{min-height:85px}.learning-page .video-result-panel{margin-top:20px}
+.realtime-placeholder{display:flex;align-items:center;justify-content:center;flex-direction:column;padding:36px;text-align:center;height:100%;gap:16px;color:#476d5a}.realtime-placeholder h2{font-size:25px;font-weight:500;margin:0}.realtime-placeholder p{font-size:14px;line-height:1.9;color:#728479;margin:0}.realtime-placeholder a{text-decoration:none}.realtime-note{font-size:14px;line-height:1.9;color:#6c8276}.learning-entry{text-decoration:none;display:inline-flex}
+@media(max-width:800px){.learning-page .stage{min-height:410px}.learning-page .header-actions{gap:8px}.learning-brand span{display:none}.learning-page .learning-toolbar{align-items:flex-start}.learning-page .learning-toolbar>.quiet-button{font-size:11px;white-space:nowrap}.learning-vocabulary{gap:5px}.learning-vocabulary span{padding:6px 10px;font-size:11px}.learning-page .intro-note{display:none}.learning-page .account-name{max-width:100px;overflow:hidden;text-overflow:ellipsis}}
+.learning-recognition-actions{margin:20px 0;padding:16px;border:1px solid #d4e3d7;border-radius:12px}.learning-recognition-actions h3{font-size:14px;margin:0 0 10px}.learning-recognition-actions small{font-size:12px;font-weight:400;color:#75847b}.learning-recognition-actions p{font-size:12px;line-height:1.8;color:#667d72}
+
+.learning-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}.learning-preview{padding:24px;background:white;border:1px solid #dce5e0;border-radius:18px;position:sticky;top:20px}.learning-preview h2{margin:0 0 16px}.learning-preview select{margin:8px 0;width:100%;padding:10px;border:1px solid #cadbd2;border-radius:8px;font:inherit}.learning-preview p{font-size:14px;line-height:1.8;color:#5b7469}.learning-preview-stage{min-height:500px}.learning-practice.workspace{display:flex;flex-direction:column;gap:16px}.learning-practice .stage,.learning-practice .interaction-panel{width:100%}.learning-practice .camera-stage{min-height:350px}.learning-practice .camera-content{min-height:270px}.learning-practice .interaction-panel{border-radius:16px}.learning-practice .capture-steps{display:none}@media(max-width:900px){.learning-split{grid-template-columns:1fr}.learning-preview{position:static}.learning-preview-stage{min-height:420px}}
+
+.learning-page .learning-practice .camera-stage{min-height:440px}.learning-page .learning-practice .camera-content{min-height:350px}.learning-page .learning-preview-stage{min-height:590px}
+
+/* Keep the previous layout and panels available in source; presentation overrides only. */
+.learning-page .learning-split{grid-template-columns:minmax(0,1fr);max-width:1000px;margin-inline:auto}
+.learning-page .learning-preview{position:static}
+.learning-page .learning-preview-stage{min-height:620px}
+.learning-preview>.small-hint,
+.learning-page .stage-info,
+.learning-session-panel.is-idle,
+.learning-session-panel.is-capture>.panel-heading,
+.learning-session-panel.is-capture>.small-hint,
+.learning-session-panel.is-capture>.panel-bottom{display:none}
+.learning-page .header-actions{flex-wrap:wrap}
+@media(max-width:800px){.learning-page .site-header{height:auto;min-height:75px;flex-wrap:wrap;padding-block:16px}.learning-page .header-actions{gap:8px 16px}.learning-page .learning-preview{padding:16px}.learning-page .learning-preview-stage{min-height:620px}}

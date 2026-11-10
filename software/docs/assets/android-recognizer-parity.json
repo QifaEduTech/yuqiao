@@ -1,0 +1,48 @@
+{
+  "verifiedOn": "2026-10-26",
+  "syntheticOnly": true,
+  "modelStubs": true,
+  "gateScenarios": {
+    "thumb": 9,
+    "help": 6,
+    "need": 9,
+    "me": 7
+  },
+  "actionStreams": 30,
+  "automaticStreams": 9,
+  "automaticFrames": 972,
+  "scriptedTransitions": 8,
+  "sourceHashes": {
+    "server/realtime_multi.py": "178c46b1c5c8778defa6c1aaebb27e57d7487b807be57fab89aa654fee52183f",
+    "server/realtime_window.py": "5e1afa6c40e8f3b9b9a68dc7f2e0291068935b5dfd16954b92dff69d0d78f4b8",
+    "server/realtime_events.py": "af0aebedd850a5b402f58fa4005983b4428b86678b784062cf57f6c0d4f92fdc",
+    "server/thanks_active_hand.py": "2eac5aa3cb73859b70b88a8a3ac98e622a7f27598540f371c9a5387d6aaf1b1c",
+    "server/thumb_local_motion.py": "e0ea813bf010e6104265c2540361107934a109156b6dc05e0c11e0b11c5ac03b",
+    "server/help_motion.py": "158f9f32e9ebbb13b375522254fe4053c5e2b05f486ea83b9b84a2edadd4ccf9",
+    "server/help_tcn_live.py": "1d2c803d2bd0966f686e4fbcca91a8ea486e99356ceed4aa030b84a06cb706eb",
+    "server/help_live_probe.py": "010b47b0a23675220678a3099d20973a31aa0a7f7465fe8976f61c947ceca3c3",
+    "server/need_required_motion.py": "07b28ed155cdb708a5820f5eab383fd54578f202e059ac672c38fb313cab5d6b",
+    "server/need_live.py": "f317156e90f475a4ef287f140b7860bffa2875ffa3d17bf30fae02fe613aaea5",
+    "server/me_motion.py": "a7a415a07bf51240fa85882d8c11c883e974e64d59f0916ea1a541f72887b791",
+    "server/me_live.py": "28e9fead8f0b17cd88d639433e1b0105d16b41e7e52c7dd3b3241678f3d1b7b6",
+    "shared/realtime-sign.json": "ba87a4a30b9235d1398142effd9b55ecc63a71c68fbf2234c00f7d59ece04780",
+    "shared/thumb-motion.json": "ee3e6ca10848f12564bf1a5cff688c28174d1d768644b551e0a67170bc30de97",
+    "shared/thumb-local-motion.json": "732debee31350a8fdbb4bd27501330d2e0b6632eb2ba6ef19bc77b4dbcd41bdc",
+    "shared/thanks-active-hand.json": "8e2010783296a5e247ac0aab6c0b497b2b812701fc8f4e873309e24ffaa5752e",
+    "shared/help-motion.json": "a69fa0d01c8bf0a882b4642c9b3f2844c4abe60e4e8c3478d21fa6bcd5947722",
+    "shared/help-runtime.json": "1b6fe750bfb00ea55124ac3f0a3aac3d1ee3bb22e20d84a21aa10ce5c26a3e49",
+    "shared/need-required-motion.json": "a06945fcc9a1154ad0367dcc166b6a3301c0005d95885c41fff0928b9d5bd5c6",
+    "shared/need-live.json": "ae9579960b9191951c6307d0c6c8bbd3af3f24db065e591b1565af4333fda76d",
+    "shared/me-motion.json": "fa7946756a1ca091bf63399f901717c8a3c5fc810986926bf515c37e2da2f79a",
+    "shared/me-live.json": "a7c71c2b6a96366478b20aaa3b40ac1ebb84b1bda60a50d1485ba014414e6fda",
+    "shared/realtime-transitions.json": "4252152b71d2440eee6ab903d3df5e195c398d8b768d6eb02dd9245ed96bee07"
+  },
+  "portHashes": {
+    "shared/android-features.js": "52bdda318f93b795f63e7810a252977d5047447434a261910646b9f47528f87d",
+    "shared/android-motion.js": "82f888c35aed59f08413d5ea269fbeda00e9d173c9f7ec13e41e21f41262b0ad",
+    "shared/android-recognizers.js": "7b5f29ee1abb61161066892754400c39fee1d62502556874bc779786fd40005c",
+    "shared/android-multi.js": "b0a3a5bf4d56e5812ca98e4f4e7536500117493f2817fcf6155f34b507806556"
+  },
+  "recognitionAccuracy": null,
+  "realTrackerEquivalence": false
+}

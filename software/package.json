@@ -1,0 +1,52 @@
+{
+  "name": "yuqiao-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/run-local.mjs dev",
+    "build": "node scripts/run-local.mjs build",
+    "preview": "node scripts/run-local.mjs preview",
+    "test:e2e": "node scripts/run-local.mjs test",
+    "server": "node scripts/run-local.mjs server",
+    "test:server": "node --test tests/server/*.test.mjs",
+    "dictionary:build": "node scripts/render-sign-dictionary.mjs",
+    "dictionary:crawl": "node scripts/crawl-sign-dictionary.mjs",
+    "dictionary:import": "node scripts/import-dictionary-source-index.mjs",
+    "motions:compose": "node scripts/build-fixed-sequence.mjs",
+    "test:sign-runtime": "node scripts/run-local.mjs sign-check",
+    "test:realtime-runtime": "node scripts/run-local.mjs realtime-check",
+    "samples:audit": "node scripts/run-local.mjs sample-quality",
+    "test:sample-quality": "node scripts/run-local.mjs sample-quality-check",
+    "test:temporal": "node scripts/run-local.mjs temporal-check",
+    "samples:temporal": "node scripts/run-local.mjs temporal-evaluate",
+    "samples:thumb": "node scripts/run-local.mjs thumb-evaluate",
+    "test:thumb": "node scripts/run-local.mjs thumb-check",
+    "test:thumb-multijoint": "node scripts/run-local.mjs thumb-multijoint-check",
+    "test:training-features": "node scripts/run-local.mjs training-features-check",
+    "test:sign-training": "node scripts/run-local.mjs sign-training-check",
+    "training:check": "node scripts/run-local.mjs training-readiness",
+    "training:pilot": "node scripts/run-local.mjs training-pilot",
+    "agent:brief": "node scripts/agent-context.mjs",
+    "agent:check": "node scripts/agent-context.mjs --check",
+    "agent:refresh": "node scripts/agent-context.mjs --refresh --reviewed"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "1.1.1",
+    "@pixiv/three-vrm": "^3.5.5",
+    "lucide-react": "^0.468.0",
+    "mysql2": "3.24.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "three": "^0.172.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.172.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "~5.7.3",
+    "vite": "^6.4.4"
+  }
+}

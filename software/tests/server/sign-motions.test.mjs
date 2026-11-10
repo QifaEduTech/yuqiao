@@ -1,0 +1,37 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdir,mkdtemp,writeFile,access,rm} from 'node:fs/promises';
+import {resolve,join,sep} from 'node:path';
+import {createHash} from 'node:crypto';
+import {once} from 'node:events';
+import {createApp} from '../../server/app.mjs';
+
+test('动作参考按原录像账号隔离、禁止伪造校验、源文件变化失效并级联删除',async t=>{
+  const parent=resolve('.runtime-logs/server-tests');await mkdir(parent,{recursive:true});
+  const root=await mkdtemp(join(parent,'motion-'));
+  const server=await createApp({dataDir:root,publicDir:resolve('web/public')});server.listen(0,'127.0.0.1');await once(server,'listening');
+  t.after(async()=>{server.closeAllConnections();await new Promise(r=>server.close(r));assert.ok(resolve(root).startsWith(parent+sep));await rm(root,{recursive:true,force:true});});
+  const base=`http://127.0.0.1:${server.address().port}`;
+  const request=(path,cookie,options={})=>fetch(base+path,{...options,headers:{Origin:'http://127.0.0.1:5173','X-Yuqiao-Request':'1',...(cookie?{Cookie:cookie}:{}),...options.headers}});
+  const register=async username=>{const res=await request('/api/auth/register',null,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password:'motion-test-passphrase'})});assert.equal(res.status,201);return res.headers.get('set-cookie').split(';')[0];};
+  const owner=await register('MotionOwner'),other=await register('MotionOther');
+  const bytes=Buffer.alloc(40);Buffer.from([0x1a,0x45,0xdf,0xa3]).copy(bytes);
+  const saved=await request('/api/records/video?duration=2',owner,{method:'POST',headers:{'Content-Type':'video/webm'},body:bytes});assert.equal(saved.status,201);
+  const {record}=await saved.json();const path=`/api/records/${record.id}/motion`;
+  await mkdir(join(root,'sign-motions'));
+  const artifact=join(root,'sign-motions',`${record.id}.json`);
+  const motion={schemaVersion:1,id:'csl.thanks',label:'谢谢',rig:'anny-makehuman',status:'authored_unverified',review:'not_reviewed',verifiedBy:null,source:{recordId:record.id,sha256:createHash('sha256').update(bytes).digest('hex')},frames:[{t:0,hands:{}}]};
+  await writeFile(artifact,JSON.stringify(motion));
+  assert.equal((await request(path,null)).status,401);
+  assert.equal((await request(path,other)).status,404);
+  assert.equal((await request('/api/sign/motion-references',null)).status,401);
+  assert.equal((await (await request('/api/sign/motion-references',other)).json()).references.length,0);
+  const listing=await (await request('/api/sign/motion-references',owner)).json();assert.equal(listing.references[0].recordId,record.id);assert.equal(listing.references[0].label,'谢谢');
+  const response=await request(path,owner);assert.equal(response.status,200);assert.equal(response.headers.get('cache-control'),'no-store');
+  await writeFile(artifact,JSON.stringify({...motion,status:'ready',verifiedBy:'fake'}));assert.equal((await request(path,owner)).status,409);
+  await writeFile(artifact,JSON.stringify({...motion,source:{...motion.source,sha256:'0'.repeat(64)}}));assert.equal((await request(path,owner)).status,409);
+  await writeFile(artifact,JSON.stringify({...motion,id:'csl.unknown'}));assert.equal((await request(path,owner)).status,409);
+  await writeFile(artifact,JSON.stringify(motion));
+  assert.equal((await request(`/api/records/${record.id}`,owner,{method:'DELETE'})).status,200);
+  await assert.rejects(access(artifact));assert.equal((await request(path,owner)).status,404);
+});

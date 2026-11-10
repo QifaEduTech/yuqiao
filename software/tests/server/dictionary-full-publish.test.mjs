@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {mergeFullDictionary} from '../../scripts/publish-full-dictionary.mjs';
+import {makePageData} from '../../scripts/dictionary-pagination.mjs';
+const original=JSON.parse(readFileSync(new URL('../../shared/sign-dictionary.json',import.meta.url),'utf8'));
+const picture=original.entries.find(e=>e.gestureImages?.length).gestureImages[0];
+const term={sourceId:'bmcx.999999',term:'测试同名',description:'手部动作测试说明。',canonicalUrl:'https://shouyu.bmcx.com/999999__shouyud/',sourceListingUrl:'https://shouyu.bmcx.com/%E7%A4%BE%E4%BA%A4_1__shouyul/',category:'社交',retrievedAt:'2026-10-19T00:00:00Z',sourceListingSha256:'0'.repeat(64),gestureImages:[picture]};
+test('full publication is idempotent and preserves project definitions',()=>{const before=structuredClone(original);const a=mergeFullDictionary(original,[term]);const b=mergeFullDictionary(a.dictionary,[term]);assert.equal(a.added,1);assert.equal(b.added,0);assert.equal(b.updated,0);assert.deepEqual(original,before);assert.deepEqual(a.dictionary.entries.slice(0,original.entries.length),original.entries);});
+test('same word source variants are kept as separate IDs',()=>{const a=mergeFullDictionary(original,[{...term,term:'谢谢'}]);assert.equal(a.added,1);assert.equal(a.dictionary.entries.find(e=>e.id==='csl.thanks').description,original.entries.find(e=>e.id==='csl.thanks').description);});
+test('source missing pictures do not become fake illustrations',()=>{const a=mergeFullDictionary(original,[{...term,gestureImages:[],imageStatus:'missing_at_source'}]);const entry=a.dictionary.entries.at(-1);assert.equal(entry.sourceMissingImage,true);assert.equal(entry.gestureImages.length,0);assert.equal(entry.review,'not_reviewed');});
+test('pagination data prevents script termination and round-trips HTML',()=>{const encoded=makePageData([{text:'</script>测试',category:'社交'}],['<tr><td>&lt;script&gt;</td></tr>']);assert.ok(!encoded.includes('<'));assert.equal(JSON.parse(encoded)[0].word,'</script>测试');});

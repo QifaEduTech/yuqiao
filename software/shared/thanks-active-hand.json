@@ -1,0 +1,9 @@
+{
+  "id": "thanks-active-hand-v1",
+  "passiveWindowSeconds": 1.0,
+  "minSamples": 8,
+  "minSpanSeconds": 0.35,
+  "maxWristRangePalmLengths": 0.3,
+  "maxLocalShapeRange": 0.12,
+  "maxPalmScaleRelativeRange": 0.15
+}

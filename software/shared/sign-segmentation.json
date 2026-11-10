@@ -1,0 +1,11 @@
+{
+  "version": "pause-midpoint-v2",
+  "pauseSeconds": 0.7,
+  "minimumPauseSamples": 8,
+  "restWristY": 0.78,
+  "minimumActionSeconds": 0.5,
+  "maximumActionSeconds": 10.25,
+  "maximumVideoSeconds": 30.25,
+  "maximumSegments": 10,
+  "note": "Experimental deliberate hands-low/out-of-frame separators; not natural continuous-sign boundaries."
+}

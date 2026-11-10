@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "id": "service-window-reception-1",
+  "title": "第一次来到服务窗口",
+  "status": "animation_trial_unverified",
+  "recognitionReady": false,
+  "motions": [
+    {
+      "id": "csl.ref.bmcx.1874",
+      "label": "需要",
+      "activeFrom": 0.7,
+      "activeTo": 2.4,
+      "duration": 3.2,
+      "source": "https://shouyu.bmcx.com/1874__shouyud/",
+      "version": "user-description-1"
+    },
+    {
+      "id": "csl.ref.bmcx.1900",
+      "label": "帮助",
+      "activeFrom": 0.7,
+      "activeTo": 2.8,
+      "duration": 3.6,
+      "source": "https://shouyu.bmcx.com/1900__shouyud/"
+    },
+    {
+      "id": "csl.ref.bmcx.1932",
+      "label": "请",
+      "activeFrom": 0.65,
+      "activeTo": 2.4,
+      "duration": 3.2,
+      "source": "https://shouyu.bmcx.com/1932__shouyud/"
+    },
+    {
+      "id": "csl.ref.bmcx.1938",
+      "label": "等候",
+      "activeFrom": 0.8,
+      "activeTo": 2.5,
+      "duration": 3.4,
+      "source": "https://shouyu.bmcx.com/1938__shouyud/"
+    }
+  ],
+  "dialogue": [
+    {
+      "role": "工作人员",
+      "text": "你好",
+      "motionIds": [
+        "csl.hello"
+      ]
+    },
+    {
+      "role": "办事群众",
+      "text": "你好，我需要帮助",
+      "motionIds": [
+        "csl.hello",
+        "csl.me",
+        "csl.ref.bmcx.1874",
+        "csl.ref.bmcx.1900"
+      ]
+    },
+    {
+      "role": "工作人员",
+      "text": "好，请等候",
+      "motionIds": [
+        "csl.good",
+        "csl.ref.bmcx.1932",
+        "csl.ref.bmcx.1938"
+      ]
+    },
+    {
+      "role": "办事群众",
+      "text": "谢谢",
+      "motionIds": [
+        "csl.thanks"
+      ]
+    },
+    {
+      "role": "工作人员",
+      "text": "再见",
+      "motionIds": [
+        "csl.goodbye"
+      ]
+    }
+  ],
+  "note": "本阶段用文字输入演练双方表达，尚不能用摄像头识别完整求助句。用户同意先用等候，不将稍等自动等同等候。"
+}

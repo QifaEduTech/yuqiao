@@ -1,0 +1,17 @@
+{
+  "id": "need-video-tcn-development-v1",
+  "target": "csl.ref.bmcx.1874",
+  "labels": ["not_need", "need"],
+  "featureProtocol": "hands-local-absolute-motion-153-v1",
+  "review": "development_only_reused_data",
+  "epochs": 120,
+  "patience": 15,
+  "seed": 20261020,
+  "learningRate": 0.001,
+  "maxSamples": 128,
+  "maxDurationSeconds": 12,
+  "maxFrames": 384,
+  "minEffectiveFps": 20,
+  "threshold": 0.5,
+  "productionEligible": false
+}

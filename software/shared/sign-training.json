@@ -1,0 +1,19 @@
+{
+  "id": "thanks-binary-tcn-pilot-v1",
+  "review": "development_only",
+  "target": "csl.thanks",
+  "labels": ["not_thanks", "thanks"],
+  "featureProtocol": "hands-local-absolute-motion-153-v1",
+  "dimensions": 153,
+  "maxFrames": 384,
+  "maxSamples": 128,
+  "maxDurationSeconds": 12,
+  "minEffectiveFps": 20,
+  "minGroups": 3,
+  "minimumPerClass": {"train": 2, "validation": 2, "test": 2},
+  "epochs": 120,
+  "patience": 15,
+  "learningRate": 0.001,
+  "seed": 20261016,
+  "productionEligible": false
+}

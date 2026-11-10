@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "provider": "ollama",
+  "baseUrl": "http://127.0.0.1:11435",
+  "model": "qwen3:4b",
+  "timeoutMs": 90000,
+  "keepAlive": "1m",
+  "contextLength": 4096,
+  "maxOutputTokens": 900
+}

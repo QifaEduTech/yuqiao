@@ -1,0 +1,8 @@
+{
+  "id": "tasks-1.1.1-to-solutions-0.10.21-mirrored-slots-v1",
+  "inputCoordinates": "horizontally_mirrored_image",
+  "mapping": {"Left": "Right", "Right": "Left"},
+  "purpose": "Preserve desktop training feature slots across tracking APIs; do not flip image coordinates or alter gesture labels.",
+  "basis": "Matched development video frames show aligned wrist coordinates but opposite handedness category names.",
+  "review": "development_adapter_requires_broader_field_validation"
+}

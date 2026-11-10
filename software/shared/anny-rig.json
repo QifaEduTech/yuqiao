@@ -1,0 +1,112 @@
+{
+  "version": "anny-makehuman-idle-2",
+  "purpose": "Independent rig self-test, not sign language",
+  "idle": {
+    "upper": [
+      0.40,
+      -1.0,
+      0.04
+    ],
+    "lower": [
+      0.20,
+      -1.0,
+      0.02
+    ]
+  },
+  "fingers": {
+    "L": {
+      "1": {
+        "axis": "x",
+        "sign": 1,
+        "angles": [
+          0.15,
+          0.65,
+          0.7
+        ]
+      },
+      "2": {
+        "axis": "x",
+        "sign": 1,
+        "angles": [
+          0.7,
+          1.0,
+          0.8
+        ]
+      },
+      "3": {
+        "axis": "x",
+        "sign": 1,
+        "angles": [
+          0.7,
+          1.0,
+          0.8
+        ]
+      },
+      "4": {
+        "axis": "x",
+        "sign": 1,
+        "angles": [
+          0.7,
+          1.0,
+          0.8
+        ]
+      },
+      "5": {
+        "axis": "x",
+        "sign": 1,
+        "angles": [
+          0.7,
+          1.0,
+          0.8
+        ]
+      }
+    },
+    "R": {
+      "1": {
+        "axis": "x",
+        "sign": 1,
+        "angles": [
+          0.15,
+          0.65,
+          0.7
+        ]
+      },
+      "2": {
+        "axis": "x",
+        "sign": 1,
+        "angles": [
+          0.7,
+          1.0,
+          0.8
+        ]
+      },
+      "3": {
+        "axis": "x",
+        "sign": 1,
+        "angles": [
+          0.7,
+          1.0,
+          0.8
+        ]
+      },
+      "4": {
+        "axis": "x",
+        "sign": 1,
+        "angles": [
+          0.7,
+          1.0,
+          0.8
+        ]
+      },
+      "5": {
+        "axis": "x",
+        "sign": 1,
+        "angles": [
+          0.7,
+          1.0,
+          0.8
+        ]
+      }
+    }
+  }
+}

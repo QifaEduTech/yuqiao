@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "actions": [
+    {
+      "category": "thanks",
+      "signId": "csl.thanks",
+      "text": "谢谢",
+      "stage": "experimental_live_baseline",
+      "collectByDefault": false,
+      "publicDistributionNote": "开发记录与私人采集报告未随公开仓库提供；不将开发成绩称为独立准确率。"
+    },
+    {
+      "category": "help",
+      "signId": "csl.ref.bmcx.1900",
+      "text": "帮助",
+      "stage": "opt_in_realtime_trial_pending_user_check",
+      "collectByDefault": true,
+      "source": "https://shouyu.bmcx.com/1900__shouyud/",
+      "referenceDescription": "双手掌心向外，向前拍动两下。",
+      "semanticReview": "user_viewed_animation_not_professional_validation",
+      "recognitionReady": true,
+      "otherExamples": [
+        "静止双掌",
+        "单手向前推",
+        "双手左右摆动",
+        "静止点赞"
+      ],
+      "candidateSignals": [
+        "双手存在与跟踪连续性",
+        "五指展开及掌部方向",
+        "腕部运动相对掌宽的变化",
+        "双手时序配合与停顿",
+        "完整动作起止"
+      ],
+      "dataCautions": [
+        "手腕归一化的126维旧输入丢失绝对腕运动，不能直接复用为完整帮助特征",
+        "单目深度不等于真实前后距离",
+        "外观完全相同但声称意图不同的动作不能可靠分成相反标签",
+        "词典图或数字人动画不作为真人训练样本"
+      ],
+      "reusePolicy": {
+        "reuseExistingDevelopmentBackground": true,
+        "reuseExistingThanksAndOther": true,
+        "doNotRequireEveryNegativeAgainEachRound": true,
+        "independentTestMustNotReuseDevelopmentSources": true
+      },
+      "nextCollection": {
+        "requiredNow": false,
+        "note": "先现场试用帮助与既有相似动作，不要求重录背景。"
+      },
+      "releaseStage": "user_requested_video_model_v1_with_geometry_rollback",
+      "validatedAccuracy": null,
+      "publicDistributionNote": "开发记录与私人采集报告未随公开仓库提供；不将开发成绩称为独立准确率。"
+    },
+    {
+      "category": "need",
+      "signId": "csl.ref.bmcx.1874",
+      "text": "需要",
+      "stage": "experimental_live_trial_pending_user_check",
+      "collectByDefault": true,
+      "source": "https://shouyu.bmcx.com/1874__shouyud/",
+      "referenceDescription": "一手平伸，掌心向上，向自己滑回一次；不包含点胸动作。",
+      "semanticReview": "user_corrected_single_inward_slide_pending_preview",
+      "recognitionReady": true,
+      "otherExamples": [
+        "只保持掌心向上不动",
+        "掌心向上向外推",
+        "只点胸、不做后拉"
+      ],
+      "candidateSignals": [
+        "平掌手形与掌心方向",
+        "朝自己后拉的腕部轨迹",
+        "完整起止与跟踪连续性"
+      ],
+      "dataCautions": [
+        "按用户最新定义只做向自己滑回，不要求点胸或两段连招",
+        "不强制双手运动，不复用谢谢拇指门槛或帮助双手门槛",
+        "单目深度不等于真实前后距离，需原片与关键点配对验证",
+        "31.2/31.3呈自然手指弯曲，不能复用帮助的伸指计数阈值；当前仅1拍摄组。"
+      ],
+      "reusePolicy": {
+        "reuseExistingDevelopmentBackground": true,
+        "reuseExistingThanksAndOther": true,
+        "doNotRequireEveryNegativeAgainEachRound": true,
+        "independentTestMustNotReuseDevelopmentSources": true
+      },
+      "nextCollection": {
+        "requiredNow": false,
+        "count": 0,
+        "note": "需要已开放实时自动试用，无需选择动作。先试向自己滑回、静止掌心和三动作交替，暂时不用补录。"
+      },
+      "validatedAccuracy": null,
+      "referenceVersion": "user-description-1",
+      "projectionExperiment": {
+        "status": "development_only_failed_positive_retention",
+        "supportedPositive": 2,
+        "positiveCount": 3,
+        "falseSupport": 0,
+        "negativeCount": 36,
+        "productionEligible": false
+      },
+      "excludedUncertainSamples": [
+        "29.1 (formerly 28.13)"
+      ],
+      "latestDevelopmentResult": {
+        "eligibleRealSources": 42,
+        "training": {
+          "tp": 3,
+          "fn": 0,
+          "fp": 1,
+          "tn": 32
+        },
+        "validation": {
+          "tp": 3,
+          "fn": 0,
+          "fp": 0,
+          "tn": 3
+        },
+        "remainingFalsePositive": "28.11",
+        "frozenStressTriggers": 5,
+        "frozenStressCount": 8,
+        "independentAccuracy": null,
+        "modelPersisted": false,
+        "productionEligible": false
+      },
+      "liveModel": "models/need-video-tcn/experimental-v1/manifest.json",
+      "publicDistributionNote": "开发记录与私人采集报告未随公开仓库提供；不将开发成绩称为独立准确率。"
+    },
+    {
+      "category": "me",
+      "signId": "csl.me",
+      "text": "我",
+      "stage": "experimental_live_user_pair_trial_passed",
+      "collectByDefault": false,
+      "referenceVersion": "user-description-1",
+      "referenceDescription": "一手伸出食指，指向自己的胸前，短暂停留后自然收手。不要改成需要的平掌内收，也不要求连续点三次。",
+      "semanticReview": "user_provided_definition_pending_new_capture_review",
+      "recognitionReady": true,
+      "candidateSignals": [
+        "食指伸出与其余手指形态",
+        "指向自身胸前的方向与位置",
+        "进入、停留和收手过程"
+      ],
+      "dataCautions": [
+        "手部153维没有胸部参考点，不能只按屏幕中心或手指形态判定我",
+        "允许自然指向时短暂停留，不套用谢谢拇指弯动或帮助双手运动门槛",
+        "当前三词的静止拒识约束不能外推为所有手语都必须持续运动"
+      ],
+      "reusePolicy": {
+        "reuseExistingDevelopmentBackground": true,
+        "reuseExistingThanksAndOther": true,
+        "doNotRequireEveryNegativeAgainEachRound": true,
+        "independentTestMustNotReuseDevelopmentSources": true
+      },
+      "nextCollection": {
+        "requiredNow": false,
+        "category": "me",
+        "count": 0,
+        "note": "本次自然我及误报对照现场试用已通过，不再常规补采；保留历史与定向补采入口。"
+      },
+      "validatedAccuracy": null,
+      "initialQuality": {
+        "registered": 3,
+        "qualityPassed": 3,
+        "captureGroups": 1,
+        "semanticVerified": false,
+        "trainingStarted": false
+      },
+      "developmentEvidence": {
+        "positiveSupported": 3,
+        "positiveCount": 3,
+        "negativeSupported": 0,
+        "negativeCount": 44,
+        "scope": "development_geometry_not_semantic_recognition",
+        "trained": false,
+        "productionEligible": false
+      },
+      "candidateModel": "models/me-video-tcn/experimental-v1/manifest.json",
+      "trainingSummary": {
+        "trainSamples": 49,
+        "validationSamples": 5,
+        "trainCorrect": 49,
+        "validationCorrect": 5,
+        "scope": "development_validation_after_geometric_review",
+        "independentAccuracy": null,
+        "liveEnabled": true
+      },
+      "trackingReview": "docs/assets/me-32.5-source-review-2026-10-21.json",
+      "videoRecognitionReady": false,
+      "fieldFailureReview": "docs/研发历史.md#doc-97",
+      "pointingEvidence": {
+        "protocol": "me-body-pointing-development-v3",
+        "change": "参考点由肩中点改为肩中点下移0.30肩宽的胸前参照；指向余弦阈值仍0.55；形态取3D/2D中条件更好者，门槛仍140°／125°；位置条件不变",
+        "measureReport": "docs/assets/me-pointing-chest-measure-2026-10-22.json",
+        "geometryReport": "docs/assets/me-pointing-geometry-v2-2026-10-22.json",
+        "liveReplayReport": "docs/assets/me-field-v3-all-2026-10-22.json",
+        "developmentReplay": {
+          "positiveCandidate": 6,
+          "positiveCount": 6,
+          "positiveSingleEvent": 6,
+          "negativeWithMe": 0,
+          "negativeCount": 48,
+          "scope": "development_replay_synthetic_end_boundaries_not_independent_accuracy"
+        },
+        "fieldFailureResolved": true,
+        "note": "用户确认本次两种现场试用正常；不代表全部动作、设备或使用者均已通过。"
+      },
+      "userTrial": {
+        "date": "2026-10-22",
+        "feedback": "两种都正常，可以继续",
+        "scope": "natural_me_and_reported_upward_index_counterexample",
+        "independentAccuracy": null
+      },
+      "publicDistributionNote": "开发记录与私人采集报告未随公开仓库提供；不将开发成绩称为独立准确率。"
+    },
+    {
+      "category": "please",
+      "signId": "csl.ref.bmcx.1932",
+      "text": "请",
+      "stage": "second_round_tracking_insufficient_pending_clear_targets",
+      "collectByDefault": true,
+      "referenceVersion": "source-reference-1",
+      "referenceDescription": "沿用现有邀请式示范：双手掌心向上，放在腰前，一同向身旁移，再自然收手。",
+      "semanticReview": "source_reference_authored_unverified",
+      "recognitionReady": false,
+      "videoRecognitionReady": false,
+      "candidateSignals": [
+        "双掌朝上与手指形态",
+        "双手在腰前向身旁移动",
+        "完整进入、邀请与收手过程"
+      ],
+      "dataCautions": [
+        "邀请式请不等同所有语境的礼貌请求，专业语义仍待核对",
+        "不套帮助向前拍动或谢谢拇指运动门槛",
+        "手部相对特征不能单独证明腰部位置，需结合原片及身体参照"
+      ],
+      "reusePolicy": {
+        "reuseExistingDevelopmentBackground": true,
+        "doNotRequireEveryNegativeAgainEachRound": true,
+        "independentTestMustNotReuseDevelopmentSources": true
+      },
+      "nextCollection": {
+        "requiredNow": true,
+        "category": "please",
+        "count": 3,
+        "note": "28.19静止、28.20前推两个反例已收好，不用再录。33.5说明已改请；33.5/33.6双手追踪不足，原片保留。请只补3条清楚的新请：开录前站定，镜头不动，肩膀到腰前和双手入镜；向旁移时不出画、不快速反复摆。实际新拍时点一次开始新一轮，保存不识别。旧通过样本不重拍。"
+      },
+      "validatedAccuracy": null,
+      "initialQuality": {
+        "registered": 4,
+        "passedSamples": [
+          "33.1",
+          "33.2",
+          "33.4"
+        ],
+        "reviewSamples": [
+          "33.3"
+        ],
+        "captureGroups": 1,
+        "semanticVerified": false,
+        "trainingStarted": false
+      },
+      "qualityHolds": [
+        "33.3",
+        "33.5",
+        "33.6"
+      ],
+      "publicDistributionNote": "开发记录与私人采集报告未随公开仓库提供；不将开发成绩称为独立准确率。"
+    }
+  ]
+}

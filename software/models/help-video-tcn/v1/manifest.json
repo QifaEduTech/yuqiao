@@ -1,0 +1,12 @@
+{
+  "id": "help-video-tcn-development-v1",
+  "version": "v1",
+  "architecture": "BinaryTCN-153-32-32-meanmax",
+  "featureProtocol": "hands-local-absolute-motion-153-v1",
+  "artifactSha256": "0a1bf5e509fd558f08bca7bdb08c341b6c36a652cc6257c3487110aae75fd19f",
+  "weightsSha256": "befc21ff332b488eb4db00b0aeeaf24fa224440ffca472d7d759c045ee168de6",
+  "threshold": 0.5,
+  "knownError": "28.9_static_open_palms",
+  "review": "user_requested_trial_replacement",
+  "numpyParityMaxError": 8.012717600536234e-08
+}

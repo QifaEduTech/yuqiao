@@ -1,0 +1,17 @@
+{
+  "id": "me-live-trial-v1",
+  "maxWindowSeconds": 4,
+  "maxSamples": 140,
+  "minSamples": 6,
+  "minSpanSeconds": 0.35,
+  "predictIntervalSeconds": 0.12,
+  "threshold": 0.5,
+  "minPredictions": 1,
+  "stableSeconds": 0,
+  "evidenceAgeSeconds": 0.25,
+  "missingEndSeconds": 0.6,
+  "maxSupportAgeSeconds": 3,
+  "maxSegmentSeconds": 12,
+  "resetGapSeconds": 1,
+  "minEvidenceFrames": 3
+}

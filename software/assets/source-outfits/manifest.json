@@ -1,0 +1,140 @@
+{
+  "repository": "https://github.com/k3yg4n/glamcam-makehuman-clothing-assets",
+  "tree": "92118047e35fd678096eb861751dc58f75c67132",
+  "downloadedAt": "2026-10-15",
+  "files": [
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked/T-shirt_basic-bump.png",
+      "file": "assets/source-outfits/T-shirt_Basic_Tucked/T-shirt_basic-bump.png",
+      "bytes": 181491,
+      "gitBlob": "ffa52d5cd93caaef8c2369c531ccdd142c338684",
+      "sha256": "dfe923b14a9188857d12eb227ceb6365dcf1ec3cd97e42f30c6fe3ae2c474578"
+    },
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked/T-shirt_basic.png",
+      "file": "assets/source-outfits/T-shirt_Basic_Tucked/T-shirt_basic.png",
+      "bytes": 861166,
+      "gitBlob": "8bbf972a6d5fed31d27ca1227b546839f0deab59",
+      "sha256": "c1992ad975e14aa2cef891ff9632d28283607b2de6160d72e350f059043a063b"
+    },
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked/t_shirt_basic_tucked.mhclo",
+      "file": "assets/source-outfits/T-shirt_Basic_Tucked/t_shirt_basic_tucked.mhclo",
+      "bytes": 94278,
+      "gitBlob": "c6b40bd5724a8a89d231bc635e3bae9b4350aee6",
+      "sha256": "c34bd03895c5ad9ec46965ef7d5f3e5e8c567630797ab312f8762c1d9fde8f71"
+    },
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked/t_shirt_basic_tucked.mhmat",
+      "file": "assets/source-outfits/T-shirt_Basic_Tucked/t_shirt_basic_tucked.mhmat",
+      "bytes": 509,
+      "gitBlob": "0e6b70f03ab984c5b30b37c429aa64c11c9de1cd",
+      "sha256": "44098003a7ed47cd4c613d04adcdccaae47fe0d2b380bf3c25f105a739814f94"
+    },
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked/t_shirt_basic_tucked.obj",
+      "file": "assets/source-outfits/T-shirt_Basic_Tucked/t_shirt_basic_tucked.obj",
+      "bytes": 109974,
+      "gitBlob": "e9d22d4bff796ac0302d53cf3445651a476e363d",
+      "sha256": "22159cf14d1f6831f931b49625f8f7692910bac22499c43466c0b5a2159b4d03"
+    },
+    {
+      "path": "finalized_clothes/T-shirt_Basic_Tucked/t_shirt_basic_tucked.thumb",
+      "file": "assets/source-outfits/T-shirt_Basic_Tucked/t_shirt_basic_tucked.thumb",
+      "bytes": 8115,
+      "gitBlob": "02c2595f8e067a8a0da1f6b3ebe994df10921bce",
+      "sha256": "c6340fe2bce89d60c1d151a9026525dc5c76d62e1baca18c762cd1cc18e25261"
+    },
+    {
+      "path": "finalized_clothes/Retro_top/vintagetop.mhclo",
+      "file": "assets/source-outfits/Retro_top/vintagetop.mhclo",
+      "bytes": 115406,
+      "gitBlob": "854e5220acbfaa7bd7dfa6b280003d1bb62c1f76",
+      "sha256": "b7e1a554ce90ff4893cf14d6bd89acbac022eae47a0a8b1b2d307bfe6262acf3"
+    },
+    {
+      "path": "finalized_clothes/Retro_top/vintagetop.mhmat",
+      "file": "assets/source-outfits/Retro_top/vintagetop.mhmat",
+      "bytes": 855,
+      "gitBlob": "d52eb213ec7fed4e8996e573e84643229036eb18",
+      "sha256": "4ffb75e26dfabffcb79a7efd626ef53e27fab34740fc16feacb1c82ca097fa38"
+    },
+    {
+      "path": "finalized_clothes/Retro_top/vintagetop.obj",
+      "file": "assets/source-outfits/Retro_top/vintagetop.obj",
+      "bytes": 130695,
+      "gitBlob": "838f306f8e2e55c117392bc9ac4c51797a368199",
+      "sha256": "25fce21514f2614e91f3217db83499edc642361a9e180e1d98c5cb5833e8f09d"
+    },
+    {
+      "path": "finalized_clothes/Retro_top/vintagetop.png",
+      "file": "assets/source-outfits/Retro_top/vintagetop.png",
+      "bytes": 627315,
+      "gitBlob": "8c187dfd282651137c24d5fa40a2e0e038371fc4",
+      "sha256": "74ad7715dc7fa699e23ca39a52d4c2b22bc1fa1ae43bf16a87de397537cd96d3"
+    },
+    {
+      "path": "finalized_clothes/Retro_top/vintagetop.thumb",
+      "file": "assets/source-outfits/Retro_top/vintagetop.thumb",
+      "bytes": 21683,
+      "gitBlob": "3a8bf7dc804564a40ffe5bd4c40066f1692cfd08",
+      "sha256": "4aff7016e20fe5edd45cf8f09452a732c734e77e89cec28f0feab8eb42163bbe"
+    },
+    {
+      "path": "finalized_clothes/Retro_top/vintagetop_normals.png",
+      "file": "assets/source-outfits/Retro_top/vintagetop_normals.png",
+      "bytes": 571826,
+      "gitBlob": "d43fcf979ea08a7831320533268cad5dff603888",
+      "sha256": "16b6f29b60260bfe24ef9c9834d8229226b3ff76e08fd1db1e21cee1649dad00"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/M_Trousers_02.png",
+      "file": "assets/source-outfits/M_Trousers_02/M_Trousers_02.png",
+      "bytes": 897126,
+      "gitBlob": "4da49fd6a212b5b5449611ca7d42cc3d3ca2051a",
+      "sha256": "924ef541a8e3169e33c380c5b0d5b5594fb7700314e92579a1bcaf94e71e258e"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/M_Trousers_02_NRM.png",
+      "file": "assets/source-outfits/M_Trousers_02/M_Trousers_02_NRM.png",
+      "bytes": 3644365,
+      "gitBlob": "e7b5a6bea80a594a168f147bff1fcd0d7027b587",
+      "sha256": "403608f9a52fb6572ec111066f8f97f6a638c094cfa93a7cfbfaf2167806aa75"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/M_Trousers_02_SPEC.png",
+      "file": "assets/source-outfits/M_Trousers_02/M_Trousers_02_SPEC.png",
+      "bytes": 1521336,
+      "gitBlob": "bc674b6d6822a84e5f6f7bc45b6dd20cabd05b56",
+      "sha256": "4251384a5586975f58358e2d92d1aae60721a20e0dd3cc8fe92c07ba21011caa"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/m_trousers_02.mhclo",
+      "file": "assets/source-outfits/M_Trousers_02/m_trousers_02.mhclo",
+      "bytes": 502082,
+      "gitBlob": "39025e3e5da6145159987bf1c1cc5c5649d5d7bc",
+      "sha256": "fa4a1b702b33b4052bceb8a07172dc7b2d8bec5f5b27e60333cab58e0b238b33"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/m_trousers_02.mhmat",
+      "file": "assets/source-outfits/M_Trousers_02/m_trousers_02.mhmat",
+      "bytes": 615,
+      "gitBlob": "f5adc6f8b07df91562479c37521ef1687d8d78af",
+      "sha256": "9454601e3f264becefc094026d22a39f0ab29b2e75793314e124f92126368184"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/m_trousers_02.obj",
+      "file": "assets/source-outfits/M_Trousers_02/m_trousers_02.obj",
+      "bytes": 614555,
+      "gitBlob": "b5ccc4833b977ca322420af9561846d71be8fc89",
+      "sha256": "43bd510dd3c4d2e2a505d2665e4a2ca1fb5031737e55d9e3bf88912d9bb387dd"
+    },
+    {
+      "path": "finalized_clothes/M_Trousers_02/m_trousers_02.thumb",
+      "file": "assets/source-outfits/M_Trousers_02/m_trousers_02.thumb",
+      "bytes": 5682,
+      "gitBlob": "ef0b9c097c5d8e190a9b73a16e5f34e097e3018b",
+      "sha256": "a0762e8d95ad5e1d59272dbee3bc2973ad65c0430d1bb9aa7ae83f8cf34a16e9"
+    }
+  ]
+}

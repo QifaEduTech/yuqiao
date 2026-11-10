@@ -1,0 +1,11 @@
+{
+  "id": "thumb-local-motion-v1",
+  "review": "development_only_needs_new_holdout",
+  "baseProtocol": "thumb-flexion-evidence-v2",
+  "minThumbSpanContractionFraction": 0.25,
+  "referenceBeforeOnsetSeconds": 0.15,
+  "maxReferenceDistanceSeconds": 0.08,
+  "maxPalmNormalRotationDegrees": 20,
+  "maxPalmAxisRotationDegrees": 20,
+  "maxReportedEvents": 16
+}

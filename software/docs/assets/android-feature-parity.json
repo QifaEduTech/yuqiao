@@ -1,0 +1,27 @@
+{
+  "verifiedOn": "2026-10-23",
+  "syntheticOnly": true,
+  "sourceVideosRead": 0,
+  "staticCases": 180,
+  "temporalCases": 8,
+  "modelScoreComparisons": 24,
+  "maxFeatureError": 0,
+  "maxScoreError": 1.961540618822255e-8,
+  "featureLibrarySha256": "52bdda318f93b795f63e7810a252977d5047447434a261910646b9f47528f87d",
+  "sourceHashes": {
+    "server/sign_training_features.py": "1ff8416cd74e564ad308be10522d84a08cb612f60b67e9f636c3f123929e575e",
+    "server/me_training_features.py": "e059da614effaacf0f730c59de3955c51576015498679c586f9322988f0ec11e",
+    "server/need_directional_features.py": "ce53cd4cb6989973be9b4680de180471a157438670385d5c6a3a7f99e4023e0f",
+    "server/thumb_motion.py": "0f6f459aeb2f6db52e50c55e3b5ff310d26642dd6b14529c4e138acc32dfdf2f",
+    "server/thumb_multijoint.py": "0f854c777b68deb13c1720ce6faf45b6daf7abd5a1d6a0380e1428ccb6dde425",
+    "server/sign_worker.py": "239f70a7fc9649b27d33ca0a43ef0decaa6e9053469f036bcc36656947420b32",
+    "shared/me-motion.json": "fa7946756a1ca091bf63399f901717c8a3c5fc810986926bf515c37e2da2f79a",
+    "server/me_motion.py": "a7a415a07bf51240fa85882d8c11c883e974e64d59f0916ea1a541f72887b791",
+    "server/help_tcn_inference.py": "575476b451f7eb7c233acdf9a0395fc5ee60c56b2d2c16d72eb0d3680ee47824",
+    "server/need_tcn_inference.py": "f97d8cd565de545589cba5b5fa7799205bb19e35fa3c36cde9e0b0de561a49dd",
+    "server/me_tcn_inference.py": "79611ca1b2c8249aed24495ea214da46b611d54065e0af647a6832e51f02e2c7"
+  },
+  "recognitionAccuracy": null,
+  "nativeAndroidVerified": false,
+  "trackerEquivalenceVerified": false
+}

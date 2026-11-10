@@ -1,0 +1,33 @@
+{
+  "id": "csl.thanks",
+  "label": "谢谢",
+  "status": "authored_unverified",
+  "durationMs": 1400,
+  "loop": false,
+  "authoring": {
+    "basis": "文字描述：一手伸出拇指，弯曲两下，表示向人感谢。",
+    "source": "用户提供的网页说明（站点带 51240.com 水印），非权威出处",
+    "authoritativeReference": "《国家通用手语常用词表》（中国残联/教育部/国家语委）——本项目尚未取得该条目原文",
+    "verifiedBy": null,
+    "verifiedAt": null,
+    "disclaimer": "关节角度是按文字描述自拟的，未经聋人／手语老师校验。不得作为标准手语使用、不得对外演示、不得据此声称已实现手语翻译。"
+  },
+  "channels": [
+    { "bone": "rightIndexProximal", "axis": "z", "keys": [[0, -0.85]] },
+    { "bone": "rightIndexIntermediate", "axis": "z", "keys": [[0, -1.2]] },
+    { "bone": "rightIndexDistal", "axis": "z", "keys": [[0, -1.0]] },
+    { "bone": "rightMiddleProximal", "axis": "z", "keys": [[0, -0.85]] },
+    { "bone": "rightMiddleIntermediate", "axis": "z", "keys": [[0, -1.2]] },
+    { "bone": "rightMiddleDistal", "axis": "z", "keys": [[0, -1.0]] },
+    { "bone": "rightRingProximal", "axis": "z", "keys": [[0, -0.85]] },
+    { "bone": "rightRingIntermediate", "axis": "z", "keys": [[0, -1.2]] },
+    { "bone": "rightRingDistal", "axis": "z", "keys": [[0, -1.0]] },
+    { "bone": "rightLittleProximal", "axis": "z", "keys": [[0, -0.85]] },
+    { "bone": "rightLittleIntermediate", "axis": "z", "keys": [[0, -1.2]] },
+    { "bone": "rightLittleDistal", "axis": "z", "keys": [[0, -1.0]] },
+    { "bone": "rightUpperArm", "axis": "z", "keys": [[0, -0.62]] },
+    { "bone": "rightLowerArm", "axis": "y", "keys": [[0, 1.55]] },
+    { "bone": "rightThumbProximal", "axis": "y", "keys": [[0, 0], [260, -0.5], [520, 0], [780, -0.5], [1040, 0], [1400, 0]] },
+    { "bone": "rightThumbDistal", "axis": "y", "keys": [[0, 0], [260, -0.32], [520, 0], [780, -0.32], [1040, 0], [1400, 0]] }
+  ]
+}

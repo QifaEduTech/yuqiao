@@ -1,0 +1,11 @@
+{
+  "id": "thumb-multijoint-evidence-v2",
+  "review": "development_only_failed_pilot_check",
+  "baseProtocol": "thumb-flexion-evidence-v2",
+  "minThumbSpanContractionFraction": 0.25,
+  "joints": [
+    {"name": "cmc_proxy", "index": 0},
+    {"name": "mcp", "index": 1},
+    {"name": "ip", "index": 2}
+  ]
+}

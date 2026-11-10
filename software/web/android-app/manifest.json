@@ -1,0 +1,21 @@
+{
+  "@platforms": ["android"],
+  "id": "",
+  "name": "语桥",
+  "version": {"name": "0.1.0", "code": 100},
+  "description": "语桥本地界面与动作库；携带推理权重，不包含训练视频或服务密钥。摄像头本地识别尚待适配。",
+  "launch_path": "index.html",
+  "permissions": {"Camera": {}, "Audio": {}, "IO": {}, "Webview": {}, "XHR": {}},
+  "plus": {
+    "statusbar": {"background": "#f7faf7", "style": "dark"},
+    "splashscreen": {"autoclose": true, "waiting": true},
+    "distribute": {
+      "android": {
+        "packagename": "cn.yuqiao.app",
+        "minSdkVersion": 26,
+        "targetSdkVersion": 34,
+        "permissions": ["<uses-permission android:name=\"android.permission.INTERNET\"/>", "<uses-permission android:name=\"android.permission.CAMERA\"/>", "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>"]
+      }
+    }
+  }
+}

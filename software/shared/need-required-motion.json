@@ -1,0 +1,19 @@
+{
+  "id": "need-required-image-motion-v1",
+  "review": "development_only_requires_model_and_live_validation",
+  "productionEligible": false,
+  "maxWindowSeconds": 4,
+  "maxGapSeconds": 0.2,
+  "maxWristStep": 0.25,
+  "minHandSeparation": 0.04,
+  "overlapPalmWidths": 0.75,
+  "endpointSeconds": 0.12,
+  "minEndpointFrames": 3,
+  "minTransitionSeconds": 0.2,
+  "maxTransitionSeconds": 1.5,
+  "minRelativeContraction": 0.2,
+  "maxEndpointRelativeSpread": 0.12,
+  "minIntermediateFrames": 3,
+  "minPalmWidth": 0.015,
+  "evidenceMaxAgeSeconds": 1.5
+}

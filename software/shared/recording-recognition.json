@@ -1,0 +1,70 @@
+{
+  "id": "realtime-four-words-recording-v1",
+  "maxSeconds": 30,
+  "maxDecodedFrames": 3690,
+  "maxImageEdge": 640,
+  "maxSourceDimension": 4096,
+  "maxSourcePixels": 8294400,
+  "timeoutMs": 120000,
+  "sampleIntervalSeconds": 0.03,
+  "models": {
+    "thanks": {
+      "manifest": "shared/sign-catalog.json",
+      "weights": "models/sign-word-baseline/dynamic_gesture_classifier.tflite"
+    },
+    "help": {
+      "manifest": "models/help-video-tcn/v1/manifest.json",
+      "weights": "models/help-video-tcn/v1/weights.npz"
+    },
+    "need": {
+      "manifest": "models/need-video-tcn/experimental-v1/manifest.json",
+      "weights": "models/need-video-tcn/experimental-v1/weights.npz"
+    },
+    "me": {
+      "manifest": "models/me-video-tcn/experimental-v1/manifest.json",
+      "weights": "models/me-video-tcn/experimental-v1/weights.npz"
+    }
+  },
+  "sources": [
+    "server/recording_worker.py",
+    "server/recording_result.py",
+    "server/realtime_observation.py",
+    "server/realtime_multi.py",
+    "server/realtime_window.py",
+    "server/realtime_events.py",
+    "server/thanks_active_hand.py",
+    "server/thumb_motion.py",
+    "server/thumb_multijoint.py",
+    "server/thumb_local_motion.py",
+    "server/help_tcn_live.py",
+    "server/help_tcn_inference.py",
+    "server/help_live_probe.py",
+    "server/help_motion.py",
+    "server/need_live.py",
+    "server/need_required_motion.py",
+    "server/need_directional_features.py",
+    "server/need_tcn_inference.py",
+    "server/me_live.py",
+    "server/me_motion.py",
+    "server/me_training_features.py",
+    "server/me_tcn_inference.py",
+    "server/me_diagnostics.py",
+    "server/sign_worker.py",
+    "server/sign_training_features.py",
+    "server/body_tracking.py",
+    "shared/realtime-targets.json",
+    "shared/realtime-sign.json",
+    "shared/realtime-transitions.json",
+    "shared/thumb-motion.json",
+    "shared/thumb-multijoint.json",
+    "shared/thumb-local-motion.json",
+    "shared/thanks-active-hand.json",
+    "shared/help-runtime.json",
+    "shared/help-motion.json",
+    "shared/need-live.json",
+    "shared/need-required-motion.json",
+    "shared/me-live.json",
+    "shared/me-motion.json",
+    "server/trained_runtime.py"
+  ]
+}

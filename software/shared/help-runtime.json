@@ -1,0 +1,8 @@
+{
+  "defaultEngine": "video-tcn",
+  "engines": ["video-tcn", "geometry"],
+  "modelVersion": "v1",
+  "knownIssue": "原始模型分数对静止双掌仍可能偏高，必须同时通过双手运动检查",
+  "motionGuard": {"id":"bilateral-motion-v1","maxEvidenceAgeSeconds":1.5},
+  "userRequestedReplacement": true
+}

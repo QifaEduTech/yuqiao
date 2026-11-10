@@ -1,0 +1,83 @@
+[
+  {
+    "id": "tee",
+    "author": "MRT",
+    "license": "CC0-1.0",
+    "vertices": 1644,
+    "triangles": 2700,
+    "scale": [
+      0.10149930103719651,
+      0.09733034333843187,
+      0.09793760442631248
+    ],
+    "bounds": [
+      [
+        -0.3082504507288331,
+        0.08856838256404945,
+        -0.080308676495773
+      ],
+      [
+        0.3079767643929702,
+        0.5680666867588935,
+        0.14716349959400865
+      ]
+    ],
+    "bodySha256": "703162c8c692e0ed074bd4fa446528dcfff233c2a336b881b5614161162b4edb",
+    "adaptation": "hm08 fit, merged 12-bone weights, opaque RGB textures <=1024 px; tops: 2.5 mm clearance and up to 35 mm hem extension",
+    "source": "https://github.com/k3yg4n/glamcam-makehuman-clothing-assets/tree/main/finalized_clothes/T-shirt_Basic_Tucked"
+  },
+  {
+    "id": "vintage",
+    "author": "punkduck",
+    "license": "CC-BY-3.0",
+    "vertices": 1824,
+    "triangles": 3212,
+    "scale": [
+      0.10411301694373376,
+      0.1064766031309938,
+      0.10622254900117543
+    ],
+    "bounds": [
+      [
+        -0.29906771457604453,
+        0.10086665532727881,
+        -0.0809019250083211
+      ],
+      [
+        0.29906771457604453,
+        0.5286811583632849,
+        0.15640687798888192
+      ]
+    ],
+    "bodySha256": "703162c8c692e0ed074bd4fa446528dcfff233c2a336b881b5614161162b4edb",
+    "adaptation": "hm08 fit, merged 12-bone weights, opaque RGB textures <=1024 px; tops: 2.5 mm clearance and up to 35 mm hem extension",
+    "source": "https://github.com/k3yg4n/glamcam-makehuman-clothing-assets/tree/main/finalized_clothes/Retro_top"
+  },
+  {
+    "id": "trousers",
+    "author": "Mindfront (Sweden)",
+    "license": "CC-BY-4.0",
+    "vertices": 7902,
+    "triangles": 14584,
+    "scale": [
+      0.08597845857740781,
+      0.08963376721329938,
+      0.08914563370581746
+    ],
+    "bounds": [
+      [
+        -0.2360913099088094,
+        -0.792067277779903,
+        -0.09503576290124839
+      ],
+      [
+        0.23405869782259114,
+        0.16519183751041605,
+        0.13672603433229796
+      ]
+    ],
+    "bodySha256": "703162c8c692e0ed074bd4fa446528dcfff233c2a336b881b5614161162b4edb",
+    "adaptation": "hm08 fit, merged 12-bone weights, opaque RGB textures <=1024 px; tops: 2.5 mm clearance and up to 35 mm hem extension",
+    "source": "https://github.com/k3yg4n/glamcam-makehuman-clothing-assets/tree/main/finalized_clothes/M_Trousers_02"
+  }
+]

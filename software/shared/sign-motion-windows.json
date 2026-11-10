@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "transition": 0.7,
+  "maxActions": 10,
+  "maxDuration": 30,
+  "entries": [
+    {
+      "id": "csl.hello",
+      "version": "user-description-1",
+      "activeFrom": 0.6,
+      "activeTo": 3.2,
+      "duration": 4
+    },
+    {
+      "id": "csl.thanks",
+      "version": "user-description-3",
+      "activeFrom": 0.6,
+      "activeTo": 3.3,
+      "duration": 4
+    },
+    {
+      "id": "csl.goodbye",
+      "version": "user-description-1",
+      "activeFrom": 0.7,
+      "activeTo": 3.1,
+      "duration": 4
+    },
+    {
+      "id": "csl.sorry",
+      "version": "user-description-3",
+      "activeFrom": 0.7,
+      "activeTo": 4.2,
+      "duration": 5
+    },
+    {
+      "id": "csl.me",
+      "version": "user-description-1",
+      "activeFrom": 0.7,
+      "activeTo": 2.2,
+      "duration": 3
+    },
+    {
+      "id": "csl.love",
+      "version": "user-description-2",
+      "activeFrom": 0.8,
+      "activeTo": 3.2,
+      "duration": 4
+    },
+    {
+      "id": "csl.you",
+      "version": "user-description-1",
+      "activeFrom": 0.6,
+      "activeTo": 2.2,
+      "duration": 3
+    },
+    {
+      "id": "csl.good",
+      "version": "user-description-1",
+      "activeFrom": 0.7,
+      "activeTo": 2.2,
+      "duration": 3
+    },
+    {
+      "id": "csl.yes",
+      "version": "user-description-2",
+      "activeFrom": 0.8,
+      "activeTo": 2.2,
+      "duration": 3
+    },
+    {
+      "id": "csl.not",
+      "version": "user-description-1",
+      "activeFrom": 0.6,
+      "activeTo": 2.3,
+      "duration": 3
+    },
+    {
+      "id": "csl.ref.bmcx.1874",
+      "version": "user-description-1",
+      "activeFrom": 0.7,
+      "activeTo": 2.4,
+      "duration": 3.2
+    },
+    {
+      "id": "csl.ref.bmcx.1900",
+      "version": "source-reference-1",
+      "activeFrom": 0.7,
+      "activeTo": 2.8,
+      "duration": 3.6
+    },
+    {
+      "id": "csl.ref.bmcx.1932",
+      "version": "source-reference-1",
+      "activeFrom": 0.65,
+      "activeTo": 2.4,
+      "duration": 3.2
+    },
+    {
+      "id": "csl.ref.bmcx.1938",
+      "version": "source-reference-1",
+      "activeFrom": 0.8,
+      "activeTo": 2.5,
+      "duration": 3.4
+    }
+  ]
+}
