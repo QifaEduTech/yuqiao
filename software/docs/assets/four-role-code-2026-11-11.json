@@ -1,0 +1,177 @@
+{
+  "date": "2026-11-11",
+  "scope": "four independent role modules split into existing project layers and replacement of the code appendix in the 55-minute script",
+  "modules": [
+    {
+      "id": "01",
+      "role": "大模型工程师",
+      "path": "server/llm/minicpm_camera.py",
+      "layer": "server/算法模型层",
+      "sourceLines": 422,
+      "sha256": "ff209e9bab781d4ba72e4bd6cff0cb6b3c972e7248debf692c3b8632304ef913",
+      "showcase": "271-311",
+      "typedLines": [
+        273,
+        277,
+        280,
+        286,
+        288,
+        290,
+        294,
+        299,
+        307,
+        309
+      ],
+      "outputs": [
+        "outputs/four-role/01_大模型工程师/observation.json",
+        "outputs/four-role/01_大模型工程师/observation.md",
+        "outputs/four-role/01_大模型工程师/capture.jpg"
+      ]
+    },
+    {
+      "id": "02",
+      "role": "视觉工程师",
+      "path": "server/vision/yolo_segmentation.py",
+      "layer": "server/视觉层",
+      "sourceLines": 302,
+      "sha256": "41e7d80edfb7acf6585a838b4da886561d3f1201ffddbd448db7a872b21c32d2",
+      "showcase": "94-149",
+      "typedLines": [
+        96,
+        97,
+        98,
+        99,
+        102,
+        103,
+        104,
+        105,
+        115,
+        116,
+        117,
+        118,
+        121,
+        122,
+        123,
+        145,
+        148
+      ],
+      "outputs": [
+        "outputs/four-role/02_视觉工程师/segmentation.json",
+        "outputs/four-role/02_视觉工程师/segmentation.md",
+        "outputs/four-role/02_视觉工程师/annotated.jpg"
+      ]
+    },
+    {
+      "id": "03",
+      "role": "AI应用工程师",
+      "path": "server/service/fastapi_workflow.py",
+      "layer": "server/服务接口层",
+      "sourceLines": 336,
+      "sha256": "e497345c9499b0e507987924a90056b84c8526f0b1e571adcefd72dbf97ed3f1",
+      "showcase": "134-199",
+      "typedLines": [
+        146,
+        147,
+        149,
+        150,
+        152,
+        153,
+        155,
+        156,
+        158,
+        159,
+        162,
+        163,
+        165,
+        172,
+        173,
+        175,
+        183,
+        198
+      ],
+      "outputs": [
+        "outputs/four-role/03_AI应用工程师/workflow.json"
+      ]
+    },
+    {
+      "id": "04",
+      "role": "项目经理",
+      "path": "scripts/project_cockpit.py",
+      "layer": "scripts/项目管理工具层",
+      "sourceLines": 328,
+      "sha256": "4557cbed7e33d1d2b49054ec8f0c1eca88c3ee5b38cfdb54ea4b700f23908bed",
+      "showcase": "127-187",
+      "typedLines": [
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        154,
+        163,
+        164,
+        165,
+        166,
+        171,
+        172,
+        174,
+        183,
+        184,
+        185,
+        187
+      ],
+      "outputs": [
+        "outputs/four-role/04_项目经理/standup.md",
+        "outputs/four-role/04_项目经理/standup.html",
+        "outputs/four-role/04_项目经理/standup.json"
+      ]
+    }
+  ],
+  "annotation": {
+    "sourceMarker": "# [敲] marks lines to type during the live demo",
+    "docxMarker": "▶ in the line-number column plus yellow shading",
+    "excerptMarkdown": "docs/四岗代码摘录.md",
+    "excerptJson": "docs/assets/four-role-code-excerpt.json",
+    "readme": "docs/四岗独立代码.md"
+  },
+  "docx": {
+    "path": "不随公开源码包发布（逐字稿与PPT按组织模板在飞书维护）",
+    "backup": "不随公开源码包发布",
+    "oldAppendixRemoved": "代码A 数据标注工程师 / 代码B 模型训练工程师 / 代码C 智能交互工程师 / 代码D 全栈开发工程师",
+    "newAppendix": "七 四岗独立代码与附录",
+    "tables": 5,
+    "tableRows": [
+      5,
+      42,
+      57,
+      67,
+      62
+    ],
+    "headingsPresent": true,
+    "oldHeadingsAbsent": true,
+    "bodyNarrationChanged": false,
+    "mappingTable": true,
+    "wordOpenCheck": {
+      "tables": 5,
+      "pages": 23,
+      "openedReadOnly": true
+    }
+  },
+  "demoRuns": {
+    "01": "1 evidence-backed candidate 需要; 1 no-evidence candidate 帮助 dropped",
+    "02": "person=1 chair=1; demo_input.ppm generated",
+    "03": "workflow completed; 需要 kept; 帮助 dropped",
+    "04": "30 actions / 4 builtin / 26 new / 11 animations"
+  },
+  "boundaries": [
+    "MiniCPM-V observation is not sign language translation.",
+    "COCO YOLO has no hand class; person/object segmentation is not hand segmentation.",
+    "FastAPI workflow does not diagnose or approve registration.",
+    "PM cockpit reports plan and evidence status, not accuracy.",
+    "Body narration still uses the old four role names; appendix mapping table explains the replacement.",
+    "The four modules are independent demos; they do not enter the production realtime recognition chain."
+  ],
+  "publicPackageNote": "公开包只包含四岗源码、计划工作簿和可公开的验证摘要；逐字稿、私人录像、账号和密钥不在公开包。"
+}

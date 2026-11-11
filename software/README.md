@@ -8,6 +8,21 @@
 
 内置实时谢谢、帮助、需要、我，不选动作。词典词数、数字人动作数与识别词数不同；不得将开发成绩当独立准确率。达标自训练结果有共用模型库逻辑，任务和原片按账号保存。公开包不含原作者私人任务和模型库，首次仅有随包基线；新增动作由使用者自行采集训练。
 
+## 四岗独立演示代码
+
+这四个模块是独立演示，不进入正式Web、数据库或实时识别链路，互不import。命令先在`software`目录执行：
+
+| 角色 | 文件地址 | 独立运行 |
+|---|---|---|
+| 大模型工程师 | `server/llm/minicpm_camera.py` | `python server/llm/minicpm_camera.py --demo` |
+| 视觉工程师 | `server/vision/yolo_segmentation.py` | `python server/vision/yolo_segmentation.py --demo` |
+| AI应用工程师 | `server/service/fastapi_workflow.py` | `python server/service/fastapi_workflow.py --demo` |
+| 项目经理 | `scripts/project_cockpit.py` | `python scripts/project_cockpit.py` |
+
+运行产出在`outputs/four-role/`，已被Git忽略。完整代码、文件地址和展示行号见[docs/四岗独立代码.md](docs/四岗独立代码.md)；现场需要敲出的行见[docs/四岗代码摘录.md](docs/四岗代码摘录.md)，源码内用`# [敲]`标记。真实MiniCPM、YOLO和FastAPI服务需要各自依赖和模型；`--demo`只用标准库。不能把demo结果称为识别准确率或医院现场验收。
+
+医院互助30词训练计划见[项目计划/医院互助场景训练计划_30动作_2026-11-11.xlsx](项目计划/医院互助场景训练计划_30动作_2026-11-11.xlsx)；`项目计划/项目进度数据.json`只是公开摘要，完整项目台账不随源码发布。该计划尚未实施，实时仍为谢谢、帮助、需要、我四词。
+
 ## 所需软件
 
 | 软件 | 版本和下载 | 用途 |

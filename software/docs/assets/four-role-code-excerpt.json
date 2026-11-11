@@ -1,0 +1,1496 @@
+{
+  "generatedAt": "2026-11-11",
+  "modules": [
+    {
+      "id": "01",
+      "role": "大模型工程师",
+      "path": "server/llm/minicpm_camera.py",
+      "run": [
+        "python server/llm/minicpm_camera.py --demo",
+        "python server/llm/minicpm_camera.py --camera 0",
+        "python server/llm/minicpm_camera.py --image xxx.jpg --endpoint http://127.0.0.1:8000/v1"
+      ],
+      "outputs": [
+        "outputs/four-role/01_大模型工程师/observation.json",
+        "outputs/four-role/01_大模型工程师/observation.md",
+        "outputs/four-role/01_大模型工程师/capture.jpg"
+      ],
+      "boundary": "MiniCPM-V 只做视觉观察和候选提示，不是手语翻译结论；无可见证据不出词，必须人工确认。",
+      "startLine": 271,
+      "endLine": 311,
+      "typedLines": [
+        273,
+        277,
+        280,
+        286,
+        288,
+        290,
+        294,
+        299,
+        307,
+        309
+      ],
+      "lines": [
+        {
+          "line": 271,
+          "text": "def analyze_frame(source: str, args: argparse.Namespace, out_dir: Path) -> dict[str, Any]:",
+          "marked": "def analyze_frame(source: str, args: argparse.Namespace, out_dir: Path) -> dict[str, Any]:",
+          "typed": false
+        },
+        {
+          "line": 272,
+          "text": "    \"\"\"核心流程：取帧 → 提示词 → MiniCPM → JSON 解析 → 证据闸门。\"\"\"",
+          "marked": "    \"\"\"核心流程：取帧 → 提示词 → MiniCPM → JSON 解析 → 证据闸门。\"\"\"",
+          "typed": false
+        },
+        {
+          "line": 273,
+          "text": "    mode = \"demo\"",
+          "marked": "    mode = \"demo\"                                        # [敲]",
+          "typed": true
+        },
+        {
+          "line": 274,
+          "text": "    image_path: Path | None = None",
+          "marked": "    image_path: Path | None = None",
+          "typed": false
+        },
+        {
+          "line": 275,
+          "text": "    capture_info: dict[str, Any] = {}",
+          "marked": "    capture_info: dict[str, Any] = {}",
+          "typed": false
+        },
+        {
+          "line": 276,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 277,
+          "text": "    if source == \"--camera\":",
+          "marked": "    if source == \"--camera\":                             # [敲]",
+          "typed": true
+        },
+        {
+          "line": 278,
+          "text": "        image_path, capture_info = capture_frame(args.camera, out_dir)",
+          "marked": "        image_path, capture_info = capture_frame(args.camera, out_dir)",
+          "typed": false
+        },
+        {
+          "line": 279,
+          "text": "        mode = \"local\" if not args.endpoint else \"endpoint\"",
+          "marked": "        mode = \"local\" if not args.endpoint else \"endpoint\"",
+          "typed": false
+        },
+        {
+          "line": 280,
+          "text": "    elif source == \"--image\":",
+          "marked": "    elif source == \"--image\":                            # [敲]",
+          "typed": true
+        },
+        {
+          "line": 281,
+          "text": "        image_path = Path(args.image).expanduser().resolve()",
+          "marked": "        image_path = Path(args.image).expanduser().resolve()",
+          "typed": false
+        },
+        {
+          "line": 282,
+          "text": "        if not image_path.exists():",
+          "marked": "        if not image_path.exists():",
+          "typed": false
+        },
+        {
+          "line": 283,
+          "text": "            raise ObservationError(f\"图片不存在：{image_path}\")",
+          "marked": "            raise ObservationError(f\"图片不存在：{image_path}\")",
+          "typed": false
+        },
+        {
+          "line": 284,
+          "text": "        mode = \"local\" if not args.endpoint else \"endpoint\"",
+          "marked": "        mode = \"local\" if not args.endpoint else \"endpoint\"",
+          "typed": false
+        },
+        {
+          "line": 285,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 286,
+          "text": "    prompt = build_prompt(args.scene)",
+          "marked": "    prompt = build_prompt(args.scene)                    # [敲]",
+          "typed": true
+        },
+        {
+          "line": 287,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 288,
+          "text": "    if mode == \"demo\":",
+          "marked": "    if mode == \"demo\":                                   # [敲]",
+          "typed": true
+        },
+        {
+          "line": 289,
+          "text": "        raw = demo_raw()",
+          "marked": "        raw = demo_raw()",
+          "typed": false
+        },
+        {
+          "line": 290,
+          "text": "    elif mode == \"endpoint\":",
+          "marked": "    elif mode == \"endpoint\":                             # [敲]",
+          "typed": true
+        },
+        {
+          "line": 291,
+          "text": "        assert image_path is not None",
+          "marked": "        assert image_path is not None",
+          "typed": false
+        },
+        {
+          "line": 292,
+          "text": "        text = call_endpoint(args.endpoint, args.model, image_path, prompt, args.timeout)",
+          "marked": "        text = call_endpoint(args.endpoint, args.model, image_path, prompt, args.timeout)",
+          "typed": false
+        },
+        {
+          "line": 293,
+          "text": "        raw = parse_json_response(text)",
+          "marked": "        raw = parse_json_response(text)",
+          "typed": false
+        },
+        {
+          "line": 294,
+          "text": "    else:",
+          "marked": "    else:                                                # [敲]",
+          "typed": true
+        },
+        {
+          "line": 295,
+          "text": "        assert image_path is not None",
+          "marked": "        assert image_path is not None",
+          "typed": false
+        },
+        {
+          "line": 296,
+          "text": "        text = call_local(args.model, image_path, prompt)",
+          "marked": "        text = call_local(args.model, image_path, prompt)",
+          "typed": false
+        },
+        {
+          "line": 297,
+          "text": "        raw = parse_json_response(text)",
+          "marked": "        raw = parse_json_response(text)",
+          "typed": false
+        },
+        {
+          "line": 298,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 299,
+          "text": "    observation = normalize_observation(",
+          "marked": "    observation = normalize_observation(                 # [敲]",
+          "typed": true
+        },
+        {
+          "line": 300,
+          "text": "        raw,",
+          "marked": "        raw,",
+          "typed": false
+        },
+        {
+          "line": 301,
+          "text": "        source=str(image_path) if image_path else \"demo://hospital_mutual_aid\",",
+          "marked": "        source=str(image_path) if image_path else \"demo://hospital_mutual_aid\",",
+          "typed": false
+        },
+        {
+          "line": 302,
+          "text": "        mode=mode,",
+          "marked": "        mode=mode,",
+          "typed": false
+        },
+        {
+          "line": 303,
+          "text": "    )",
+          "marked": "    )",
+          "typed": false
+        },
+        {
+          "line": 304,
+          "text": "    if capture_info:",
+          "marked": "    if capture_info:",
+          "typed": false
+        },
+        {
+          "line": 305,
+          "text": "        observation[\"capture\"] = capture_info",
+          "marked": "        observation[\"capture\"] = capture_info",
+          "typed": false
+        },
+        {
+          "line": 306,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 307,
+          "text": "    if observation[\"dropped_candidates\"]:",
+          "marked": "    if observation[\"dropped_candidates\"]:                # [敲]",
+          "typed": true
+        },
+        {
+          "line": 308,
+          "text": "        print(f\"[闸门] 丢弃 {len(observation['dropped_candidates'])} 条无证据候选\")",
+          "marked": "        print(f\"[闸门] 丢弃 {len(observation['dropped_candidates'])} 条无证据候选\")",
+          "typed": false
+        },
+        {
+          "line": 309,
+          "text": "    if not observation[\"sign_candidates\"]:",
+          "marked": "    if not observation[\"sign_candidates\"]:               # [敲]",
+          "typed": true
+        },
+        {
+          "line": 310,
+          "text": "        print(\"[闸门] 本次只输出视觉观察，不输出任何词\")",
+          "marked": "        print(\"[闸门] 本次只输出视觉观察，不输出任何词\")",
+          "typed": false
+        },
+        {
+          "line": 311,
+          "text": "    return observation",
+          "marked": "    return observation",
+          "typed": false
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "role": "视觉工程师",
+      "path": "server/vision/yolo_segmentation.py",
+      "run": [
+        "python server/vision/yolo_segmentation.py --demo",
+        "python server/vision/yolo_segmentation.py --source 0 --model yolo11n-seg.pt"
+      ],
+      "outputs": [
+        "outputs/four-role/02_视觉工程师/segmentation.json",
+        "outputs/four-role/02_视觉工程师/segmentation.md",
+        "outputs/four-role/02_视觉工程师/annotated.jpg"
+      ],
+      "boundary": "COCO 预训练类别不含 hand；人物/物分割不等于手部实例分割，也不是手语词义。",
+      "startLine": 94,
+      "endLine": 149,
+      "typedLines": [
+        96,
+        97,
+        98,
+        99,
+        102,
+        103,
+        104,
+        105,
+        115,
+        116,
+        117,
+        118,
+        121,
+        122,
+        123,
+        145,
+        148
+      ],
+      "lines": [
+        {
+          "line": 94,
+          "text": "def summarize_result(result, image_path: str, model_path: str) -> dict[str, Any]:",
+          "marked": "def summarize_result(result, image_path: str, model_path: str) -> dict[str, Any]:",
+          "typed": false
+        },
+        {
+          "line": 95,
+          "text": "    \"\"\"核心流程：逐实例取框、类别、mask → 统一 JSON。\"\"\"",
+          "marked": "    \"\"\"核心流程：逐实例取框、类别、mask → 统一 JSON。\"\"\"",
+          "typed": false
+        },
+        {
+          "line": 96,
+          "text": "    names = result.names or {}",
+          "marked": "    names = result.names or {}                                           # [敲]",
+          "typed": true
+        },
+        {
+          "line": 97,
+          "text": "    height, width = result.orig_shape[:2]",
+          "marked": "    height, width = result.orig_shape[:2]                                # [敲]",
+          "typed": true
+        },
+        {
+          "line": 98,
+          "text": "    boxes = result.boxes",
+          "marked": "    boxes = result.boxes                                               # [敲]",
+          "typed": true
+        },
+        {
+          "line": 99,
+          "text": "    masks = result.masks",
+          "marked": "    masks = result.masks                                               # [敲]",
+          "typed": true
+        },
+        {
+          "line": 100,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 101,
+          "text": "    instances: list[dict[str, Any]] = []",
+          "marked": "    instances: list[dict[str, Any]] = []",
+          "typed": false
+        },
+        {
+          "line": 102,
+          "text": "    for index in range(len(boxes)):",
+          "marked": "    for index in range(len(boxes)):                                       # [敲]",
+          "typed": true
+        },
+        {
+          "line": 103,
+          "text": "        cls_id = int(boxes.cls[index].item())",
+          "marked": "        cls_id = int(boxes.cls[index].item())                             # [敲]",
+          "typed": true
+        },
+        {
+          "line": 104,
+          "text": "        confidence = float(boxes.conf[index].item())",
+          "marked": "        confidence = float(boxes.conf[index].item())                      # [敲]",
+          "typed": true
+        },
+        {
+          "line": 105,
+          "text": "        xyxy = [round(float(v), 2) for v in boxes.xyxy[index].tolist()]",
+          "marked": "        xyxy = [round(float(v), 2) for v in boxes.xyxy[index].tolist()]   # [敲]",
+          "typed": true
+        },
+        {
+          "line": 106,
+          "text": "        instance = {",
+          "marked": "        instance = {",
+          "typed": false
+        },
+        {
+          "line": 107,
+          "text": "            \"id\": index + 1,",
+          "marked": "            \"id\": index + 1,",
+          "typed": false
+        },
+        {
+          "line": 108,
+          "text": "            \"class\": str(names.get(cls_id, cls_id)),",
+          "marked": "            \"class\": str(names.get(cls_id, cls_id)),",
+          "typed": false
+        },
+        {
+          "line": 109,
+          "text": "            \"class_id\": cls_id,",
+          "marked": "            \"class_id\": cls_id,",
+          "typed": false
+        },
+        {
+          "line": 110,
+          "text": "            \"confidence\": round(confidence, 4),",
+          "marked": "            \"confidence\": round(confidence, 4),",
+          "typed": false
+        },
+        {
+          "line": 111,
+          "text": "            \"box\": xyxy,",
+          "marked": "            \"box\": xyxy,",
+          "typed": false
+        },
+        {
+          "line": 112,
+          "text": "            \"mask_area\": None,",
+          "marked": "            \"mask_area\": None,",
+          "typed": false
+        },
+        {
+          "line": 113,
+          "text": "            \"mask_polygon\": [],",
+          "marked": "            \"mask_polygon\": [],",
+          "typed": false
+        },
+        {
+          "line": 114,
+          "text": "        }",
+          "marked": "        }",
+          "typed": false
+        },
+        {
+          "line": 115,
+          "text": "        if masks is not None and masks.data is not None and index < len(masks.data):",
+          "marked": "        if masks is not None and masks.data is not None and index < len(masks.data):  # [敲]",
+          "typed": true
+        },
+        {
+          "line": 116,
+          "text": "            mask = masks.data[index].detach().cpu().numpy()",
+          "marked": "            mask = masks.data[index].detach().cpu().numpy()                # [敲]",
+          "typed": true
+        },
+        {
+          "line": 117,
+          "text": "            instance[\"mask_area\"] = int((mask > 0.5).sum())",
+          "marked": "            instance[\"mask_area\"] = int((mask > 0.5).sum())                # [敲]",
+          "typed": true
+        },
+        {
+          "line": 118,
+          "text": "            instance[\"mask_polygon\"] = mask_to_polygon(mask, width, height)",
+          "marked": "            instance[\"mask_polygon\"] = mask_to_polygon(mask, width, height)  # [敲]",
+          "typed": true
+        },
+        {
+          "line": 119,
+          "text": "        instances.append(instance)",
+          "marked": "        instances.append(instance)",
+          "typed": false
+        },
+        {
+          "line": 120,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 121,
+          "text": "    counts: dict[str, int] = {}",
+          "marked": "    counts: dict[str, int] = {}                                            # [敲]",
+          "typed": true
+        },
+        {
+          "line": 122,
+          "text": "    for item in instances:",
+          "marked": "    for item in instances:                                                 # [敲]",
+          "typed": true
+        },
+        {
+          "line": 123,
+          "text": "        counts[item[\"class\"]] = counts.get(item[\"class\"], 0) + 1",
+          "marked": "        counts[item[\"class\"]] = counts.get(item[\"class\"], 0) + 1           # [敲]",
+          "typed": true
+        },
+        {
+          "line": 124,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 125,
+          "text": "    return {",
+          "marked": "    return {",
+          "typed": false
+        },
+        {
+          "line": 126,
+          "text": "        \"schema_version\": SCHEMA_VERSION,",
+          "marked": "        \"schema_version\": SCHEMA_VERSION,",
+          "typed": false
+        },
+        {
+          "line": 127,
+          "text": "        \"module\": MODULE_ID,",
+          "marked": "        \"module\": MODULE_ID,",
+          "typed": false
+        },
+        {
+          "line": 128,
+          "text": "        \"mode\": \"yolo_instance_segmentation\",",
+          "marked": "        \"mode\": \"yolo_instance_segmentation\",",
+          "typed": false
+        },
+        {
+          "line": 129,
+          "text": "        \"source\": str(image_path),",
+          "marked": "        \"source\": str(image_path),",
+          "typed": false
+        },
+        {
+          "line": 130,
+          "text": "        \"model\": str(model_path),",
+          "marked": "        \"model\": str(model_path),",
+          "typed": false
+        },
+        {
+          "line": 131,
+          "text": "        \"image\": {\"width\": width, \"height\": height},",
+          "marked": "        \"image\": {\"width\": width, \"height\": height},",
+          "typed": false
+        },
+        {
+          "line": 132,
+          "text": "        \"instances\": instances,",
+          "marked": "        \"instances\": instances,",
+          "typed": false
+        },
+        {
+          "line": 133,
+          "text": "        \"counts\": counts,",
+          "marked": "        \"counts\": counts,",
+          "typed": false
+        },
+        {
+          "line": 134,
+          "text": "        \"notes\": [",
+          "marked": "        \"notes\": [",
+          "typed": false
+        },
+        {
+          "line": 135,
+          "text": "            \"COCO 预训练类别不含 hand；手部区域需另接 MediaPipe 或自定义模型。\",",
+          "marked": "            \"COCO 预训练类别不含 hand；手部区域需另接 MediaPipe 或自定义模型。\",",
+          "typed": false
+        },
+        {
+          "line": 136,
+          "text": "            \"mask 多边形为轮廓简化结果，不是像素级精确边界。\",",
+          "marked": "            \"mask 多边形为轮廓简化结果，不是像素级精确边界。\",",
+          "typed": false
+        },
+        {
+          "line": 137,
+          "text": "            \"分割结果不是手语词义，也不做身份识别。\",",
+          "marked": "            \"分割结果不是手语词义，也不做身份识别。\",",
+          "typed": false
+        },
+        {
+          "line": 138,
+          "text": "        ],",
+          "marked": "        ],",
+          "typed": false
+        },
+        {
+          "line": 139,
+          "text": "        \"created_at\": time.strftime(\"%Y-%m-%dT%H:%M:%S%z\"),",
+          "marked": "        \"created_at\": time.strftime(\"%Y-%m-%dT%H:%M:%S%z\"),",
+          "typed": false
+        },
+        {
+          "line": 140,
+          "text": "    }",
+          "marked": "    }",
+          "typed": false
+        },
+        {
+          "line": 141,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 142,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 143,
+          "text": "def run_yolo(model, image_path: str, conf: float = 0.25):",
+          "marked": "def run_yolo(model, image_path: str, conf: float = 0.25):",
+          "typed": false
+        },
+        {
+          "line": 144,
+          "text": "    \"\"\"只推理一次，同时返回结构化结果和原始结果供标注图复用。\"\"\"",
+          "marked": "    \"\"\"只推理一次，同时返回结构化结果和原始结果供标注图复用。\"\"\"",
+          "typed": false
+        },
+        {
+          "line": 145,
+          "text": "    results = model.predict(source=image_path, conf=conf, verbose=False)",
+          "marked": "    results = model.predict(source=image_path, conf=conf, verbose=False)  # [敲]",
+          "typed": true
+        },
+        {
+          "line": 146,
+          "text": "    if not results:",
+          "marked": "    if not results:",
+          "typed": false
+        },
+        {
+          "line": 147,
+          "text": "        raise VisionError(\"YOLO 没有返回结果。\")",
+          "marked": "        raise VisionError(\"YOLO 没有返回结果。\")",
+          "typed": false
+        },
+        {
+          "line": 148,
+          "text": "    raw = results[0]",
+          "marked": "    raw = results[0]                                                     # [敲]",
+          "typed": true
+        },
+        {
+          "line": 149,
+          "text": "    return summarize_result(raw, image_path, getattr(model, \"ckpt_path\", DEFAULT_MODEL)), raw",
+          "marked": "    return summarize_result(raw, image_path, getattr(model, \"ckpt_path\", DEFAULT_MODEL)), raw",
+          "typed": false
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "role": "AI应用工程师",
+      "path": "server/service/fastapi_workflow.py",
+      "run": [
+        "python server/service/fastapi_workflow.py --demo",
+        "python server/service/fastapi_workflow.py --serve --port 8010"
+      ],
+      "outputs": [
+        "outputs/four-role/03_AI应用工程师/workflow.json"
+      ],
+      "boundary": "只编排观察流程；01/02 当前为 CLI，未内置 HTTP 服务，默认 mock 独立跑；不诊断、不决定挂号/检查/接诊；无证据候选直接丢弃。",
+      "startLine": 134,
+      "endLine": 199,
+      "typedLines": [
+        146,
+        147,
+        149,
+        150,
+        152,
+        153,
+        155,
+        156,
+        158,
+        159,
+        162,
+        163,
+        165,
+        172,
+        173,
+        175,
+        183,
+        198
+      ],
+      "lines": [
+        {
+          "line": 134,
+          "text": "async def run_hospital_workflow(",
+          "marked": "async def run_hospital_workflow(",
+          "typed": false
+        },
+        {
+          "line": 135,
+          "text": "    image_bytes: bytes,",
+          "marked": "    image_bytes: bytes,",
+          "typed": false
+        },
+        {
+          "line": 136,
+          "text": "    vision_url: str = \"\",",
+          "marked": "    vision_url: str = \"\",",
+          "typed": false
+        },
+        {
+          "line": 137,
+          "text": "    llm_url: str = \"\",",
+          "marked": "    llm_url: str = \"\",",
+          "typed": false
+        },
+        {
+          "line": 138,
+          "text": "    timeout: float = DEFAULT_TIMEOUT,",
+          "marked": "    timeout: float = DEFAULT_TIMEOUT,",
+          "typed": false
+        },
+        {
+          "line": 139,
+          "text": ") -> dict[str, Any]:",
+          "marked": ") -> dict[str, Any]:",
+          "typed": false
+        },
+        {
+          "line": 140,
+          "text": "    \"\"\"核心流程：并行调用 → 合并 → 策略闸门 → 统一结果。\"\"\"",
+          "marked": "    \"\"\"核心流程：并行调用 → 合并 → 策略闸门 → 统一结果。\"\"\"",
+          "typed": false
+        },
+        {
+          "line": 141,
+          "text": "    if not image_bytes:",
+          "marked": "    if not image_bytes:",
+          "typed": false
+        },
+        {
+          "line": 142,
+          "text": "        raise WorkflowError(\"图片为空。\")",
+          "marked": "        raise WorkflowError(\"图片为空。\")",
+          "typed": false
+        },
+        {
+          "line": 143,
+          "text": "    if len(image_bytes) > 8 * 1024 * 1024:",
+          "marked": "    if len(image_bytes) > 8 * 1024 * 1024:",
+          "typed": false
+        },
+        {
+          "line": 144,
+          "text": "        raise WorkflowError(\"图片超过 8MB。\")",
+          "marked": "        raise WorkflowError(\"图片超过 8MB。\")",
+          "typed": false
+        },
+        {
+          "line": 145,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 146,
+          "text": "    workflow_id = uuid.uuid4().hex[:12]",
+          "marked": "    workflow_id = uuid.uuid4().hex[:12]                                  # [敲]",
+          "typed": true
+        },
+        {
+          "line": 147,
+          "text": "    started = time.perf_counter()",
+          "marked": "    started = time.perf_counter()                                       # [敲]",
+          "typed": true
+        },
+        {
+          "line": 148,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 149,
+          "text": "    vision_task = call_vision(image_bytes, vision_url, timeout)",
+          "marked": "    vision_task = call_vision(image_bytes, vision_url, timeout)          # [敲]",
+          "typed": true
+        },
+        {
+          "line": 150,
+          "text": "    llm_task = call_llm(image_bytes, llm_url, timeout)",
+          "marked": "    llm_task = call_llm(image_bytes, llm_url, timeout)                   # [敲]",
+          "typed": true
+        },
+        {
+          "line": 151,
+          "text": "    try:",
+          "marked": "    try:",
+          "typed": false
+        },
+        {
+          "line": 152,
+          "text": "        vision, observation = await asyncio.wait_for(",
+          "marked": "        vision, observation = await asyncio.wait_for(                       # [敲]",
+          "typed": true
+        },
+        {
+          "line": 153,
+          "text": "            asyncio.gather(vision_task, llm_task), timeout=timeout",
+          "marked": "            asyncio.gather(vision_task, llm_task), timeout=timeout          # [敲]",
+          "typed": true
+        },
+        {
+          "line": 154,
+          "text": "        )",
+          "marked": "        )",
+          "typed": false
+        },
+        {
+          "line": 155,
+          "text": "    except asyncio.TimeoutError as exc:",
+          "marked": "    except asyncio.TimeoutError as exc:                                  # [敲]",
+          "typed": true
+        },
+        {
+          "line": 156,
+          "text": "        raise WorkflowError(f\"工作流超时（>{timeout:.0f}s）。\") from exc",
+          "marked": "        raise WorkflowError(f\"工作流超时（>{timeout:.0f}s）。\") from exc    # [敲]",
+          "typed": true
+        },
+        {
+          "line": 157,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 158,
+          "text": "    candidates, dropped = [], []",
+          "marked": "    candidates, dropped = [], []                                         # [敲]",
+          "typed": true
+        },
+        {
+          "line": 159,
+          "text": "    for item in observation.get(\"sign_candidates\", []) or []:",
+          "marked": "    for item in observation.get(\"sign_candidates\", []) or []:           # [敲]",
+          "typed": true
+        },
+        {
+          "line": 160,
+          "text": "        word = str(item.get(\"word\", \"\")).strip()",
+          "marked": "        word = str(item.get(\"word\", \"\")).strip()",
+          "typed": false
+        },
+        {
+          "line": 161,
+          "text": "        evidence = str(item.get(\"evidence\", \"\")).strip()",
+          "marked": "        evidence = str(item.get(\"evidence\", \"\")).strip()",
+          "typed": false
+        },
+        {
+          "line": 162,
+          "text": "        if not word or not evidence:",
+          "marked": "        if not word or not evidence:                                     # [敲]",
+          "typed": true
+        },
+        {
+          "line": 163,
+          "text": "            dropped.append({\"word\": word, \"reason\": \"no_evidence\"})",
+          "marked": "            dropped.append({\"word\": word, \"reason\": \"no_evidence\"})      # [敲]",
+          "typed": true
+        },
+        {
+          "line": 164,
+          "text": "            continue",
+          "marked": "            continue",
+          "typed": false
+        },
+        {
+          "line": 165,
+          "text": "        candidates.append({",
+          "marked": "        candidates.append({                                              # [敲]",
+          "typed": true
+        },
+        {
+          "line": 166,
+          "text": "            \"word\": word,",
+          "marked": "            \"word\": word,",
+          "typed": false
+        },
+        {
+          "line": 167,
+          "text": "            \"evidence\": evidence,",
+          "marked": "            \"evidence\": evidence,",
+          "typed": false
+        },
+        {
+          "line": 168,
+          "text": "            \"confidence\": max(0.0, min(1.0, float(item.get(\"confidence\", 0) or 0))),",
+          "marked": "            \"confidence\": max(0.0, min(1.0, float(item.get(\"confidence\", 0) or 0))),",
+          "typed": false
+        },
+        {
+          "line": 169,
+          "text": "            \"status\": \"candidate_requires_human_review\",",
+          "marked": "            \"status\": \"candidate_requires_human_review\",",
+          "typed": false
+        },
+        {
+          "line": 170,
+          "text": "        })",
+          "marked": "        })",
+          "typed": false
+        },
+        {
+          "line": 171,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 172,
+          "text": "    if observation.get(\"medical_advice\"):",
+          "marked": "    if observation.get(\"medical_advice\"):                                # [敲]",
+          "typed": true
+        },
+        {
+          "line": 173,
+          "text": "        dropped.append({\"word\": None, \"reason\": \"medical_advice_blocked\"})",
+          "marked": "        dropped.append({\"word\": None, \"reason\": \"medical_advice_blocked\"})  # [敲]",
+          "typed": true
+        },
+        {
+          "line": 174,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 175,
+          "text": "    merged = {",
+          "marked": "    merged = {                                                           # [敲]",
+          "typed": true
+        },
+        {
+          "line": 176,
+          "text": "        \"scene\": \"hospital_mutual_aid\",",
+          "marked": "        \"scene\": \"hospital_mutual_aid\",",
+          "typed": false
+        },
+        {
+          "line": 177,
+          "text": "        \"instances\": vision.get(\"instances\", []),",
+          "marked": "        \"instances\": vision.get(\"instances\", []),",
+          "typed": false
+        },
+        {
+          "line": 178,
+          "text": "        \"counts\": vision.get(\"counts\", {}),",
+          "marked": "        \"counts\": vision.get(\"counts\", {}),",
+          "typed": false
+        },
+        {
+          "line": 179,
+          "text": "        \"observed\": observation.get(\"observed\", []),",
+          "marked": "        \"observed\": observation.get(\"observed\", []),",
+          "typed": false
+        },
+        {
+          "line": 180,
+          "text": "        \"unknowns\": observation.get(\"unknowns\", []),",
+          "marked": "        \"unknowns\": observation.get(\"unknowns\", []),",
+          "typed": false
+        },
+        {
+          "line": 181,
+          "text": "        \"sign_candidates\": candidates,",
+          "marked": "        \"sign_candidates\": candidates,",
+          "typed": false
+        },
+        {
+          "line": 182,
+          "text": "    }",
+          "marked": "    }",
+          "typed": false
+        },
+        {
+          "line": 183,
+          "text": "    result = {",
+          "marked": "    result = {                                                           # [敲]",
+          "typed": true
+        },
+        {
+          "line": 184,
+          "text": "        \"schema_version\": SCHEMA_VERSION,",
+          "marked": "        \"schema_version\": SCHEMA_VERSION,",
+          "typed": false
+        },
+        {
+          "line": 185,
+          "text": "        \"module\": MODULE_ID,",
+          "marked": "        \"module\": MODULE_ID,",
+          "typed": false
+        },
+        {
+          "line": 186,
+          "text": "        \"workflow_id\": workflow_id,",
+          "marked": "        \"workflow_id\": workflow_id,",
+          "typed": false
+        },
+        {
+          "line": 187,
+          "text": "        \"status\": \"completed\",",
+          "marked": "        \"status\": \"completed\",",
+          "typed": false
+        },
+        {
+          "line": 188,
+          "text": "        \"result\": merged,",
+          "marked": "        \"result\": merged,",
+          "typed": false
+        },
+        {
+          "line": 189,
+          "text": "        \"policy\": {",
+          "marked": "        \"policy\": {",
+          "typed": false
+        },
+        {
+          "line": 190,
+          "text": "            \"medical_advice\": False,",
+          "marked": "            \"medical_advice\": False,",
+          "typed": false
+        },
+        {
+          "line": 191,
+          "text": "            \"human_review_required\": True,",
+          "marked": "            \"human_review_required\": True,",
+          "typed": false
+        },
+        {
+          "line": 192,
+          "text": "            \"dropped_candidates\": dropped,",
+          "marked": "            \"dropped_candidates\": dropped,",
+          "typed": false
+        },
+        {
+          "line": 193,
+          "text": "            \"no_evidence_no_word\": True,",
+          "marked": "            \"no_evidence_no_word\": True,",
+          "typed": false
+        },
+        {
+          "line": 194,
+          "text": "        },",
+          "marked": "        },",
+          "typed": false
+        },
+        {
+          "line": 195,
+          "text": "        \"timings_ms\": {\"total\": round((time.perf_counter() - started) * 1000, 1)},",
+          "marked": "        \"timings_ms\": {\"total\": round((time.perf_counter() - started) * 1000, 1)},",
+          "typed": false
+        },
+        {
+          "line": 196,
+          "text": "        \"created_at\": now(),",
+          "marked": "        \"created_at\": now(),",
+          "typed": false
+        },
+        {
+          "line": 197,
+          "text": "    }",
+          "marked": "    }",
+          "typed": false
+        },
+        {
+          "line": 198,
+          "text": "    JOBS[workflow_id] = {\"status\": \"completed\", \"result\": result}",
+          "marked": "    JOBS[workflow_id] = {\"status\": \"completed\", \"result\": result}       # [敲]",
+          "typed": true
+        },
+        {
+          "line": 199,
+          "text": "    return result",
+          "marked": "    return result",
+          "typed": false
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "role": "项目经理",
+      "path": "scripts/project_cockpit.py",
+      "run": [
+        "python scripts/project_cockpit.py",
+        "python scripts/project_cockpit.py --live"
+      ],
+      "outputs": [
+        "outputs/four-role/04_项目经理/standup.md",
+        "outputs/four-role/04_项目经理/standup.html",
+        "outputs/four-role/04_项目经理/standup.json"
+      ],
+      "boundary": "只报告计划和证据状态；不把文件存在写成功能完成，不读取私人录像或数据库。",
+      "startLine": 127,
+      "endLine": 187,
+      "typedLines": [
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        154,
+        163,
+        164,
+        165,
+        166,
+        171,
+        172,
+        174,
+        183,
+        184,
+        185,
+        187
+      ],
+      "lines": [
+        {
+          "line": 127,
+          "text": "def compute_stats(actions: list[dict[str, str]], tasks: list[dict[str, str]]) -> dict[str, Any]:",
+          "marked": "def compute_stats(actions: list[dict[str, str]], tasks: list[dict[str, str]]) -> dict[str, Any]:",
+          "typed": false
+        },
+        {
+          "line": 128,
+          "text": "    \"\"\"把工作簿行变成例会能直接读的数字，不把空状态算成完成。\"\"\"",
+          "marked": "    \"\"\"把工作簿行变成例会能直接读的数字，不把空状态算成完成。\"\"\"",
+          "typed": false
+        },
+        {
+          "line": 129,
+          "text": "    total = len(actions)",
+          "marked": "    total = len(actions)                                                  # [敲]",
+          "typed": true
+        },
+        {
+          "line": 130,
+          "text": "    builtin = sum(1 for row in actions if row.get(\"内置识别\") == \"已有内置识别\")",
+          "marked": "    builtin = sum(1 for row in actions if row.get(\"内置识别\") == \"已有内置识别\")  # [敲]",
+          "typed": true
+        },
+        {
+          "line": 131,
+          "text": "    new_targets = total - builtin",
+          "marked": "    new_targets = total - builtin                                         # [敲]",
+          "typed": true
+        },
+        {
+          "line": 132,
+          "text": "    animated = sum(1 for row in actions if str(row.get(\"数字人示范\", \"\")).startswith(\"已有\"))",
+          "marked": "    animated = sum(1 for row in actions if str(row.get(\"数字人示范\", \"\")).startswith(\"已有\"))  # [敲]",
+          "typed": true
+        },
+        {
+          "line": 133,
+          "text": "    status = Counter(row.get(\"跟进状态\", \"未填\") for row in actions)",
+          "marked": "    status = Counter(row.get(\"跟进状态\", \"未填\") for row in actions)       # [敲]",
+          "typed": true
+        },
+        {
+          "line": 134,
+          "text": "    task_status = Counter(row.get(\"状态\", \"未填\") for row in tasks)",
+          "marked": "    task_status = Counter(row.get(\"状态\", \"未填\") for row in tasks)        # [敲]",
+          "typed": true
+        },
+        {
+          "line": 135,
+          "text": "    return {",
+          "marked": "    return {                                                              # [敲]",
+          "typed": true
+        },
+        {
+          "line": 136,
+          "text": "        \"total\": total,",
+          "marked": "        \"total\": total,",
+          "typed": false
+        },
+        {
+          "line": 137,
+          "text": "        \"builtin\": builtin,",
+          "marked": "        \"builtin\": builtin,",
+          "typed": false
+        },
+        {
+          "line": 138,
+          "text": "        \"newTargets\": new_targets,",
+          "marked": "        \"newTargets\": new_targets,",
+          "typed": false
+        },
+        {
+          "line": 139,
+          "text": "        \"animated\": animated,",
+          "marked": "        \"animated\": animated,",
+          "typed": false
+        },
+        {
+          "line": 140,
+          "text": "        \"actionStatus\": dict(status),",
+          "marked": "        \"actionStatus\": dict(status),",
+          "typed": false
+        },
+        {
+          "line": 141,
+          "text": "        \"taskStatus\": dict(task_status),",
+          "marked": "        \"taskStatus\": dict(task_status),",
+          "typed": false
+        },
+        {
+          "line": 142,
+          "text": "        \"completionClaimAllowed\": False,",
+          "marked": "        \"completionClaimAllowed\": False,",
+          "typed": false
+        },
+        {
+          "line": 143,
+          "text": "        \"note\": \"数字来自计划表；内置识别和已有示范都不等于连续段落验收。\",",
+          "marked": "        \"note\": \"数字来自计划表；内置识别和已有示范都不等于连续段落验收。\",",
+          "typed": false
+        },
+        {
+          "line": 144,
+          "text": "    }",
+          "marked": "    }",
+          "typed": false
+        },
+        {
+          "line": 145,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 146,
+          "text": "",
+          "marked": "",
+          "typed": false
+        },
+        {
+          "line": 147,
+          "text": "def render_markdown(",
+          "marked": "def render_markdown(",
+          "typed": false
+        },
+        {
+          "line": 148,
+          "text": "    plan: dict[str, Any],",
+          "marked": "    plan: dict[str, Any],",
+          "typed": false
+        },
+        {
+          "line": 149,
+          "text": "    stats: dict[str, Any],",
+          "marked": "    stats: dict[str, Any],",
+          "typed": false
+        },
+        {
+          "line": 150,
+          "text": "    outputs: list[dict[str, Any]],",
+          "marked": "    outputs: list[dict[str, Any]],",
+          "typed": false
+        },
+        {
+          "line": 151,
+          "text": "    health: list[dict[str, Any]] | None,",
+          "marked": "    health: list[dict[str, Any]] | None,",
+          "typed": false
+        },
+        {
+          "line": 152,
+          "text": ") -> str:",
+          "marked": ") -> str:",
+          "typed": false
+        },
+        {
+          "line": 153,
+          "text": "    \"\"\"生成一页 Markdown 例会报告。\"\"\"",
+          "marked": "    \"\"\"生成一页 Markdown 例会报告。\"\"\"",
+          "typed": false
+        },
+        {
+          "line": 154,
+          "text": "    lines = [",
+          "marked": "    lines = [                                                            # [敲]",
+          "typed": true
+        },
+        {
+          "line": 155,
+          "text": "        \"# 语桥四岗项目例会 · 自动生成\",",
+          "marked": "        \"# 语桥四岗项目例会 · 自动生成\",",
+          "typed": false
+        },
+        {
+          "line": 156,
+          "text": "        \"\",",
+          "marked": "        \"\",",
+          "typed": false
+        },
+        {
+          "line": 157,
+          "text": "        f\"- 生成时间：{time.strftime('%Y-%m-%d %H:%M:%S')}\",",
+          "marked": "        f\"- 生成时间：{time.strftime('%Y-%m-%d %H:%M:%S')}\",",
+          "typed": false
+        },
+        {
+          "line": 158,
+          "text": "        f\"- 项目计划更新：{plan.get('updated', '未知')}\",",
+          "marked": "        f\"- 项目计划更新：{plan.get('updated', '未知')}\",",
+          "typed": false
+        },
+        {
+          "line": 159,
+          "text": "        f\"- 当前下一步：{plan.get('nextCaption', '未填写')}\",",
+          "marked": "        f\"- 当前下一步：{plan.get('nextCaption', '未填写')}\",",
+          "typed": false
+        },
+        {
+          "line": 160,
+          "text": "        \"\",",
+          "marked": "        \"\",",
+          "typed": false
+        },
+        {
+          "line": 161,
+          "text": "        \"## 医院互助 30 词计划\",",
+          "marked": "        \"## 医院互助 30 词计划\",",
+          "typed": false
+        },
+        {
+          "line": 162,
+          "text": "        \"\",",
+          "marked": "        \"\",",
+          "typed": false
+        },
+        {
+          "line": 163,
+          "text": "        f\"- 场景动作总数：{stats['total']}\",",
+          "marked": "        f\"- 场景动作总数：{stats['total']}\",                               # [敲]",
+          "typed": true
+        },
+        {
+          "line": 164,
+          "text": "        f\"- 已有内置识别：{stats['builtin']}\",",
+          "marked": "        f\"- 已有内置识别：{stats['builtin']}\",                             # [敲]",
+          "typed": true
+        },
+        {
+          "line": 165,
+          "text": "        f\"- 计划新增识别：{stats['newTargets']}\",",
+          "marked": "        f\"- 计划新增识别：{stats['newTargets']}\",                          # [敲]",
+          "typed": true
+        },
+        {
+          "line": 166,
+          "text": "        f\"- 已有数字人示范：{stats['animated']}（未专业验收）\",",
+          "marked": "        f\"- 已有数字人示范：{stats['animated']}（未专业验收）\",             # [敲]",
+          "typed": true
+        },
+        {
+          "line": 167,
+          "text": "        f\"- 跟进状态：{json.dumps(stats['actionStatus'], ensure_ascii=False)}\",",
+          "marked": "        f\"- 跟进状态：{json.dumps(stats['actionStatus'], ensure_ascii=False)}\",",
+          "typed": false
+        },
+        {
+          "line": 168,
+          "text": "        \"\",",
+          "marked": "        \"\",",
+          "typed": false
+        },
+        {
+          "line": 169,
+          "text": "        \"## 四岗输出\",",
+          "marked": "        \"## 四岗输出\",",
+          "typed": false
+        },
+        {
+          "line": 170,
+          "text": "        \"\",",
+          "marked": "        \"\",",
+          "typed": false
+        },
+        {
+          "line": 171,
+          "text": "    ]",
+          "marked": "    ]                                                                    # [敲]",
+          "typed": true
+        },
+        {
+          "line": 172,
+          "text": "    for item in outputs:",
+          "marked": "    for item in outputs:                                                 # [敲]",
+          "typed": true
+        },
+        {
+          "line": 173,
+          "text": "        mark = \"存在\" if item[\"exists\"] else \"缺失\"",
+          "marked": "        mark = \"存在\" if item[\"exists\"] else \"缺失\"",
+          "typed": false
+        },
+        {
+          "line": 174,
+          "text": "        lines.append(f\"- {item['role']}：{mark}｜{item['path']}\")",
+          "marked": "        lines.append(f\"- {item['role']}：{mark}｜{item['path']}\")         # [敲]",
+          "typed": true
+        },
+        {
+          "line": 175,
+          "text": "    if health:",
+          "marked": "    if health:",
+          "typed": false
+        },
+        {
+          "line": 176,
+          "text": "        lines += [\"\", \"## 健康检查\", \"\"]",
+          "marked": "        lines += [\"\", \"## 健康检查\", \"\"]",
+          "typed": false
+        },
+        {
+          "line": 177,
+          "text": "        for item in health:",
+          "marked": "        for item in health:",
+          "typed": false
+        },
+        {
+          "line": 178,
+          "text": "            lines.append(f\"- {item['role']}：{item['status']}（{item['url']}）\")",
+          "marked": "            lines.append(f\"- {item['role']}：{item['status']}（{item['url']}）\")",
+          "typed": false
+        },
+        {
+          "line": 179,
+          "text": "    lines += [",
+          "marked": "    lines += [",
+          "typed": false
+        },
+        {
+          "line": 180,
+          "text": "        \"\",",
+          "marked": "        \"\",",
+          "typed": false
+        },
+        {
+          "line": 181,
+          "text": "        \"## 边界\",",
+          "marked": "        \"## 边界\",",
+          "typed": false
+        },
+        {
+          "line": 182,
+          "text": "        \"\",",
+          "marked": "        \"\",",
+          "typed": false
+        },
+        {
+          "line": 183,
+          "text": "        \"- 计划数字不等于识别准确率。\",",
+          "marked": "        \"- 计划数字不等于识别准确率。\",                                    # [敲]",
+          "typed": true
+        },
+        {
+          "line": 184,
+          "text": "        \"- 缺失输出如实报缺，不按“文件存在”推断完成。\",",
+          "marked": "        \"- 缺失输出如实报缺，不按“文件存在”推断完成。\",                      # [敲]",
+          "typed": true
+        },
+        {
+          "line": 185,
+          "text": "        \"- 医院互助只做沟通辅助，不替代诊断、挂号受理或医疗决策。\",",
+          "marked": "        \"- 医院互助只做沟通辅助，不替代诊断、挂号受理或医疗决策。\",          # [敲]",
+          "typed": true
+        },
+        {
+          "line": 186,
+          "text": "    ]",
+          "marked": "    ]",
+          "typed": false
+        },
+        {
+          "line": 187,
+          "text": "    return \"\\n\".join(lines) + \"\\n\"",
+          "marked": "    return \"\\n\".join(lines) + \"\\n\"                                      # [敲]",
+          "typed": true
+        }
+      ]
+    }
+  ]
+}

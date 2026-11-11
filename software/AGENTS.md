@@ -3,7 +3,8 @@
 先读仓库根AGENTS.md和本目录README。本目录是可运行项目根，终端必须先进入software。
 
 - 本次是公开源码交付，不携带原作者数据库、账号、录像、密钥、环境或私有Git历史。旧Gitee私有备份规则不适用于这里。
-- `web`前端、`server`后端、`shared`词典/动作协议、`models`已有小权重、`scripts`运行与构建、`tests`隔离测试。React/TypeScript、Node、Python、MySQL；没有迁移为Spring或FastAPI。
+- `web`前端、`server`后端、`shared`词典/动作协议、`models`已有小权重、`scripts`运行与构建、`tests`隔离测试。React/TypeScript、Node、Python、MySQL；生产栈没有迁移为Spring或FastAPI，`server/service/fastapi_workflow.py`只是独立演示。
+- 四岗独立演示代码：`server/llm/minicpm_camera.py`（MiniCPM观察）、`server/vision/yolo_segmentation.py`（YOLO分割）、`server/service/fastapi_workflow.py`（FastAPI编排）、`scripts/project_cockpit.py`（项目驾驶舱）。四者互不import，`--demo`各自可跑，产出在`outputs/four-role/`；不进入正式Web、数据库或实时识别链路。文件地址、展示行和需敲行见`docs/四岗独立代码.md`与`docs/四岗代码摘录.md`。
 - `npm run agent:brief`查看入口，`npm run agent:check`检查公共运行文件。这些命令不读取私人数据，不证明独立准确率或完整部署成功。
 - 先按README安装MySQL并导入`database/schema.sql`的10张空表；Configure-Database.cmd只校验表可访问并写新机DPAPI连接配置，不创建/清空数据库、不覆盖已有配置。API Key在注册后的账号设置中填写。
 - 发布只在新分支提交，遵循根目录的审阅流程，不直接推main、不自行合并。负责人姓名、飞书链接与比赛最终版本未确认，不能编造。
