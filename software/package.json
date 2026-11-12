@@ -29,7 +29,9 @@
     "training:pilot": "node scripts/run-local.mjs training-pilot",
     "agent:brief": "node scripts/agent-context.mjs",
     "agent:check": "node scripts/agent-context.mjs --check",
-    "agent:refresh": "node scripts/agent-context.mjs --refresh --reviewed"
+    "agent:refresh": "node scripts/agent-context.mjs --refresh --reviewed",
+    "nginx:prepare": "node scripts/prepare-nginx.mjs",
+    "nginx:check": "node scripts/check-nginx-proxy.mjs"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "1.1.1",

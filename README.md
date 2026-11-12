@@ -26,7 +26,7 @@
 
 1. 安装MySQL 8.0，使用自己的账号密码。只在新环境导入`software/database/schema.sql`，建立yuqiao及10张空表；已有同名库先核对，不能覆盖。
 2. 双击 **Deploy-Web.cmd**。准备Node、Python、Ollama与依赖，提示填写本机数据库凭据，下载模型、构建并启动。软件源、UAC和数据库安装可能需要操作，不承诺完全无人值守。
-3. 看到`Ready: http://127.0.0.1:5173/`后打开首页，注册自己的账号，在账号设置填写自己的百炼中国内地API Key并试听。
+3. 看到`Ready: http://127.0.0.1:8080/`后打开首页；同一局域网用`http://<电脑IP>:8080/`。注册自己的账号，在账号设置填写自己的百炼中国内地API Key并试听。默认HTTP；手机摄像头或HTTPS用`Start-Yuqiao.cmd -Https`，公网用`Start-Public.cmd`。
 4. 日常 **Start-Yuqiao.cmd**，结束 **Stop-Yuqiao.cmd**。首次数据库连接也可单独运行 **Configure-Database.cmd**（需先装Node与npm依赖）。
 
 公开包不含真实API Key、数据库密码、账号数据、私人录像、SQL数据备份或原机DPAPI密文。只提供空库结构与新机配置入口。

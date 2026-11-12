@@ -52,6 +52,57 @@ function Get-YuqiaoStopPlan([string]$Root,[object[]]$Processes,[object[]]$Connec
   }
   return @{Processes=@($selected.Values);Frontend=@($front | Select-Object -Unique);Backend=@($back | Select-Object -Unique)}
 }
+function Test-Port([int]$Port) { return @(Get-NetTCPConnection -State Listen -LocalPort $Port -ErrorAction SilentlyContinue).Count -gt 0 }
+function Get-NginxMarker([string]$Root) {
+  $marker=Join-Path $Root '.runtime-logs/nginx-runtime.json'
+  if (-not (Test-Path -LiteralPath $marker)) { return $null }
+  try { return Get-Content -LiteralPath $marker -Raw | ConvertFrom-Json } catch { return $null }
+}
+function Stop-ProjectCloudflared([string]$Root,[switch]$WhatIf) {
+  $marker=Join-Path $Root '.runtime-logs/cloudflared.json'
+  if (-not (Test-Path -LiteralPath $marker)) { return $false }
+  try { $info=Get-Content -LiteralPath $marker -Raw | ConvertFrom-Json } catch { return $false }
+  if (-not $info.pid) { return $false }
+  $processInfo=Get-CimInstance Win32_Process -Filter "ProcessId = $([int]$info.pid)" -ErrorAction SilentlyContinue
+  if (-not $processInfo) { return $false }
+  if ($processInfo.Name -ne 'cloudflared.exe' -or -not $processInfo.CommandLine -or $processInfo.CommandLine -notmatch 'tunnel') { throw 'cloudflared marker does not match the running process; no process stopped.' }
+  if ($WhatIf) { Write-Output ('Would stop cloudflared PID '+$info.pid+' ('+$info.url+')'); return $true }
+  Stop-Process -Id ([int]$info.pid) -ErrorAction Stop
+  Remove-Item -LiteralPath $marker -Force -ErrorAction SilentlyContinue
+  return $true
+}
+function Stop-ProjectNginx([string]$Root,[switch]$WhatIf) {
+  $info=Get-NginxMarker $Root
+  if (-not $info) {
+    if (Test-Port 8080) { throw 'Port 8080 is occupied but no project Nginx runtime marker was found. No process stopped.' }
+    return $false
+  }
+  if ($WhatIf) { Write-Output ('Would stop Nginx runtime: '+$info.runtime); return $true }
+  $exe=Join-Path $info.runtime 'nginx.exe'
+  if (Test-Path -LiteralPath $exe) {
+    $previous=$ErrorActionPreference
+    $ErrorActionPreference='Continue'
+    try { & $exe -p $info.runtime -c 'conf/yuqiao.conf' -s quit 2>&1 | Out-Null } catch { }
+    finally { $ErrorActionPreference=$previous }
+  }
+  for ($i=0;$i -lt 20;$i++) {
+    if (-not (Test-Port 8080) -and -not (Test-Port 8443)) { return $true }
+    Start-Sleep -Milliseconds 250
+  }
+  $connection=@(Get-NetTCPConnection -State Listen -LocalPort 8080,8443 -ErrorAction SilentlyContinue) | Select-Object -First 1
+  if (-not $connection) { return $true }
+  $owner=[int]$connection.OwningProcess
+  $processInfo=Get-CimInstance Win32_Process -Filter "ProcessId = $owner" -ErrorAction Stop
+  if ($processInfo.Name -ne 'nginx.exe' -or -not $processInfo.CommandLine -or -not $processInfo.CommandLine.Contains($info.runtime) -or -not $processInfo.CommandLine.Contains('yuqiao.conf')) {
+    throw 'Port 8080 is owned by another or unverifiable process. No unrelated process stopped.'
+  }
+  Stop-Process -Id $owner -ErrorAction Stop
+  for ($i=0;$i -lt 20;$i++) {
+    if (-not (Test-Port 8080) -and -not (Test-Port 8443)) { return $true }
+    Start-Sleep -Milliseconds 250
+  }
+  throw 'Nginx ports 8080/8443 are still occupied after a graceful stop.'
+}
 
 # Dot sourcing exposes the planner for synthetic tests without stopping services.
 if($MyInvocation.InvocationName -eq '.'){return}
@@ -59,11 +110,19 @@ try {
   $projectRoot=(Resolve-Path (Join-Path $PSScriptRoot '..')).Path
   $processes=@(Get-CimInstance Win32_Process -ErrorAction Stop)
   $connections=@(Get-NetTCPConnection -State Listen -ErrorAction Stop)
+  # Validate Node/Vite ownership before stopping anything.
   $plan=Get-YuqiaoStopPlan $projectRoot $processes $connections
-  if(-not $plan.Processes.Count){Write-Output 'Yuqiao Web/API is already stopped. MySQL and independent Ollama are unchanged.';exit 0}
   if($WhatIfPreference){
+    $null=Stop-ProjectCloudflared $projectRoot -WhatIf
+    $null=Stop-ProjectNginx $projectRoot -WhatIf
     foreach($p in $plan.Processes){$null=$PSCmdlet.ShouldProcess("$($p.Name) PID $($p.ProcessId)",'Stop this project process')}
     Write-Output 'Preview only. MySQL, independent Ollama, browsers and other projects are not targeted.';exit 0
+  }
+  $cloudflaredStopped=Stop-ProjectCloudflared $projectRoot
+  $nginxStopped=Stop-ProjectNginx $projectRoot
+  if(-not $plan.Processes.Count){
+    if($cloudflaredStopped -or $nginxStopped){Write-Output 'Yuqiao public tunnel/Nginx stopped. MySQL and independent Ollama are unchanged.';exit 0}
+    Write-Output 'Yuqiao Web/API is already stopped. MySQL and independent Ollama are unchanged.';exit 0
   }
   $approved=@{}
   foreach($p in $plan.Processes){if($PSCmdlet.ShouldProcess("$($p.Name) PID $($p.ProcessId)",'Stop this project process')){$approved[[int]$p.ProcessId]=$p}}
@@ -79,15 +138,15 @@ try {
   foreach($owner in $plan.Frontend){Stop-Verified $approved[$owner]}
   if($plan.Frontend.Count){
     for($i=0;$i -lt 20;$i++){
-      $live=@(Get-NetTCPConnection -State Listen -ErrorAction Stop | Where-Object {$_.LocalPort -in @(5173,5174)})
+      $live=@(Get-NetTCPConnection -State Listen -ErrorAction Stop | Where-Object {$_.LocalPort -in @(5173,5174,8080,8443)})
       if(-not $live.Count){break};Start-Sleep -Milliseconds 250
     }
   }
   # Clean up only surviving identities from the verified snapshot, newest children first.
   foreach($p in ($approved.Values | Sort-Object CreationDate -Descending)){Stop-Verified $p}
   for($i=0;$i -lt 20;$i++){
-    $remaining=@(Get-NetTCPConnection -State Listen -ErrorAction Stop | Where-Object {$_.LocalPort -in @(5173,5174)})
-    if(-not $remaining.Count){Write-Output 'Yuqiao Web/API and owned runtime workers stopped. MySQL and independent Ollama are unchanged.';exit 0}
+    $remaining=@(Get-NetTCPConnection -State Listen -ErrorAction Stop | Where-Object {$_.LocalPort -in @(5173,5174,8080,8443)})
+    if(-not $remaining.Count){Write-Output 'Yuqiao cloudflared/Nginx, Web/API and owned runtime workers stopped. MySQL and independent Ollama are unchanged.';exit 0}
     Start-Sleep -Milliseconds 250
   }
   throw 'Project ports remain occupied. No unrelated process will be stopped.'

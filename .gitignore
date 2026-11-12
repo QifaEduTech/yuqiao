@@ -10,6 +10,12 @@ node_modules/
 dist/
 build/
 outputs/
+tools/nginx/
+tools/cloudflared/
+nginx/logs/
+nginx/temp/
+nginx/generated/
+nginx/certs/
 *.log
 .runtime-logs/
 data/

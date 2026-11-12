@@ -23,6 +23,32 @@
 
 医院互助30词训练计划见[项目计划/医院互助场景训练计划_30动作_2026-11-11.xlsx](项目计划/医院互助场景训练计划_30动作_2026-11-11.xlsx)；`项目计划/项目进度数据.json`只是公开摘要，完整项目台账不随源码发布。该计划尚未实施，实时仍为谢谢、帮助、需要、我四词。
 
+## Nginx 一键启动（HTTP 局域网）
+
+默认由 Nginx 监听 `0.0.0.0:8080` 并反代 `/api/` 到 Node `127.0.0.1:5174`，同一 Wi-Fi/热点下的手机或电脑可访问：
+
+```text
+Start-Yuqiao.cmd          # 默认 HTTP 局域网 8080
+Start-Yuqiao.cmd -Https   # 可选 HTTPS 8443 + 本地 CA
+Start-Yuqiao.cmd -Dev     # Vite 开发 5173
+Start-Public.cmd          # Cloudflare 临时公网隧道
+Stop-Yuqiao.cmd           # 停 cloudflared、Nginx、Node
+```
+
+成功标志类似：
+
+```text
+Ready: http://127.0.0.1:8080/ -- LAN: http://<电脑IP>:8080/ -- sign in, then Settings > API Key
+```
+
+说明：
+
+- 默认 HTTP 只用于本机和同一局域网，不是公网。
+- 手机通过 HTTP 可以打开页面、登录、词典、学习和记录；手机摄像头需要 HTTPS，使用 `-Https` 并在手机信任 `http://<电脑IP>:8080/yuqiao-ca.crt`。
+- 防火墙脚本需管理员：`scripts/allow-lan-firewall.ps1`、`scripts/harden-public-firewall.ps1`。
+- 详细说明见[docs/Nginx反向代理.md](docs/Nginx反向代理.md)，公网见[docs/公网部署.md](docs/公网部署.md)。
+- 检查：`npm run nginx:prepare`、`npm run nginx:check`。
+
 ## 所需软件
 
 | 软件 | 版本和下载 | 用途 |
@@ -95,7 +121,7 @@ Ollama使用项目11435端口与models/ollama目录。直接在默认11434运行
 Deploy完成依赖、模型检查和构建后启动。日常双击`Start-Yuqiao.cmd`，成功标志：
 
 ```text
-Ready: http://127.0.0.1:5173/
+Ready: http://127.0.0.1:8080/
 ```
 
 首页`/`，学习`/learning.html`，训练`/training.html`，实时`/realtime.html`，词典`/sign-dictionary.html`。
@@ -123,7 +149,7 @@ Key按账号在后端DPAPI加密，不回显、不放前端。没有Key时不会
 - Node/Python找不到：重开终端，核对Node 24.x和`py -3.12`，不要混用32位或ARM环境。
 - MySQL connection/schema unavailable：检查本机服务、自己的凭据和10表；不要创建SQLite替代。
 - 复制旧mysql.json不可用：DPAPI不能跨Windows用户/机器直接迁移，重新用本机配置入口。
-- 端口5173/5174冲突：确认所属项目后处理，启动器不会杀掉其他项目。
+- 端口8080/8443/5174冲突：确认所属项目后处理，启动器不会杀掉其他项目。
 - 规划超时：检查11435的Ollama和qwen3:4b，保留原话，不能假装已转换。
 - 源不可访问：使用上列官方源重试，保留版本和哈希，不绕过验证挑战。
 - 新词未达标：按质量、分区、独立测试与旧动作回归处理，不因词典已有条目就宣称能识别。
