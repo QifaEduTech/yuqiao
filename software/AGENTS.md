@@ -6,6 +6,7 @@
 - `web`前端、`server`后端、`shared`词典/动作协议、`models`已有小权重、`scripts`运行与构建、`tests`隔离测试。React/TypeScript、Node、Python、MySQL；生产栈没有迁移为Spring或FastAPI，`server/service/fastapi_workflow.py`只是独立演示。
 - 四岗独立演示代码：`server/llm/minicpm_camera.py`（MiniCPM观察）、`server/vision/yolo_segmentation.py`（YOLO分割）、`server/service/fastapi_workflow.py`（FastAPI编排）、`scripts/project_cockpit.py`（项目驾驶舱）。四者互不import，`--demo`各自可跑，产出在`outputs/four-role/`；不进入正式Web、数据库或实时识别链路。文件地址、展示行和需敲行见`docs/四岗独立代码.md`与`docs/四岗代码摘录.md`。
 - Nginx默认HTTP `0.0.0.0:8080`，同一局域网可访问；`-Https`可选8443+本地CA，`-Dev`回Vite 5173；`Start-Public.cmd`/`-Public`为Cloudflare隧道；`Stop-Yuqiao.cmd`停cloudflared/Nginx/Node。Node只监听127.0.0.1:5174；默认Cookie非Secure，HTTPS/公网为Secure；`APP_ORIGINS`含本机+LAN IP/域名。运行目录必须是ASCII `%LOCALAPPDATA%\Yuqiao\nginx-runtime`，`runtime/web`为指向`web/dist`的junction；配置由`scripts/prepare-nginx.mjs`生成。手机HTTP可打开页面但摄像头受浏览器限制，手机摄像头需`-Https`并信任本地CA。防火墙脚本需管理员。
+- 项目经理演示只依赖 Python 标准库；用 `Run-ProjectCockpit.cmd` 或 `py -3 scripts/project_cockpit.py`。不要复制其他电脑的 `.venv`/`.venv-sign`/`.venv-anny`，它们写死了原机器 Python 绝对路径，换机后用 Deploy-Web.cmd 重建。
 - `npm run agent:brief`查看入口，`npm run agent:check`检查公共运行文件。这些命令不读取私人数据，不证明独立准确率或完整部署成功。
 - 先按README安装MySQL并导入`database/schema.sql`的10张空表；Configure-Database.cmd只校验表可访问并写新机DPAPI连接配置，不创建/清空数据库、不覆盖已有配置。API Key在注册后的账号设置中填写。
 - 发布只在新分支提交，遵循根目录的审阅流程，不直接推main、不自行合并。负责人姓名、飞书链接与比赛最终版本未确认，不能编造。

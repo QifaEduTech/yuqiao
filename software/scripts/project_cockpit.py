@@ -14,9 +14,13 @@
 
 独立运行
 --------
-    python scripts/project_cockpit.py --demo
+    Run-ProjectCockpit.cmd                  # Windows 自动找本机 Python 3.8+
+    py -3 scripts/project_cockpit.py
     python scripts/project_cockpit.py
     python scripts/project_cockpit.py --live          # 额外检查三个模块的健康地址
+
+只依赖 Python 标准库，不需要 .venv。不要把其他电脑的 .venv 复制过来，
+它里面写死了原机器的 Python 绝对路径。
 
 输出
 ----

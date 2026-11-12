@@ -17,7 +17,13 @@
 | 大模型工程师 | `server/llm/minicpm_camera.py` | `python server/llm/minicpm_camera.py --demo` |
 | 视觉工程师 | `server/vision/yolo_segmentation.py` | `python server/vision/yolo_segmentation.py --demo` |
 | AI应用工程师 | `server/service/fastapi_workflow.py` | `python server/service/fastapi_workflow.py --demo` |
-| 项目经理 | `scripts/project_cockpit.py` | `python scripts/project_cockpit.py` |
+| 项目经理 | `scripts/project_cockpit.py` | `Run-ProjectCockpit.cmd` 或 `py -3 scripts/project_cockpit.py` |
+
+### Windows 换机运行（四岗演示代码）
+
+- 项目经理模块只依赖 Python 标准库，**不需要 `.venv`**。双击 `Run-ProjectCockpit.cmd`，它会自动寻找本机的 `py -3` 或 `python`。
+- 不要把其他电脑的 `.venv`、`.venv-sign`、`.venv-anny` 整个复制过来；这些目录写死了原机器的 Python 绝对路径，换机后会报 `did not find executable ...`。新机按本 README 重新安装依赖。
+- 出现 `did not find executable at C:/Users/.../python.exe` 时，说明用了旧的虚拟环境；改用 `Run-ProjectCockpit.cmd` 或系统 Python 即可。
 
 运行产出在`outputs/four-role/`，已被Git忽略。完整代码、文件地址和展示行号见[docs/四岗独立代码.md](docs/四岗独立代码.md)；现场需要敲出的行见[docs/四岗代码摘录.md](docs/四岗代码摘录.md)，源码内用`# [敲]`标记。真实MiniCPM、YOLO和FastAPI服务需要各自依赖和模型；`--demo`只用标准库。不能把demo结果称为识别准确率或医院现场验收。
 
