@@ -20,15 +20,20 @@ def emit(value):
     print(json.dumps(value,ensure_ascii=False),flush=True)
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--target',choices=['auto','thanks','help'],default='auto');parser.add_argument('--help-engine',choices=['video-tcn','geometry'],default='video-tcn');parser.add_argument('--trained-models',default='[]');args=parser.parse_args()
-    from trained_runtime import TrainedRuntime
-    trained=TrainedRuntime(json.loads(args.trained_models))
+    parser=argparse.ArgumentParser();parser.add_argument('--target',choices=['auto','thanks','help'],default='auto');parser.add_argument('--help-engine',choices=['video-tcn','geometry'],default='video-tcn');parser.add_argument('--trained-models',default='[]');parser.add_argument('--flow',choices=['words','paragraph'],default='words');args=parser.parse_args()
+    if args.flow=='paragraph' and args.target!='auto':raise ValueError('paragraph_requires_auto')
+    from realtime_paragraph import ParagraphBuffer
+    paragraph=ParagraphBuffer() if args.flow=='paragraph' else None
+    from trained_runtime import TrainedRuntime,TrainedLiveRecognizer
+    entries=json.loads(args.trained_models)
+    trained=TrainedRuntime(entries) if paragraph is None else None
+    additional={e['text']:TrainedLiveRecognizer(e) for e in entries} if paragraph is not None else {}
     engine,inp,out=classifier()
     window=LiveRecognizer(lambda sequence:predict(engine,inp,out,sequence))
     if args.target=='auto':
         from realtime_multi import MultiLiveRecognizer
         from need_live import NeedLiveRecognizer
-        multi=MultiLiveRecognizer(lambda sequence:predict(engine,inp,out,sequence),need_detector=NeedLiveRecognizer(),me_detector=MeLiveRecognizer())
+        multi=MultiLiveRecognizer(lambda sequence:predict(engine,inp,out,sequence),need_detector=NeedLiveRecognizer(),me_detector=MeLiveRecognizer(),continuous=paragraph is not None,additional_detectors=additional)
     if args.target=='help':
         if args.help_engine=='video-tcn':
             from help_tcn_live import HelpTCNLive
@@ -39,7 +44,7 @@ def main():
     with ExitStack() as stack:
         hands=stack.enter_context(hand_graph())
         pose=stack.enter_context(pose_graph()) if args.target=='auto' else None
-        emit({'type':'ready','protocol':CONFIG['protocol'],'target':args.target,'helpEngine':args.help_engine if args.target in ('help','auto') else None})
+        emit({'type':'ready','protocol':CONFIG['protocol'],'target':args.target,'helpEngine':args.help_engine if args.target in ('help','auto') else None,'flow':args.flow})
         last_seq=0;previous_timestamp=None
         while True:
             line=sys.stdin.readline(400000)
@@ -56,7 +61,7 @@ def main():
             if args.target=='auto':
                 observation,value,vector,me_input,aspect=observe_bgr(frame,hands,pose,timestamp-previous_timestamp if previous_timestamp is not None else 1/30)
                 result=multi.push(timestamp,value,vector,aspect_ratio=aspect,me_input=me_input)
-                result=trained.merge(timestamp,me_input,result)
+                if trained is not None:result=trained.merge(timestamp,me_input,result)
             else:
                 rgb=cv2.cvtColor(cv2.flip(frame,1),cv2.COLOR_BGR2RGB)
                 observation=hands.process({'image':rgb});value=features(observation);result=window.push(timestamp,value)
@@ -77,6 +82,12 @@ def main():
                 result={**trial,'status':'candidate' if trial['candidate'] else 'waiting' if not chosen else 'observing',
                         'samples':len(help_window.samples),'handSamples':sum(bool(h) for _,h in help_window.samples),'helpEngine':'geometry','modelVersion':None}
             if args.target=='auto':result['meCheck']=multi.me.latest_check if multi.me.latest_check_time==timestamp else None
+            if paragraph is not None:
+                finish=message.get('finishParagraph') is True
+                if finish and not result.get('event'):
+                    confirmed=multi.finish_for_paragraph(timestamp)
+                    if confirmed is not None:result={**result,**confirmed}
+                result['paragraph']=paragraph.push(timestamp,result,value is not None or bool(vector[74] or vector[150]),finish)
             previous_timestamp=timestamp
             emit({'type':'frame','seq':seq,**result,'handTracking':hand_overlay(observation,int(frame.shape[1]),int(frame.shape[0])),
                   'processingMs':round((time.perf_counter()-started)*1000,1)})

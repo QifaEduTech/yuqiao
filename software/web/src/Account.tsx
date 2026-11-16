@@ -5,8 +5,14 @@ import {HistoryVideoRecognition} from './HistoryVideoRecognition';
 import {PracticeHistory} from './PracticeHistory';
 import {SampleRegistration} from './SampleRegistration';
 
-export function AuthDialog({ open, onClose, onSignedIn,storageHint }: { open: boolean; onClose: () => void; onSignedIn: (user: User) => void;storageHint?:string }) {
-  const dialog = useRef<HTMLDialogElement>(null);
+export type AuthEntry='normal'|'avatar'|'camera';
+export const authEntries:Record<AuthEntry,{name:string;description:string}> = {
+  normal:{name:'正常端',description:'输入文字或语音，数字人播放对应动作；也可以查看记录、词典和练习。'},
+  avatar:{name:'数字人端',description:'登录后只显示数字人；动作由正常端发送，本端不提供输入或识别。'},
+  camera:{name:'摄像头端',description:'登录后直接开启摄像头，识别到手语即播报；不保存日常音视频。'},
+};
+
+export function AuthForm({ onSignedIn, entry='normal', storageHint }: { onSignedIn: (user: User) => void; entry?: AuthEntry; storageHint?: string }) {
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -27,15 +33,11 @@ export function AuthDialog({ open, onClose, onSignedIn,storageHint }: { open: bo
     }catch(caught){if(captchaRequest.current===controller&&(!controller.signal.aborted||timedOut))setCaptchaError(timedOut?'验证码加载超时，请点击重试。':caught instanceof Error?caught.message:'验证码加载失败，请重试。');}
     finally{clearTimeout(timeout);if(captchaRequest.current===controller)setCaptchaLoading(false);}
   },[]);
-  useEffect(() => {
-    if (open) { dialog.current?.showModal(); setError(''); }
-    else { dialog.current?.close(); setPassword(''); setConfirmation(''); setVisible(false); }
-  }, [open]);
   useEffect(()=>{
-    if(open&&mode==='login')void refreshCaptcha();
+    if(mode==='login')void refreshCaptcha();
     else{setCaptcha(null);setCaptchaCode('');setCaptchaError('');setCaptchaLoading(false);}
     return()=>{captchaRequest.current?.abort();loginRequest.current?.abort();};
-  },[open,mode,refreshCaptcha]);
+  },[mode,refreshCaptcha]);
   async function submit(event: FormEvent) {
     event.preventDefault();
     if (mode === 'register' && password !== confirmation) { setError('两次输入的密码不一致。'); return; }
@@ -45,13 +47,12 @@ export function AuthDialog({ open, onClose, onSignedIn,storageHint }: { open: bo
     try {
       const result = await api<{ user: User }>(`/api/auth/${mode}`, { method: 'POST', body: JSON.stringify({ username, password,...(mode==='login'?{captchaId:captcha?.id,captchaCode:captchaCode.trim()}:{}) }),signal:controller.signal });
       if(controller.signal.aborted)return;
-      onSignedIn(result.user); setPassword(''); setConfirmation(''); onClose();
+      setPassword(''); setConfirmation(''); onSignedIn(result.user);
     } catch (caught) { if(!controller.signal.aborted){setError(caught instanceof Error ? caught.message : '操作失败，请重试。');if(mode==='login')void refreshCaptcha();} }
     finally { setBusy(false); }
   }
-  return <dialog ref={dialog} className="help-dialog auth-dialog" aria-labelledby="auth-title" onCancel={event => { event.preventDefault(); if (!busy) onClose(); }}>
-    <div className="dialog-heading"><span className="section-kicker">你的语桥账号</span><button className="icon-button" disabled={busy} aria-label="关闭登录窗口" onClick={onClose}><X size={18} /></button></div>
-    <h2 id="auth-title">{mode === 'login' ? '欢迎回来' : '创建你的账号'}</h2><p className="auth-description">登录后，可以保存文字与手语录像，随时回来查看。</p>
+  return <>
+    <h2 id="auth-title">{mode === 'login' ? '欢迎回来' : '创建你的账号'}</h2><p className="auth-description">{entry==='normal'?authEntries.normal.description:`${authEntries[entry].name} · ${authEntries[entry].description}`}</p>
     <div className="input-tabs"><button aria-pressed={mode === 'login'} className={mode === 'login' ? 'selected' : ''} disabled={busy} onClick={() => { setMode('login'); setError(''); setPassword(''); setConfirmation(''); }}>登录</button><button aria-pressed={mode === 'register'} className={mode === 'register' ? 'selected' : ''} disabled={busy} onClick={() => { setMode('register'); setError(''); setPassword(''); setConfirmation(''); }}>注册</button></div>
     <form onSubmit={event => void submit(event)}><label className="form-label" htmlFor="account-name">用户名</label><input id="account-name" autoComplete="username" required minLength={3} maxLength={24} value={username} onChange={event => setUsername(event.target.value)} placeholder="3–24 位汉字、字母、数字或下划线" disabled={busy} />
       <label className="form-label" htmlFor="account-password">密码</label><div className="password-input"><input id="account-password" type={visible ? 'text' : 'password'} autoComplete={mode === 'register' ? 'new-password' : 'current-password'} required minLength={10} maxLength={128} value={password} onChange={event => setPassword(event.target.value)} placeholder="至少 10 位" disabled={busy} /><button type="button" aria-label={visible ? '隐藏密码' : '显示密码'} onClick={() => setVisible(!visible)}>{visible ? <EyeOff size={16} /> : <Eye size={16} />}</button></div>
@@ -63,6 +64,18 @@ export function AuthDialog({ open, onClose, onSignedIn,storageHint }: { open: bo
       {error && <div className="inline-notice notice-error" role="alert">{error}</div>}
       <button className="primary-button" type="submit" disabled={busy||(mode==='login'&&(captchaLoading||!captcha||captchaCode.trim().length!==5))}>{busy ? '正在处理…' : mode === 'login' ? '登录账号' : '注册并登录'}<ArrowRight size={16} /></button>
     </form><p className="small-hint">{storageHint??'账号与记录由后端管理，私人记录仅属于当前账号。'}</p>
+  </>;
+}
+
+export function AuthDialog({ open, onClose, onSignedIn,storageHint }: { open: boolean; onClose: () => void; onSignedIn: (user: User) => void;storageHint?:string }) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    if (open) dialog.current?.showModal();
+    else dialog.current?.close();
+  }, [open]);
+  return <dialog ref={dialog} className="help-dialog auth-dialog" aria-labelledby="auth-title" onCancel={event => { event.preventDefault(); onClose(); }}>
+    <div className="dialog-heading"><span className="section-kicker">你的语桥账号</span><button className="icon-button" aria-label="关闭登录窗口" onClick={onClose}><X size={18} /></button></div>
+    {open && <AuthForm onSignedIn={user => { onSignedIn(user); onClose(); }} storageHint={storageHint} />}
   </dialog>;
 }
 

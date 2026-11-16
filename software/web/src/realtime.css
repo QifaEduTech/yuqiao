@@ -3,3 +3,5 @@
 .realtime-page .learning-vocabulary{display:flex;gap:10px;flex-wrap:wrap}.realtime-page .learning-vocabulary>span{padding:7px 16px;background:#e8f3ed;border:1px solid #cee3d6;border-radius:20px;color:#276b54;font-size:14px}.realtime-page details.realtime-scope{margin:16px 0;padding:12px;border:1px solid #dce7e0;border-radius:9px}.realtime-page details.realtime-scope summary{cursor:pointer}
 
 .realtime-audio-fallback{width:100%;max-width:100%;margin:12px 0}
+
+.realtime-paragraph{padding:22px;border:1px solid #d4e3d7;border-radius:14px;background:#f0f7f3;margin:18px 0;overflow-wrap:anywhere}.realtime-paragraph h3{font-size:14px;color:#396750;margin:0 0 12px}.realtime-paragraph p{font-size:24px;line-height:1.8;margin:0 0 10px}.realtime-paragraph span{font-size:12px;color:#6c8179}.realtime-paragraph.is-final{background:#fff}.realtime-paragraph.needs-review{background:#fff8ed;border-color:#ead5aa}.paragraph-finish{margin:0 0 16px;align-self:flex-start}.paragraph-history:empty{display:none}

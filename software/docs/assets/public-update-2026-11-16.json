@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-16",
+  "scope": "public source update; no private records or machine configuration",
+  "features": [
+    "三端登录与同账号显示控制",
+    "医院互助30个未专业核验的数字人动作与14句场景",
+    "通用已接入动作连续成段",
+    "训练卡片六文件夹与最简录制",
+    "自动批次记录，取消4秒资料限制与旧词回归前置"
+  ],
+  "validation": {
+    "build": "passed in public software directory",
+    "serverTests": {
+      "totalDistinct": 34,
+      "passed": 34,
+      "note": "首轮30通过、2失败、2跳过；缺少公开目录Python环境的12项实时用例复用原机环境复核12/12通过。环境不随源码提交。"
+    },
+    "browser": {
+      "passed": 26,
+      "includesSetup": 1,
+      "scope": "isolated test database, simulated camera/audio; selected suites only"
+    },
+    "python": {
+      "currentWordExam": 5,
+      "paragraph": 13,
+      "note": "使用原机Python环境运行公开副本源码，合成数据"
+    },
+    "publicEntryCheck": "passed"
+  },
+  "notValidated": [
+    "全新电脑完整安装",
+    "另一台电脑HTTPS摄像头与真人手语/扬声器完整链路",
+    "自然连续/跨使用者/30词识别效果",
+    "全量端到端测试"
+  ],
+  "excluded": [
+    "private data, accounts, recordings, backups",
+    "credentials and DPAPI ciphertext",
+    "environments, caches and downloaded large models",
+    "private Git history, transcript and PPT"
+  ],
+  "remaining": [
+    "配对码/管理员固定绑定/指令去重",
+    "每账号20个自训练动作容量扩展",
+    "数字人专业核验随制作推进"
+  ]
+}

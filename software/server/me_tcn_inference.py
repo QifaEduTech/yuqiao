@@ -8,7 +8,8 @@ ROOT=Path(__file__).resolve().parents[1]
 SHAPES={'first.weight':(32,DIMENSIONS,3),'first.bias':(32,),'second.weight':(32,32,3),'second.bias':(32,),'classifier.weight':(1,64),'classifier.bias':(1,),'mean':(DIMENSIONS,),'std':(DIMENSIONS,)}
 
 class MeTCN(HelpTCN):
-    def __init__(self,arrays=None,directory=ROOT/'models/me-video-tcn/experimental-v1'):
+    def __init__(self,arrays=None,directory=ROOT/'models/me-video-tcn/experimental-v1',max_frames=384):
+        self.max_frames=max_frames
         self.manifest=None
         if arrays is None:
             directory=Path(directory);self.manifest=json.loads((directory/'manifest.json').read_text(encoding='utf8'))
@@ -25,7 +26,7 @@ class MeTCN(HelpTCN):
 
     def probability(self,frames):
         x=np.asarray(frames,np.float32)
-        if x.ndim!=2 or x.shape[1]!=DIMENSIONS or not 2<=len(x)<=384 or not np.isfinite(x).all():raise ValueError('invalid_me_sequence')
+        if x.ndim!=2 or x.shape[1]!=DIMENSIONS or not 2<=len(x)<=self.max_frames or not np.isfinite(x).all():raise ValueError('invalid_me_sequence')
         h=self.conv((x-self.w['mean'])/self.w['std'],'first',1);h=self.conv(h,'second',2)
         logit=float((np.r_[h.mean(0),h.max(0)]@self.w['classifier.weight'].T+self.w['classifier.bias'])[0])
         return 1/(1+math.exp(-logit)) if logit>=0 else math.exp(logit)/(1+math.exp(logit))

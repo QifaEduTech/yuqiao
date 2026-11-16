@@ -1,4 +1,5 @@
 import {test,expect,type Page} from '@playwright/test';
+test.use({storageState:{cookies:[],origins:[]}});
 const password='test-passphrase-2026';
 const avatarPng=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==','base64');
 async function register(page:Page,name:string){

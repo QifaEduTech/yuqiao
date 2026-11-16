@@ -19,6 +19,10 @@ export default defineConfig({
       args: ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream', '--enable-unsafe-swiftshader'],
     },
   },
+  projects: [
+    { name: 'setup', testMatch: /auth\.setup\.ts/ },
+    { name: 'chromium', dependencies: ['setup'], testIgnore: /auth\.setup\.ts/, use: { storageState: '.runtime-logs/e2e-auth.json' } },
+  ],
   webServer: [{
     command: 'node scripts/run-local.mjs dev --port 5183 --strictPort',
     url: 'http://127.0.0.1:5183',

@@ -1,0 +1,364 @@
+{
+  "schemaVersion": 1,
+  "id": "hospital-mutual-aid-1",
+  "title": "医院互助：第一次就诊",
+  "status": "animation_trial_unverified",
+  "recognitionReady": false,
+  "motionReview": "user_viewed_not_professional",
+  "motions": [
+    {
+      "id": "csl.hello",
+      "label": "你好",
+      "version": "user-description-1",
+      "duration": 4,
+      "activeFrom": 0.6,
+      "activeTo": 3.2,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.me",
+      "label": "我",
+      "version": "user-description-1",
+      "duration": 3,
+      "activeFrom": 0.7,
+      "activeTo": 2.2,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.1874",
+      "label": "需要",
+      "version": "user-description-1",
+      "duration": 3.2,
+      "activeFrom": 0.7,
+      "activeTo": 2.4,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.1900",
+      "label": "帮助",
+      "version": "source-reference-1",
+      "duration": 3.6,
+      "activeFrom": 0.7,
+      "activeTo": 2.8,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.good",
+      "label": "好",
+      "version": "user-description-1",
+      "duration": 3,
+      "activeFrom": 0.7,
+      "activeTo": 2.2,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.1932",
+      "label": "请",
+      "version": "source-reference-1",
+      "duration": 3.2,
+      "activeFrom": 0.65,
+      "activeTo": 2.4,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.3786",
+      "label": "这里",
+      "version": "user-standard-1",
+      "duration": 3.2,
+      "activeFrom": 0.6,
+      "activeTo": 2.5,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.4039",
+      "label": "挂号",
+      "version": "user-standard-1",
+      "duration": 4.2,
+      "activeFrom": 0.6,
+      "activeTo": 3.4,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.1952",
+      "label": "给",
+      "version": "source-reference-1",
+      "duration": 3.4,
+      "activeFrom": 0.65,
+      "activeTo": 2.25,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.2512",
+      "label": "身份证",
+      "version": "user-standard-1",
+      "duration": 4,
+      "activeFrom": 0.6,
+      "activeTo": 3.2,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.3985",
+      "label": "门诊",
+      "version": "user-standard-1",
+      "duration": 4,
+      "activeFrom": 0.65,
+      "activeTo": 3,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.1938",
+      "label": "等候",
+      "version": "source-reference-1",
+      "duration": 3.4,
+      "activeFrom": 0.8,
+      "activeTo": 2.5,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.thanks",
+      "label": "谢谢",
+      "version": "user-description-3",
+      "duration": 4,
+      "activeFrom": 0.6,
+      "activeTo": 3.3,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.3789",
+      "label": "哪里",
+      "version": "user-standard-1",
+      "duration": 3,
+      "activeFrom": 0.6,
+      "activeTo": 2.3,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.1606",
+      "label": "痛",
+      "version": "user-standard-1",
+      "duration": 3.2,
+      "activeFrom": 0.7,
+      "activeTo": 2.5,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.3928",
+      "label": "发烧",
+      "version": "user-standard-1",
+      "duration": 3.4,
+      "activeFrom": 0.65,
+      "activeTo": 2.7,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.3758",
+      "label": "没有",
+      "version": "user-standard-1",
+      "duration": 3.2,
+      "activeFrom": 0.6,
+      "activeTo": 2.5,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.4040",
+      "label": "过敏",
+      "version": "user-standard-1",
+      "duration": 3.2,
+      "activeFrom": 0.7,
+      "activeTo": 2.2,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.208",
+      "label": "可以",
+      "version": "user-standard-1",
+      "duration": 3.4,
+      "activeFrom": 0.65,
+      "activeTo": 2.7,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.2379",
+      "label": "检查",
+      "version": "user-standard-1",
+      "duration": 3.6,
+      "activeFrom": 0.65,
+      "activeTo": 2.8,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.123",
+      "label": "报告",
+      "version": "user-standard-1",
+      "duration": 4,
+      "activeFrom": 0.6,
+      "activeTo": 3.1,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.3757",
+      "label": "有",
+      "version": "user-standard-1",
+      "duration": 3,
+      "activeFrom": 0.7,
+      "activeTo": 2.1,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.ref.bmcx.3964",
+      "label": "药",
+      "version": "source-reference-1",
+      "duration": 3.6,
+      "activeFrom": 0.65,
+      "activeTo": 2.9,
+      "status": "authored_unverified"
+    },
+    {
+      "id": "csl.goodbye",
+      "label": "再见",
+      "version": "user-description-1",
+      "duration": 4,
+      "activeFrom": 0.7,
+      "activeTo": 3.1,
+      "status": "authored_unverified"
+    }
+  ],
+  "dialogue": [
+    {
+      "role": "志愿者",
+      "text": "你好。",
+      "signText": "你好",
+      "motionIds": [
+        "csl.hello"
+      ]
+    },
+    {
+      "role": "聋人患者",
+      "text": "你好，我需要帮助。",
+      "signText": "你好 我 需要 帮助",
+      "motionIds": [
+        "csl.hello",
+        "csl.me",
+        "csl.ref.bmcx.1874",
+        "csl.ref.bmcx.1900"
+      ]
+    },
+    {
+      "role": "志愿者",
+      "text": "好，请这边。",
+      "signText": "好 请 这里",
+      "motionIds": [
+        "csl.good",
+        "csl.ref.bmcx.1932",
+        "csl.ref.bmcx.3786"
+      ]
+    },
+    {
+      "role": "聋人患者",
+      "text": "我第一次来，需要挂号。",
+      "signText": "我 需要 挂号",
+      "motionIds": [
+        "csl.me",
+        "csl.ref.bmcx.1874",
+        "csl.ref.bmcx.4039"
+      ]
+    },
+    {
+      "role": "志愿者",
+      "text": "请给身份证。",
+      "signText": "请 给 身份证",
+      "motionIds": [
+        "csl.ref.bmcx.1932",
+        "csl.ref.bmcx.1952",
+        "csl.ref.bmcx.2512"
+      ]
+    },
+    {
+      "role": "聋人患者",
+      "text": "给。",
+      "signText": "给",
+      "motionIds": [
+        "csl.ref.bmcx.1952"
+      ]
+    },
+    {
+      "role": "志愿者",
+      "text": "挂号在门诊，请在这里等候。",
+      "signText": "挂号 门诊 这里 等候",
+      "motionIds": [
+        "csl.ref.bmcx.4039",
+        "csl.ref.bmcx.3985",
+        "csl.ref.bmcx.3786",
+        "csl.ref.bmcx.1938"
+      ]
+    },
+    {
+      "role": "聋人患者",
+      "text": "谢谢。",
+      "signText": "谢谢",
+      "motionIds": [
+        "csl.thanks"
+      ]
+    },
+    {
+      "role": "医生",
+      "text": "哪里痛？",
+      "signText": "哪里 痛",
+      "motionIds": [
+        "csl.ref.bmcx.3789",
+        "csl.ref.bmcx.1606"
+      ]
+    },
+    {
+      "role": "聋人患者",
+      "text": "这里痛，发烧，没有过敏。",
+      "signText": "这里 痛 发烧 没有 过敏",
+      "motionIds": [
+        "csl.ref.bmcx.3786",
+        "csl.ref.bmcx.1606",
+        "csl.ref.bmcx.3928",
+        "csl.ref.bmcx.3758",
+        "csl.ref.bmcx.4040"
+      ]
+    },
+    {
+      "role": "医生",
+      "text": "可以检查，报告在这里。",
+      "signText": "可以 检查 报告 这里",
+      "motionIds": [
+        "csl.ref.bmcx.208",
+        "csl.ref.bmcx.2379",
+        "csl.ref.bmcx.123",
+        "csl.ref.bmcx.3786"
+      ]
+    },
+    {
+      "role": "聋人患者",
+      "text": "有药吗？",
+      "signText": "有 药",
+      "motionIds": [
+        "csl.ref.bmcx.3757",
+        "csl.ref.bmcx.3964"
+      ]
+    },
+    {
+      "role": "医生",
+      "text": "有，可以。",
+      "signText": "有 可以",
+      "motionIds": [
+        "csl.ref.bmcx.3757",
+        "csl.ref.bmcx.208"
+      ]
+    },
+    {
+      "role": "聋人患者",
+      "text": "谢谢，再见。",
+      "signText": "谢谢 再见",
+      "motionIds": [
+        "csl.thanks",
+        "csl.goodbye"
+      ]
+    }
+  ],
+  "note": "数字人动作演示，只表达当前动作库能覆盖的词语；不是逐字手语翻译，也不替代医生诊断、挂号受理、检查安排或医疗决策。未出现的语义不自动补词。"
+}

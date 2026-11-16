@@ -120,6 +120,8 @@ export async function createApp({ dataDir, publicDir, speechService, signService
   }
   db.prepare('DELETE FROM sessions WHERE expires_at < ?').run(Date.now());
   const throttle = new Map();
+  // 端2 数字人显示端：同一账号的显示会话订阅动作指令；只转发动作，不保存输入。
+  const displayClients = new Map();
   const dummySalt = randomBytes(16).toString('hex');
   const dummyHash = await scrypt('not-a-real-password', dummySalt, 64);
   function cookieToken(req) {
@@ -233,9 +235,9 @@ export async function createApp({ dataDir, publicDir, speechService, signService
         return send(res,200,result);
       }
       if(url.pathname==='/api/sign/realtime/sessions'&&method==='POST'){
-        const body=await readJson(req);if(!body||Array.isArray(body)||Object.keys(body).some(k=>!['target','helpEngine'].includes(k))||(body.target!==undefined&&!['auto','thanks','help'].includes(body.target))||(body.helpEngine!==undefined&&(body.target!=='help'||!['video-tcn','geometry'].includes(body.helpEngine))))throw new HttpError(400,'启动参数无效。');
+        const body=await readJson(req);if(!body||Array.isArray(body)||Object.keys(body).some(k=>!['target','helpEngine','flow'].includes(k))||(body.flow!==undefined&&!['words','paragraph'].includes(body.flow))||(body.target!==undefined&&!['auto','thanks','help'].includes(body.target))||(body.helpEngine!==undefined&&(body.target!=='help'||!['video-tcn','geometry'].includes(body.helpEngine))))throw new HttpError(400,'启动参数无效。');
         const controller=new AbortController(),cancel=()=>{if(!res.writableEnded)controller.abort();};res.on('close',cancel);
-        try{const result=await realtime.start(controller.signal,body.target??'auto',body.helpEngine,{models:training.active(userFor(req)?.id),ownerId:userFor(req)?.id??null});if(res.destroyed){realtime.stop(result.session);return;}return send(res,201,result);}finally{res.off('close',cancel);}
+        try{const result=await realtime.start(controller.signal,body.target??'auto',body.helpEngine,{models:training.active(userFor(req)?.id),ownerId:userFor(req)?.id??null,flow:body.flow??'words'});if(res.destroyed){realtime.stop(result.session);return;}return send(res,201,result);}finally{res.off('close',cancel);}
       }
       if(url.pathname==='/api/sign/realtime/sessions'&&method==='DELETE')return send(res,200,realtime.stop(req.headers['x-yuqiao-live-session']));
       if(url.pathname==='/api/sign/realtime/frames'&&method==='POST'){
@@ -243,7 +245,7 @@ export async function createApp({ dataDir, publicDir, speechService, signService
         if(req.headers['content-type']!=='image/jpeg')throw new HttpError(415,'实时画面仅支持JPEG。');
         const frame=await readBody(req,liveConfig.maxJpegBytes);
         const controller=new AbortController(),cancel=()=>{if(!res.writableEnded)controller.abort();};res.on('close',cancel);
-        try{const result=await realtime.frame(req.headers['x-yuqiao-live-session'],frame,Number(req.headers['x-yuqiao-frame-seq']),Number(req.headers['x-yuqiao-capture-ms']),controller.signal);if(!res.destroyed)return send(res,200,result);return;}finally{res.off('close',cancel);}
+        try{const result=await realtime.frame(req.headers['x-yuqiao-live-session'],frame,Number(req.headers['x-yuqiao-frame-seq']),Number(req.headers['x-yuqiao-capture-ms']),controller.signal,{finishParagraph:req.headers['x-yuqiao-finish-paragraph']==='1'});if(!res.destroyed)return send(res,200,result);return;}finally{res.off('close',cancel);}
       }
       if (url.pathname === '/api/profile/tts-key' && ['GET','PUT','DELETE'].includes(method)) {
         const user=requireUser(req);
@@ -544,6 +546,57 @@ export async function createApp({ dataDir, publicDir, speechService, signService
         if (token) db.prepare('DELETE FROM sessions WHERE token_hash=?').run(digest(token));
         res.setHeader('Set-Cookie', 'yuqiao_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0');
         return send(res, 200, { ok: true });
+      }
+      if (url.pathname === '/api/display/stream' && method === 'GET') {
+        const user = requireUser(req);
+        res.writeHead(200, {
+          'Content-Type': 'text/event-stream; charset=utf-8',
+          'Cache-Control': 'no-cache, no-transform',
+          'Connection': 'keep-alive',
+          'X-Accel-Buffering': 'no',
+        });
+        res.write('retry: 3000\n\nevent: ready\ndata: {}\n\n');
+        const clients = displayClients.get(user.id) ?? new Set();
+        displayClients.set(user.id, clients);
+        clients.add(res);
+        const heartbeat = setInterval(() => { try { res.write(': ping\n\n'); } catch { /* closed */ } }, 20000);
+        const close = () => {
+          clearInterval(heartbeat);
+          clients.delete(res);
+          if (!clients.size) displayClients.delete(user.id);
+        };
+        req.on('close', close);
+        res.on('error', close);
+        return;
+      }
+      if (url.pathname === '/api/display/command' && method === 'POST') {
+        const user = requireUser(req);
+        const body = await readJson(req);
+        if (body.control !== undefined) {
+          if (!['play', 'pause', 'replay'].includes(body.control)) throw new HttpError(400, '动作控制无效。');
+          const controlPayload = JSON.stringify({ control: body.control, sentAt: Date.now() });
+          const controlClients = displayClients.get(user.id);
+          for (const client of controlClients ?? []) { try { client.write(`event: command\ndata: ${controlPayload}\n\n`); } catch { /* closed */ } }
+          return send(res, 200, { delivered: controlClients?.size ?? 0 });
+        }
+        const preview = body.preview ?? null;
+        if (preview !== null) {
+          if (typeof preview !== 'object' || Array.isArray(preview) || preview.status !== 'authored_unverified') throw new HttpError(400, '动作指令无效。');
+          const steps = preview.kind === 'sequence' ? preview.steps : null;
+          const ids = steps ? (Array.isArray(steps) ? steps.map(step => step?.id) : []) : [preview.id];
+          if (!ids.length || ids.length > 10 || ids.some(id => !motionCatalog.entries.some(entry => entry.id === id))) throw new HttpError(400, '动作指令包含未知动作。');
+          if (typeof preview.label !== 'string' || !preview.label.trim() || preview.label.length > 200) throw new HttpError(400, '动作指令无效。');
+          if (steps) {
+            if (!(Number(preview.duration) > 0 && Number(preview.duration) <= 30)) throw new HttpError(400, '动作指令时长无效。');
+            if (steps.some(step => !step || !motionCatalog.entries.some(entry => entry.id === step.id && entry.version === step.version))) throw new HttpError(400, '动作指令版本不匹配。');
+          } else if (!motionCatalog.entries.some(entry => entry.id === preview.id && entry.version === preview.version)) {
+            throw new HttpError(400, '动作指令版本不匹配。');
+          }
+        }
+        const payload = JSON.stringify({ preview, sentAt: Date.now() });
+        const clients = displayClients.get(user.id);
+        for (const client of clients ?? []) { try { client.write(`event: command\ndata: ${payload}\n\n`); } catch { /* closed */ } }
+        return send(res, 200, { delivered: clients?.size ?? 0 });
       }
       if (url.pathname === '/api/records' && method === 'GET') {
         const user = requireUser(req);

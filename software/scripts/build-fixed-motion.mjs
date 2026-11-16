@@ -3,7 +3,7 @@ import {mkdir,writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 const root=resolve(import.meta.dirname,'..');process.env.TEMP=process.env.TMP=resolve(root,'.runtime-logs/tmp');
 const id=process.argv[2];
-if(!['csl.hello','csl.thanks','csl.you','csl.goodbye','csl.sorry','csl.me','csl.love','csl.good','csl.yes','csl.not','csl.ref.bmcx.1874','csl.ref.bmcx.1900','csl.ref.bmcx.1932','csl.ref.bmcx.1938'].includes(id))throw Error('Unsupported authoring ID');
+if(!['csl.hello','csl.thanks','csl.you','csl.goodbye','csl.sorry','csl.me','csl.love','csl.good','csl.yes','csl.not','csl.ref.bmcx.3796','csl.ref.bmcx.3928','csl.ref.bmcx.3964','csl.ref.bmcx.2379','csl.ref.bmcx.123','csl.ref.bmcx.1952','csl.ref.bmcx.1874','csl.ref.bmcx.1900','csl.ref.bmcx.1932','csl.ref.bmcx.1938','csl.ref.bmcx.546','csl.ref.bmcx.3984','csl.ref.bmcx.4039','csl.ref.bmcx.3985','csl.ref.bmcx.526','csl.ref.bmcx.4040','csl.ref.bmcx.2512','csl.ref.bmcx.1606','csl.ref.bmcx.3757','csl.ref.bmcx.3758','csl.ref.bmcx.208','csl.ref.bmcx.3789','csl.ref.bmcx.3786'].includes(id))throw Error('Unsupported authoring ID');
 const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true,args:['--enable-unsafe-swiftshader']});
 try{
   const page=await browser.newPage();await page.goto('http://127.0.0.1:5173/anny-review.html');

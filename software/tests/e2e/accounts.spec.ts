@@ -1,16 +1,8 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
+import { registerAtGate } from './helpers/gate';
 
-async function register(page: Page) {
-  const username = `user_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
-  await page.getByRole('button', { name: '登录 / 注册' }).click();
-  const dialog = page.getByRole('dialog', { name: '欢迎回来' });
-  await dialog.getByRole('button', { name: '注册', exact: true }).click();
-  await page.getByLabel('用户名', { exact: true }).fill(username);
-  await page.getByLabel('密码', { exact: true }).fill('test-passphrase-2026');
-  await page.getByLabel('再次输入密码', { exact: true }).fill('test-passphrase-2026');
-  await page.getByRole('button', { name: '注册并登录' }).click();
-  await expect(page.locator('.account-name')).toContainText(username);
-  return username;
+async function register(page: Parameters<typeof registerAtGate>[0]) {
+  return registerAtGate(page);
 }
 
 test('注册、文字保存、刷新后查询、注销后登录必须填写验证码', async ({ page }) => {
@@ -30,9 +22,7 @@ test('注册、文字保存、刷新后查询、注销后登录必须填写验�
   await expect(page.locator('.record-item')).toHaveCount(0);
   await page.getByRole('button', { name: '关闭我的记录' }).click();
   await page.getByRole('button', { name: '退出登录' }).click();
-  await expect(page.getByRole('button', { name: '登录 / 注册' })).toBeVisible();
-  await page.getByRole('button', { name: '登录 / 注册' }).click();
-  await page.getByRole('dialog').getByRole('button', { name: '登录', exact: true }).click();
+  await expect(page.locator('#auth-title')).toBeVisible();
   await page.getByLabel('用户名', { exact: true }).fill(username);
   await page.getByLabel('密码', { exact: true }).fill('test-passphrase-2026');
   await expect(page.getByRole('img',{name:'登录验证码'})).toBeVisible();

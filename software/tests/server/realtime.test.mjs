@@ -79,8 +79,8 @@ test('实际持久进程复用、无手拒识、限流、会话隔离和关闭�
 });
 
 test('实时接口无需账号且不创建记录，写请求仍校验来源和会话',async t=>{
-  const parent=resolve('.runtime-logs/realtime-api-tests');await mkdir(parent,{recursive:true});const root=await mkdtemp(join(parent,'case-'));let liveToken=null,frames=0;
-  const live={status:()=>({available:true}),async start(){liveToken='session-test';return{session:liveToken};},async frame(token,buffer,seq){assert.equal(buffer.length,jpeg.length);if(token!==liveToken)throw Object.assign(Error('wrong'),{status:404});frames++;return{seq,status:'waiting',candidate:null};},stop(token){if(token!==liveToken)throw Object.assign(Error('wrong'),{status:404});liveToken=null;return{ok:true};},close(){}};
+  const parent=resolve('.runtime-logs/realtime-api-tests');await mkdir(parent,{recursive:true});const root=await mkdtemp(join(parent,'case-'));let liveToken=null,frames=0,flowRequested='words';
+  const live={status:()=>({available:true}),async start(_signal,_target,_helpEngine,options={}){flowRequested=options.flow??'words';liveToken='session-test';return{session:liveToken};},async frame(token,buffer,seq){assert.equal(buffer.length,jpeg.length);if(token!==liveToken)throw Object.assign(Error('wrong'),{status:404});frames++;return{seq,status:'waiting',candidate:null};},stop(token){if(token!==liveToken)throw Object.assign(Error('wrong'),{status:404});liveToken=null;return{ok:true};},close(){}};
   const server=await createApp({dataDir:root,publicDir:resolve('web/public'),realtimeService:live});server.listen(0,'127.0.0.1');await once(server,'listening');t.after(async()=>{server.closeAllConnections();await new Promise(r=>server.close(r));assert.ok(root.startsWith(parent+sep));await rm(root,{recursive:true,force:true});});
   const url=`http://127.0.0.1:${server.address().port}`,headers={Origin:'http://127.0.0.1:5173','X-Yuqiao-Request':'1'};
   assert.equal((await fetch(url+'/api/sign/realtime/sessions',{method:'POST',body:'{}',headers:{'Content-Type':'application/json'}})).status,403);
@@ -88,5 +88,8 @@ test('实时接口无需账号且不创建记录，写请求仍校验来源和�
   const request={method:'POST',body:jpeg,headers:{...headers,'Content-Type':'image/jpeg','X-Yuqiao-Live-Session':'session-test','X-Yuqiao-Frame-Seq':'1','X-Yuqiao-Capture-Ms':'0'}};
   assert.equal((await fetch(url+'/api/sign/realtime/frames',request)).status,200);assert.equal(frames,1);
   assert.equal((await fetch(url+'/api/sign/realtime/sessions',{method:'DELETE',headers:{...headers,'X-Yuqiao-Live-Session':'session-test'}})).status,200);
+  assert.equal((await fetch(url+'/api/sign/realtime/sessions',{method:'POST',body:JSON.stringify({target:'auto',flow:'paragraph'}),headers:{...headers,'Content-Type':'application/json'}})).status,201);
+  assert.equal(flowRequested,'paragraph');
+  assert.equal((await fetch(url+'/api/sign/realtime/sessions',{method:'POST',body:JSON.stringify({flow:'made-up'}),headers:{...headers,'Content-Type':'application/json'}})).status,400);
   assert.deepEqual(await readdir(join(root,'media')),[]);
 });

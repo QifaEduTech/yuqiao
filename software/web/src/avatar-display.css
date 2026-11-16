@@ -1,0 +1,11 @@
+html,body,#root{height:100%;margin:0}
+body{background:radial-gradient(circle at 50% 20%,#1d2b22 0,#101814 62%,#0a0f0c 100%)}
+.display-page{position:fixed;inset:0;overflow:hidden;background:inherit}
+.display-stage{position:absolute;inset:0}
+.display-page .avatar-host{inset:0}
+.display-page .avatar-host.with-motion{bottom:0}
+.display-page .avatar-host canvas{width:100%!important;height:100%!important}
+.display-status{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);margin:0;padding:6px 14px;border-radius:999px;background:rgba(12,20,16,.62);color:#cfe3d7;font-size:13px;letter-spacing:.02em;pointer-events:none}
+.display-status.is-offline{color:#ffd9c9;background:rgba(60,20,10,.62)}
+.display-loading{position:absolute;inset:0;display:grid;place-items:center;color:#cfe3d7;font-size:14px;letter-spacing:.04em}
+.boot-screen{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 20%,#1d2b22 0,#101814 62%,#0a0f0c 100%);color:#cfe3d7;font:14px/1.6 system-ui,sans-serif;letter-spacing:.04em}

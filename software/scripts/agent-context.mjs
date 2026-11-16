@@ -3,7 +3,7 @@ import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {recordingBundle} from '../server/recording-catalog.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
-const entries=['README.md','database/schema.sql','server/app.mjs','server/model-registry.mjs','server/training-store.mjs','web/src/App.tsx','web/src/LearningPage.tsx','web/src/RealtimePage.tsx','web/src/TrainingPage.tsx','shared/realtime-targets.json','scripts/windows-project.ps1','scripts/configure-local-mysql.ps1'];
+const entries=['web/src/AuthGate.tsx','web/src/avatarDisplay.tsx','web/src/camera.tsx','web/src/hospitalScene.tsx','server/training_evaluation.py','shared/hospital-mutual-aid-scene.json','README.md','database/schema.sql','server/app.mjs','server/model-registry.mjs','server/training-store.mjs','web/src/App.tsx','web/src/LearningPage.tsx','web/src/RealtimePage.tsx','web/src/TrainingPage.tsx','shared/realtime-targets.json','scripts/windows-project.ps1','scripts/configure-local-mysql.ps1'];
 if(process.argv.includes('--check')){
  const errors=entries.filter(f=>!existsSync(resolve(root,f))).map(f=>'Missing '+f);
  try{recordingBundle(root);}catch{errors.push('Inference source/weight manifest check failed.');}

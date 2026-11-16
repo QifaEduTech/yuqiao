@@ -267,5 +267,13 @@
       ],
       "publicDistributionNote": "开发记录与私人采集报告未随公开仓库提供；不将开发成绩称为独立准确率。"
     }
-  ]
+  ],
+  "publicTrainingPolicy": {
+    "updated": "2026-11-16",
+    "automaticBatches": true,
+    "oldWordRegressionRequired": false,
+    "clipLimitSeconds": null,
+    "originalVideoLimitSeconds": 30,
+    "notes": "自动批次不是独立拍摄组证明；当前词考试和质量检查仍执行。"
+  }
 }

@@ -1,15 +1,15 @@
 import {test,expect} from '@playwright/test';
 import {registerForVideo,recordVideo,saveAndRecognizeVideo} from './helpers/videoPipeline';
+import {registerAtGate} from './helpers/gate';
 
-test('学习页匿名可录制，登录保存后仍不识别，点击开始才识别且不重复保存',async({page})=>{
+test('学习页登录后可录制，保存后仍不识别，点击开始才识别且不重复保存',async({page})=>{
   await page.route('**/api/sign/status',r=>r.fulfill({json:{available:true}}));let recognized=0,saves=0;
   await page.route('**/api/sign/experiments',r=>{recognized++;return r.fulfill({json:{status:'candidate',candidate:'谢谢'}});});
   page.on('request',r=>{if(r.method()==='POST'&&r.url().includes('/api/records/video'))saves++;});
-  await page.goto('/learning.html');await recordVideo(page);await page.getByRole('button',{name:'下一步：确认并保存'}).click();await page.getByRole('button',{name:'登录并保存录像'}).click();await expect(page.getByRole('dialog',{name:'欢迎回来'})).toBeVisible();expect(saves).toBe(0);expect(recognized).toBe(0);
-  await page.getByRole('button',{name:'关闭登录窗口'}).click();await registerForVideo(page);expect(saves).toBe(0);
+  await page.goto('/learning.html');await registerAtGate(page);await recordVideo(page);await page.getByRole('button',{name:'下一步：确认并保存'}).click();expect(saves).toBe(0);expect(recognized).toBe(0);
   await page.getByRole('button',{name:'确认保存录像'}).dblclick();await expect(page.getByRole('button',{name:'开始识别',exact:true})).toBeVisible();await page.waitForTimeout(500);expect(saves).toBe(1);expect(recognized).toBe(0);await expect(page.locator('#video-result')).toHaveCount(0);
   await page.getByRole('button',{name:'开始识别',exact:true}).click();await expect(page.getByTestId('sign-result')).toContainText('识别候选：谢谢');expect(saves).toBe(1);expect(recognized).toBe(1);
-  await page.getByRole('button',{name:'退出登录'}).click();await expect(page.getByTestId('sign-result')).toHaveCount(0);await expect(page.getByLabel('本段手语录像预览')).toHaveCount(0);
+  await page.getByRole('button',{name:'退出登录'}).click();await expect(page.locator('#auth-title')).toBeVisible();
 });
 
 test('未知词不作为四词候选，清空后迟到响应不恢复',async({page})=>{

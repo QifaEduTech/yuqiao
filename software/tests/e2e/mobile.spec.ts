@@ -1,4 +1,5 @@
 import {test,expect} from '@playwright/test';
+test.use({storageState:{cookies:[],origins:[]}});
 test('移动端四个入口、窄屏布局和账号入口可操作，不自动开启摄像头',async({page})=>{
  await page.setViewportSize({width:390,height:844});let cameraRequests=0;page.on('request',r=>{if(r.url().endsWith('/api/sign/realtime/sessions')&&r.method()==='POST')cameraRequests++;});
  await page.goto('/android.html');await expect(page.getByRole('heading',{name:/把想说的话，.*带到彼此身边/ })).toBeVisible();

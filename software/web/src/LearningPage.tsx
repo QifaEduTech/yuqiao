@@ -80,7 +80,7 @@ export default function LearningPage(){
   }
   async function logout(){
     if(saving)return;setSaving(true);
-    try{await api('/api/auth/logout',{method:'POST'});owner.current=null;setUser(null);setHistoryOpen(false);clear();setNotice('已退出账号，当前练习已清除；已保存录像仍在原账号中。');}
+    try{await api('/api/auth/logout',{method:'POST'});owner.current=null;setUser(null);setHistoryOpen(false);clear();setNotice('已退出账号，当前练习已清除；已保存录像仍在原账号中。');window.dispatchEvent(new Event('yuqiao-auth-changed'));}
     catch(error){setNotice(error instanceof Error?error.message:'退出失败，请重试。');}finally{setSaving(false);}
   }
   function recordDeleted(record:SavedRecord){if(record.id===saved?.id){clear();setNotice('本次录像已删除，旧识别结果已清除。');}}

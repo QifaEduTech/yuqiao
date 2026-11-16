@@ -11,6 +11,7 @@ from realtime_multi import MultiLiveRecognizer
 from need_live import NeedLiveRecognizer
 from me_live import MeLiveRecognizer
 from trained_runtime import TrainedRuntime
+from training_evaluation import summarize_test_counts
 ROOT=Path(__file__).resolve().parents[1]
 def emit(value):print(json.dumps(value,ensure_ascii=False),flush=True)
 def progress(n,message):emit({'type':'progress','progress':n,'message':message})
@@ -51,13 +52,13 @@ def observe(rows,entries,engine,inp,out):
         if result['reason']=='ambiguous_actions':conflict=True
     return words,conflict,events
 def main():
-    plan_path=Path(sys.argv[1]);plan=json.loads(plan_path.read_text(encoding='utf-8'));samples=plan['samples'];a=plan['action'];directory=Path(plan['output']);features=[];observations=[];quality=[]
+    plan_path=Path(sys.argv[1]);plan=json.loads(plan_path.read_text(encoding='utf-8'));samples=[s for s in plan['samples'] if s['split']!='regression'];a=plan['action'];directory=Path(plan['output']);features=[];observations=[];quality=[]
     for i,s in enumerate(samples):
         progress(round(i/max(1,len(samples))*45),f'检查录像 {i+1}/{len(samples)}')
         rows=decode(s);indices=[i for i,r in enumerate(rows) if r['payload'] is not None and len(r['payload']['hands'])>=a['hands'] and int(r['payload']['frame'][74]>0)+int(r['payload']['frame'][150]>0)>=a['hands'] and len(r['payload']['shoulders'])==2 and all(x[2]>=.5 for x in r['payload']['shoulders'])]
         coverage=len(indices)/(indices[-1]-indices[0]+1) if indices else 0;passed=bool(len(indices)>=12 and coverage>=.75) if s['label']==1 else True
         quality.append({'recordId':s['recordId'],'passed':passed,'coverage':round(coverage,3),'reason':'通过' if passed else '目标动作的双手/身体参照跟踪不足，请保持入画并补录。'})
-        features.append({**{k:s[k] for k in ['recordId','label','split','group','sourceHash']},'frames':[r['payload']['frame'].tolist() if r['payload'] else [0.]*178 for r in rows]});observations.append(rows)
+        features.append({**{k:s[k] for k in ['recordId','label','split','group','sourceHash']},'durationSeconds':s['end']-s['start'],'frames':[r['payload']['frame'].tolist() if r['payload'] else [0.]*178 for r in rows]});observations.append(rows)
     if plan['kind']=='quality' or not all(q['passed'] for q in quality):
         emit({'type':'result','ok':True,'message':'质量检查完成。' if all(q['passed'] for q in quality) else '部分目标样本需补录，未启动训练。','report':{'quality':quality,'passed':False,'trained':False}});return
     (directory/'features.json').write_text(json.dumps(features),encoding='utf-8');progress(50,'正在训练CPU时序模型，请耐心等待。')
@@ -71,20 +72,17 @@ def main():
       if child:
         if child.poll() is None:child.kill()
         child.stdin.close()
-    progress(75,'核对独立测试与旧动作回归。');meta=json.loads((directory/'model.json').read_text(encoding='utf-8'));entries=[x for x in plan['customModels'] if x['signId']!=a['signId']]+[{'text':a['text'],'signId':a['signId'],'path':str(directory/'model.json'),'sha256':meta['sha256']}]
-    engine,inp,out=classifier();details=[];counts={'tp':0,'fn':0,'fp':0,'tn':0};regression=[]
+    progress(75,'正在检查这个词的考试结果。');meta=json.loads((directory/'model.json').read_text(encoding='utf-8'));entries=[x for x in plan['customModels'] if x['signId']!=a['signId']]+[{'text':a['text'],'signId':a['signId'],'path':str(directory/'model.json'),'sha256':meta['sha256']}]
+    engine,inp,out=classifier();details=[];counts={'tp':0,'fn':0,'fp':0,'tn':0}
     for s,rows in zip(samples,observations):
-        if s['split'] not in ['test','regression']:continue
+        if s['split']!='test':continue
         words,conflict,events=observe(rows,entries,engine,inp,out)
         if s['split']=='test':
             predicted=words=={a['text']} and events==[a['text']] and not conflict;correct=predicted if s['label']==1 else a['text'] not in words and not conflict
             counts['tp' if s['label'] and correct else 'fn' if s['label'] else 'tn' if correct else 'fp']+=1
             details.append({'recordId':s['recordId'],'correct':correct,'observed':sorted(words),'reason':'证据冲突' if conflict else '未确认完整动作；检查收手边界或补录' if s['label'] and not correct else '误报' if not correct else '通过'})
-        else:regression.append({'recordId':s['recordId'],'word':s['expectedWord'],'passed':words=={s['expectedWord']} and not conflict})
-    tp,fn,fp,tn=[counts[k] for k in ['tp','fn','fp','tn']];recall=tp/(tp+fn) if tp+fn else 0;precision=tp/(tp+fp) if tp+fp else 0;fpr=fp/(fp+tn) if fp+tn else 1
-    sufficient=tp+fn>=20 and fp+tn>=20;reg_ok=all(r['passed'] for r in regression) and ({'谢谢','帮助','需要','我'}|{e['text'] for e in plan['customModels'] if e['signId']!=a['signId']}).issubset({r['word'] for r in regression})
-    passed=sufficient and reg_ok and recall>=.9 and precision>=.9 and fpr<=.05
-    report={'quality':quality,'trained':True,'epochs':trained['epochs'],'counts':counts,'recall':recall if tp+fn else None,'precision':precision if tp+fp else None,'falsePositiveRate':fpr if fp+tn else None,'testSufficient':sufficient,'testEvaluated':bool(details),'details':details,'regression':regression,'regressionPassed':reg_ok,'passed':passed,'modelSha256':meta['sha256'],'recommendations':(['独立测试至少需要20条目标和20条明确反例，且来自未用于训练的新拍摄轮次。'] if not sufficient else [])+(['请补齐四个已有动作的回归录像，并排查冲突。'] if not reg_ok else [])+(['查看错误样本，补充对应视角/方向/相似反例；调试后另留新测试资料。'] if sufficient and not passed else [])}
+    metrics=summarize_test_counts(counts);sufficient=metrics['testSufficient'];passed=metrics['passed']
+    report={**metrics,'quality':quality,'trained':True,'epochs':trained['epochs'],'testEvaluated':bool(details),'details':details,'regression':[],'regressionRequired':False,'regressionPassed':None,'evaluationPolicy':'current-word-exam-v2','captureGroupsVerified':not any(s.get('groupSource')=='automatic' for s in samples),'modelSha256':meta['sha256'],'recommendations':(['最后考试至少需要20条这个词和20条不是这个词的录像，不能使用已参与学习或调试的资料。'] if not sufficient else [])+(['查看错误样本，补充对应视角/方向/相似反例；调试后另留新考试资料。'] if sufficient and not passed else [])}
     emit({'type':'result','ok':True,'message':'测试达标，已加入全项目共用的模型；其他账号重新开启识别即可使用。' if passed else '训练已完成，尚未达到启用条件，请查看补充建议。','report':report})
 if __name__=='__main__':
     try:main()

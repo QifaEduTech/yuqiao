@@ -7,17 +7,22 @@ import numpy as np
 from realtime_window import CONFIG
 from help_tcn_live import HelpTCNLive
 from thanks_active_hand import ActiveHandThanks
+from me_handoff import MeHandoff
 RULES=json.loads((Path(__file__).resolve().parents[1]/'shared/realtime-transitions.json').read_text(encoding='utf8'))
 IDS={'谢谢':'csl.thanks','帮助':'csl.ref.bmcx.1900','需要':'csl.ref.bmcx.1874','我':'csl.me'}
 
 class MultiLiveRecognizer:
-    def __init__(self,classify,help_model=None,thanks_detector=None,help_detector=None,need_detector=None,me_detector=None):
+    def __init__(self,classify,help_model=None,thanks_detector=None,help_detector=None,need_detector=None,me_detector=None,continuous=False,additional_detectors=None):
+        self.continuous=continuous;self.me_handoff=MeHandoff()
+        self.additional=additional_detectors or {};self.ids={**IDS,**{w:d.entry['signId'] for w,d in self.additional.items()}}
+        if set(self.additional)&set(IDS):raise ValueError('duplicate_builtin_word')
         self.thanks=thanks_detector if thanks_detector is not None else ActiveHandThanks(classify)
         self.help=help_detector if help_detector is not None else HelpTCNLive(help_model)
         self.need=need_detector;self.me=me_detector;self.last_time=None;self.next_id=1;self.floor_ms=0;self.pending_events=[];self.buffer=deque(maxlen=CONFIG['maxSamples']);self.clear_segment()
     def clear_segment(self):
+        self.me_handoff.reset()
         self.words=set();self.active=None;self.conflicted=False;self.missing_since=None;self.overlap_since=None;self.started=None;self.buffer.clear()
-    def detectors(self):return {'谢谢':self.thanks,'帮助':self.help,**({'需要':self.need} if self.need is not None else {}),**({'我':self.me} if self.me is not None else {})}
+    def detectors(self):return {'谢谢':self.thanks,'帮助':self.help,**({'需要':self.need} if self.need is not None else {}),**({'我':self.me} if self.me is not None else {}),**self.additional}
     def reset_detectors(self,keep=None):
         for word,detector in self.detectors().items():
             if word!=keep and hasattr(detector,'reset'):detector.reset()
@@ -30,7 +35,7 @@ class MultiLiveRecognizer:
             if word==self.active['word'] or not hasattr(detector,'restart'):continue
             detector.restart()
             for t,value,vector,aspect,me_input in recent:
-                results[word]=detector.push_payload(t,me_input) if word=='我' else detector.push(t,value,vector,aspect_ratio=aspect) if word=='谢谢' else detector.push_features(t,vector,False,aspect_ratio=aspect) if word=='帮助' else detector.push_features(t,vector,aspect_ratio=aspect)
+                results[word]=detector.push_payload(t,me_input) if word=='我' or word in self.additional else detector.push(t,value,vector,aspect_ratio=aspect) if word=='谢谢' else detector.push_features(t,vector,False,aspect_ratio=aspect) if word=='帮助' else detector.push_features(t,vector,aspect_ratio=aspect)
         self.active['seeded']=True
         return results
     def rebase(self,word,start_ms):
@@ -49,7 +54,7 @@ class MultiLiveRecognizer:
         if old is None or old['retired'] is None or t-old['retired']<RULES['quietSeconds']-1e-6:return False
         boundary=round(old['retired']*1000)
         recent=old['retired']-old['lastStable']<=CONFIG['events']['maxSupportAgeSeconds'] and t-old['retired']<=RULES['maxPendingSeconds']
-        if recent:self.queue_event({'text':old['word'],'signId':IDS[old['word']],'startMs':old['startMs'],'endMs':boundary})
+        if recent:self.queue_event({'text':old['word'],'signId':self.ids[old['word']],'startMs':old['startMs'],'endMs':boundary})
         self.activate(word,t,boundary+1);self.started=(boundary+1)/1000;self.reset_detectors(keep=word);self.rebase(word,boundary+1);return True
     def push(self,t,value,vector,aspect_ratio=9/16,me_input=None):
         if not np.isfinite(t) or t<0 or self.last_time is not None and t<=self.last_time:raise ValueError('invalid_timestamp_order')
@@ -62,7 +67,8 @@ class MultiLiveRecognizer:
         a=self.thanks.push(t,value,vector,aspect_ratio=aspect_ratio);b=self.help.push_features(t,vector,False,aspect_ratio=aspect_ratio)
         c=self.need.push_features(t,vector,aspect_ratio=aspect_ratio) if self.need is not None else None
         d=self.me.push_payload(t,me_input) if self.me is not None else None
-        outputs=[a,b]+([c] if c is not None else [])+([d] if d is not None else []);present=value is not None or bool(vector[74]>0 or vector[150]>0)
+        extra={w:detector.push_payload(t,me_input) for w,detector in self.additional.items()}
+        outputs=[a,b]+([c] if c is not None else [])+([d] if d is not None else [])+list(extra.values());present=value is not None or bool(vector[74]>0 or vector[150]>0)
         self.current_hand_count=int(vector[74]>0)+int(vector[150]>0)
         if present and self.started is None:self.started=t
         candidates={r['candidate'] for r in outputs if r['candidate']}
@@ -70,7 +76,24 @@ class MultiLiveRecognizer:
         completed=[r['event'] for r in outputs if r['event']]
         # Me's return-to-rest can resemble inward palm motion. Until a clear
         # no-hands boundary, do not reseed another word from its withdrawal.
-        me_boundary=self.active is not None and self.active['word']=='我'
+        me_active=self.active is not None and self.active['word']=='我'
+        me_boundary=me_active and not self.continuous
+        if me_active and self.continuous and d is not None and not self.conflicted:
+            boundary=self.me_handoff.push(t,me_input,d)
+            if boundary is not None and boundary-self.active['lastStable']<=CONFIG['events']['maxSupportAgeSeconds']:
+                # The open palm verifies the old action ended; incoming motion
+                # starts afresh AFTER this boundary, never from withdrawal frames.
+                self.queue_event({'text':'我','signId':IDS['我'],'startMs':self.active['startMs'],'endMs':round(boundary*1000)})
+                self.clear_segment();self.reset_detectors()
+                if self.pending_events:return self.emitted(b)
+            # Other uniquely supported incoming actions use the same general
+            # handoff as every word. Only inward-palm evidence is quarantined
+            # until a fresh open palm ends self-pointing.
+            c=None
+            outputs=[a,b,d]+list(extra.values())
+            candidates={r['candidate'] for r in outputs if r['candidate']}
+            stable={r['candidate'] for r in outputs if r['candidate'] and r['eventState']=='ready_to_finish'}
+            completed=[r['event'] for r in outputs if r['event']]
         if me_boundary and d is not None:
             outputs=[d];candidates={d['candidate']} if d['candidate'] else set();stable={d['candidate']} if d['candidate'] and d['eventState']=='ready_to_finish' else set();completed=[d['event']] if d['event'] else []
         if self.active and not me_boundary:
@@ -90,7 +113,9 @@ class MultiLiveRecognizer:
                 updated=self.reseed_incoming()
             if updated:
                 a=updated.get('谢谢',a);b=updated.get('帮助',b);c=updated.get('需要',c);d=updated.get('我',d)
-                outputs=[a,b]+([c] if c is not None else [])+([d] if d is not None else []);candidates={r['candidate'] for r in outputs if r['candidate']};stable={r['candidate'] for r in outputs if r['candidate'] and r['eventState']=='ready_to_finish'};completed=[r['event'] for r in outputs if r['event']]
+                if me_active and self.continuous:c=None
+                extra={w:updated.get(w,r) for w,r in extra.items()}
+                outputs=[a,b]+([c] if c is not None else [])+([d] if d is not None else [])+list(extra.values());candidates={r['candidate'] for r in outputs if r['candidate']};stable={r['candidate'] for r in outputs if r['candidate'] and r['eventState']=='ready_to_finish'};completed=[r['event'] for r in outputs if r['event']]
         transition=False
         if len(stable)>1:
             if self.active and self.active['word'] in stable:
@@ -141,3 +166,11 @@ class MultiLiveRecognizer:
             if t-self.missing_since>=CONFIG['missingResetSeconds']:self.clear_segment();self.reset_detectors()
         status='candidate' if candidate else 'waiting' if not present else 'uncertain' if self.conflicted else 'observing'
         return {'status':status,'candidate':candidate,'reason':reason,'eventState':state,'event':None,'samples':max(a.get('samples',0),len(self.help.samples)),'handSamples':max(a.get('handSamples',0),sum(bool(h) for _,h in self.help.samples)),'helpEngine':'video-tcn','modelVersion':'v1','helpScore':b.get('helpScore'),'motionSupported':b.get('motionSupported'),'motionGuard':b.get('motionGuard')}
+
+    def finish_for_paragraph(self,t):
+        """An explicit finish may close a fresh stable action, never a guess."""
+        if not self.continuous or self.conflicted or not self.active or t-self.active['lastStable']>.3:return None
+        old=self.active
+        self.queue_event({'text':old['word'],'signId':self.ids[old['word']],'startMs':old['startMs'],'endMs':round(t*1000)})
+        self.clear_segment();self.reset_detectors()
+        return self.emitted() if self.pending_events else None

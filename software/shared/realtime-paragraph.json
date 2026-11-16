@@ -1,0 +1,17 @@
+{
+  "id": "known-word-paragraph-trial-v1",
+  "endQuietSeconds": 2,
+  "maxFrameGapSeconds": 1,
+  "maxWords": 60,
+  "maxCharacters": 500,
+  "maxSeconds": 120,
+  "maxDisplayedParagraphs": 3,
+  "meHandoff": {
+    "minOpenPalmSeconds": 0.25,
+    "minFrames": 4,
+    "maxFrameGapSeconds": 0.2,
+    "minFingerAngleDegrees": 150,
+    "maxWristStepPalmWidths": 0.8
+  },
+  "review": "technical_trial_requires_real_continuous_user_validation"
+}

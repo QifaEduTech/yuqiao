@@ -65,6 +65,8 @@
     "shared/need-required-motion.json",
     "shared/me-live.json",
     "shared/me-motion.json",
-    "server/trained_runtime.py"
+    "server/trained_runtime.py",
+    "server/me_handoff.py",
+    "shared/realtime-paragraph.json"
   ]
 }

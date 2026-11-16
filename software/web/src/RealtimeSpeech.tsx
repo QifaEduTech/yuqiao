@@ -1,12 +1,22 @@
 import {useEffect,useRef} from 'react';
 import {useLocalSpeechQueue} from './useLocalSpeechQueue';
+import type {CompletedParagraph} from '../../shared/realtime-paragraph.mjs';
 
 type Event={id:number;text:string;signId:string};
 type Result={seq:number;candidate:string|null;reason:string;eventState:string};
-export default function RealtimeSpeech({events,phase,result}:{events:Event[];phase:string;result:Result|null}){
+export default function RealtimeSpeech({events,phase,result,paragraphs,compact=false}:{events:Event[];phase:string;result:Result|null;paragraphs?:CompletedParagraph[];compact?:boolean}){
+  const lastParagraph=useRef(0);
   const speech=useLocalSpeechQueue(),seen=useRef(events.at(-1)?.id??0),spoken=useRef(new Set<string>()),completed=useRef(new Set<string>()),lastCandidate=useRef<string|null>(null),awaySince=useRef<number|null>(null);
   useEffect(()=>{
-    if(phase!=='running'){speech.cancel();seen.current=0;spoken.current.clear();completed.current.clear();lastCandidate.current=null;awaySince.current=null;return;}
+    if(phase!=='running'){speech.cancel();lastParagraph.current=0;seen.current=0;spoken.current.clear();completed.current.clear();lastCandidate.current=null;awaySince.current=null;return;}
+    if(paragraphs!==undefined){
+      for(const paragraph of paragraphs){
+        if(paragraph.id<=lastParagraph.current)continue;
+        lastParagraph.current=paragraph.id;
+        if(!paragraph.partial)speech.enqueue(paragraph.text);
+      }
+      return;
+    }
     for(const event of events){
       if(event.id<=seen.current)continue;
       seen.current=event.id;completed.current.add(event.text);
@@ -25,9 +35,9 @@ export default function RealtimeSpeech({events,phase,result}:{events:Event[];pha
     }
     lastCandidate.current=result.candidate;
     if(!spoken.current.has(result.candidate)){completed.current.delete(result.candidate);spoken.current.add(result.candidate);speech.enqueue(result.candidate);}
-  },[events,phase,result]);
+  },[events,phase,result,paragraphs]);
   return <>
-    <p className="settings-hint">千问自动播报 · 播报文字发送至阿里云百炼，需要联网；不上传摄像头画面。</p>
+    {!compact&&<p className="settings-hint">千问自动播报 · 播报文字发送至阿里云百炼，需要联网；不上传摄像头画面。</p>}
     <audio ref={speech.player} controls preload="metadata" hidden={!speech.needsPlayback} className="realtime-audio-fallback" aria-label="本次播报语音" data-testid="realtime-auto-audio" data-ready={speech.available===null?'checking':speech.available?'ready':'unavailable'}/>
     {speech.needsPlayback&&<p className="inline-notice" role="status">浏览器暂停了自动播放，请点击播放器继续。</p>}
     {speech.error&&<p role="alert" className="inline-notice notice-error">{speech.error}</p>}

@@ -5,18 +5,11 @@
   "maxDuration": 30,
   "entries": [
     {
-      "id": "csl.hello",
+      "id": "csl.good",
       "version": "user-description-1",
-      "activeFrom": 0.6,
-      "activeTo": 3.2,
-      "duration": 4
-    },
-    {
-      "id": "csl.thanks",
-      "version": "user-description-3",
-      "activeFrom": 0.6,
-      "activeTo": 3.3,
-      "duration": 4
+      "activeFrom": 0.7,
+      "activeTo": 2.2,
+      "duration": 3
     },
     {
       "id": "csl.goodbye",
@@ -26,18 +19,11 @@
       "duration": 4
     },
     {
-      "id": "csl.sorry",
-      "version": "user-description-3",
-      "activeFrom": 0.7,
-      "activeTo": 4.2,
-      "duration": 5
-    },
-    {
-      "id": "csl.me",
+      "id": "csl.hello",
       "version": "user-description-1",
-      "activeFrom": 0.7,
-      "activeTo": 2.2,
-      "duration": 3
+      "activeFrom": 0.6,
+      "activeTo": 3.2,
+      "duration": 4
     },
     {
       "id": "csl.love",
@@ -47,23 +33,9 @@
       "duration": 4
     },
     {
-      "id": "csl.you",
-      "version": "user-description-1",
-      "activeFrom": 0.6,
-      "activeTo": 2.2,
-      "duration": 3
-    },
-    {
-      "id": "csl.good",
+      "id": "csl.me",
       "version": "user-description-1",
       "activeFrom": 0.7,
-      "activeTo": 2.2,
-      "duration": 3
-    },
-    {
-      "id": "csl.yes",
-      "version": "user-description-2",
-      "activeFrom": 0.8,
       "activeTo": 2.2,
       "duration": 3
     },
@@ -73,6 +45,20 @@
       "activeFrom": 0.6,
       "activeTo": 2.3,
       "duration": 3
+    },
+    {
+      "id": "csl.ref.bmcx.123",
+      "version": "user-standard-1",
+      "activeFrom": 0.6,
+      "activeTo": 3.1,
+      "duration": 4
+    },
+    {
+      "id": "csl.ref.bmcx.1606",
+      "version": "user-standard-1",
+      "activeFrom": 0.7,
+      "activeTo": 2.5,
+      "duration": 3.2
     },
     {
       "id": "csl.ref.bmcx.1874",
@@ -101,6 +87,153 @@
       "activeFrom": 0.8,
       "activeTo": 2.5,
       "duration": 3.4
+    },
+    {
+      "id": "csl.ref.bmcx.1952",
+      "version": "source-reference-1",
+      "activeFrom": 0.65,
+      "activeTo": 2.25,
+      "duration": 3.4
+    },
+    {
+      "id": "csl.ref.bmcx.208",
+      "version": "user-standard-1",
+      "activeFrom": 0.65,
+      "activeTo": 2.7,
+      "duration": 3.4
+    },
+    {
+      "id": "csl.ref.bmcx.2379",
+      "version": "user-standard-1",
+      "activeFrom": 0.65,
+      "activeTo": 2.8,
+      "duration": 3.6
+    },
+    {
+      "id": "csl.ref.bmcx.2512",
+      "version": "user-standard-1",
+      "activeFrom": 0.6,
+      "activeTo": 3.2,
+      "duration": 4
+    },
+    {
+      "id": "csl.ref.bmcx.3757",
+      "version": "user-standard-1",
+      "activeFrom": 0.7,
+      "activeTo": 2.1,
+      "duration": 3
+    },
+    {
+      "id": "csl.ref.bmcx.3758",
+      "version": "user-standard-1",
+      "activeFrom": 0.6,
+      "activeTo": 2.5,
+      "duration": 3.2
+    },
+    {
+      "id": "csl.ref.bmcx.3786",
+      "version": "user-standard-1",
+      "activeFrom": 0.6,
+      "activeTo": 2.5,
+      "duration": 3.2
+    },
+    {
+      "id": "csl.ref.bmcx.3789",
+      "version": "user-standard-1",
+      "activeFrom": 0.6,
+      "activeTo": 2.3,
+      "duration": 3
+    },
+    {
+      "id": "csl.ref.bmcx.3796",
+      "version": "user-standard-1",
+      "activeFrom": 0.6,
+      "activeTo": 2.3,
+      "duration": 3
+    },
+    {
+      "id": "csl.ref.bmcx.3928",
+      "version": "user-standard-1",
+      "activeFrom": 0.65,
+      "activeTo": 2.7,
+      "duration": 3.4
+    },
+    {
+      "id": "csl.ref.bmcx.3964",
+      "version": "source-reference-1",
+      "activeFrom": 0.65,
+      "activeTo": 2.9,
+      "duration": 3.6
+    },
+    {
+      "id": "csl.ref.bmcx.3984",
+      "version": "user-standard-1",
+      "activeFrom": 0.7,
+      "activeTo": 2.4,
+      "duration": 3.4
+    },
+    {
+      "id": "csl.ref.bmcx.3985",
+      "version": "user-standard-1",
+      "activeFrom": 0.65,
+      "activeTo": 3,
+      "duration": 4
+    },
+    {
+      "id": "csl.ref.bmcx.4039",
+      "version": "user-standard-1",
+      "activeFrom": 0.6,
+      "activeTo": 3.4,
+      "duration": 4.2
+    },
+    {
+      "id": "csl.ref.bmcx.4040",
+      "version": "user-standard-1",
+      "activeFrom": 0.7,
+      "activeTo": 2.2,
+      "duration": 3.2
+    },
+    {
+      "id": "csl.ref.bmcx.526",
+      "version": "user-standard-1",
+      "activeFrom": 0.65,
+      "activeTo": 2.5,
+      "duration": 3.2
+    },
+    {
+      "id": "csl.ref.bmcx.546",
+      "version": "user-standard-1",
+      "activeFrom": 0.6,
+      "activeTo": 4,
+      "duration": 4.6
+    },
+    {
+      "id": "csl.sorry",
+      "version": "user-description-3",
+      "activeFrom": 0.7,
+      "activeTo": 4.2,
+      "duration": 5
+    },
+    {
+      "id": "csl.thanks",
+      "version": "user-description-3",
+      "activeFrom": 0.6,
+      "activeTo": 3.3,
+      "duration": 4
+    },
+    {
+      "id": "csl.yes",
+      "version": "user-description-2",
+      "activeFrom": 0.8,
+      "activeTo": 2.2,
+      "duration": 3
+    },
+    {
+      "id": "csl.you",
+      "version": "user-description-1",
+      "activeFrom": 0.6,
+      "activeTo": 2.2,
+      "duration": 3
     }
   ]
 }

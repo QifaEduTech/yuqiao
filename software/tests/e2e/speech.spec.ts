@@ -25,9 +25,9 @@ test('录音自动转写，修改后重新确认，再转入文字输入', async
   await expect(page.locator('.voice-input > strong')).toContainText(/正在录音 00:0[1-9]/);
   await page.getByRole('button', { name: '结束录音' }).click();
   await expect(page.getByLabel('语音识别文字')).toHaveValue('你好，请稍等一下。');
-  await expect(page.getByRole('button', { name: '登录并保存识别文字' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: '保存识别文字' })).toHaveCount(0);
   await page.getByRole('button', { name: '确认这段文字' }).click();
-  await expect(page.getByRole('button', { name: '登录并保存识别文字' })).toBeVisible();
+  await expect(page.getByRole('button', { name: '保存识别文字' })).toBeVisible();
   await page.getByLabel('语音识别文字').fill('谢谢你的帮助。');
   await expect(page.getByRole('button', { name: '确认这段文字' })).toBeVisible();
   await page.getByRole('button', { name: '确认这段文字' }).click();

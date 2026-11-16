@@ -12,7 +12,7 @@ import {AppearancePanel} from './AppearancePanel';
 import {createAnnyAppearance,type AnnyAppearance} from './annyAppearance';
 import {publicAsset} from './assetUrl';
 
-export interface AvatarHandle {resetView:()=>void;cancelMotion:()=>void}
+export interface AvatarHandle {resetView:()=>void;cancelMotion:()=>void;play:()=>void;pause:()=>void;replay:()=>void}
 function disposeModel(object:THREE.Object3D){
   object.traverse(node=>{
     if(node instanceof THREE.Mesh){node.geometry.dispose();(Array.isArray(node.material)?node.material:[node.material]).forEach(material=>material.dispose());}
@@ -21,7 +21,7 @@ function disposeModel(object:THREE.Object3D){
 }
 
 /** User-authorized homepage trial playback; this does not upgrade review status. */
-const Avatar=forwardRef<AvatarHandle,{preview:MotionPreview|null;learning?:boolean;autoPlay?:boolean;requestId?:number;displayText?:string}>(function Avatar({preview,learning=false,autoPlay=false,requestId=0,displayText},ref){
+const Avatar=forwardRef<AvatarHandle,{preview:MotionPreview|null;learning?:boolean;autoPlay?:boolean;requestId?:number;displayText?:string;bare?:boolean;onControl?:(action:'play'|'pause'|'replay')=>void;onEnded?:()=>void}>(function Avatar({preview,learning=false,autoPlay=false,requestId=0,displayText,bare=false,onControl,onEnded},ref){
   const host=useRef<HTMLDivElement>(null),reset=useRef<()=>void>(()=>{});
   const panel=useRef<HTMLElement|null>(null);
   const rig=useRef<AnnyRig|null>(null),generation=useRef(0);
@@ -29,17 +29,21 @@ const Avatar=forwardRef<AvatarHandle,{preview:MotionPreview|null;learning?:boole
   const [wardrobeStatus,setWardrobeStatus]=useState<'loading'|'ready'|'error'>('loading');
   const motionRequest=useRef<AbortController|null>(null);
   const autoStarted=useRef('');
+  // 显示端在后台标签页收到指令时不强行播放；回到前台再开始一次。
+  const pendingAuto=useRef('');
+  const endedRef=useRef(false);
+  const onEndedRef=useRef(onEnded);
+  onEndedRef.current=onEnded;
   const clock=useRef<{clip:FixedMotion|null;position:number;playing:boolean;rate:number;last:number;uiAt:number}>({clip:null,position:0,playing:false,rate:1,last:0,uiAt:0});
   const [state,setState]=useState<'loading'|'ready'|'error'>('loading');
   const [motion,setMotion]=useState<FixedMotionAsset|null>(null),[loading,setLoading]=useState(false),[error,setError]=useState('');
   const [playing,setPlaying]=useState(false),[position,setPosition]=useState(0),[rate,setRate]=useState(1),[attempt,setAttempt]=useState(0);
   const cancelMotion=useCallback(()=>{
-    generation.current++;clock.current.clip=null;clock.current.playing=false;clock.current.position=0;
+    generation.current++;clock.current.clip=null;clock.current.playing=false;clock.current.position=0;endedRef.current=false;
     motionRequest.current?.abort();motionRequest.current=null;
     rig.current?.idle();setPlaying(false);setPosition(0);setMotion(null);setLoading(false);setError('');
     host.current?.querySelector('canvas')?.setAttribute('aria-label','Anny 数字人，双臂自然下垂，双手与腿留有间距');
   },[]);
-  useImperativeHandle(ref,()=>({resetView:()=>reset.current(),cancelMotion}),[cancelMotion]);
   useEffect(()=>{
     const stage=host.current?.closest<HTMLElement>('.stage');
     if(!preview||!panel.current){if(host.current)host.current.style.bottom='';stage?.style.removeProperty('--appearance-bottom');return;}
@@ -51,12 +55,16 @@ const Avatar=forwardRef<AvatarHandle,{preview:MotionPreview|null;learning?:boole
     const epoch=generation.current,controller=new AbortController();motionRequest.current=controller;setLoading(true);
     void fetchFixedPreview(preview,controller.signal).then(asset=>{
       if(epoch!==generation.current||controller.signal.aborted||!rig.current)return;
-      clock.current.clip=loadFixedMotion(rig.current,asset);setMotion(asset);setLoading(false);
+      clock.current.clip=loadFixedMotion(rig.current,asset);endedRef.current=false;setMotion(asset);setLoading(false);
       host.current?.querySelector('canvas')?.setAttribute('aria-label',`Anny 数字人，${displayText??asset.label}动作试播，内容待核对`);
       const autoKey=`${requestId}:${attempt}:${preview.id}:${preview.version}`;
-      if(autoPlay&&!learning&&!document.hidden&&autoStarted.current!==autoKey){
+      if(autoPlay&&!learning&&autoStarted.current!==autoKey){
         autoStarted.current=autoKey;
-        applyFixedMotion(rig.current,clock.current.clip,0);clock.current.last=performance.now();clock.current.playing=true;setPlaying(true);
+        if(document.hidden)pendingAuto.current=autoKey;
+        else{
+          endedRef.current=false;
+          applyFixedMotion(rig.current,clock.current.clip,0);clock.current.last=performance.now();clock.current.playing=true;setPlaying(true);
+        }
       }
     }).catch(caught=>{if(epoch!==generation.current)return;controller.abort();clock.current.clip=null;rig.current?.idle();setLoading(false);setError(caught instanceof Error?caught.message:'动作加载失败，请重试。');});
     return()=>{controller.abort();generation.current++;clock.current.playing=false;clock.current.clip=null;rig.current?.idle();};
@@ -65,8 +73,10 @@ const Avatar=forwardRef<AvatarHandle,{preview:MotionPreview|null;learning?:boole
   const play=(restart=false)=>{
     const c=clock.current;if(!c.clip||!rig.current||state!=='ready')return;
     if(restart||c.position>=c.clip.asset.duration)c.position=0;
+    endedRef.current=false;
     applyFixedMotion(rig.current,c.clip,c.position);c.last=performance.now();c.playing=true;setPosition(c.position);setPlaying(true);
   };
+  useImperativeHandle(ref,()=>({resetView:()=>reset.current(),cancelMotion,play:()=>play(),pause,replay:()=>play(true)}));
   useEffect(()=>{
     const container=host.current!;let disposed=false,animation=0;
     setState('loading');
@@ -110,14 +120,20 @@ const Avatar=forwardRef<AvatarHandle,{preview:MotionPreview|null;learning?:boole
         rig.current.ready();scene.add(gltf.scene);frame();
       }catch{gltf.scene.removeFromParent();disposeModel(gltf.scene);setState('error');}
     },undefined,()=>{if(!disposed)setState('error');});
-    const visibility=()=>{if(document.hidden){clock.current.playing=false;setPlaying(false);setPosition(clock.current.position);}};
+    const visibility=()=>{
+      if(document.hidden){clock.current.playing=false;setPlaying(false);setPosition(clock.current.position);return;}
+      if(pendingAuto.current&&clock.current.clip){pendingAuto.current='';endedRef.current=false;applyFixedMotion(rig.current!,clock.current.clip,0);clock.current.last=performance.now();clock.current.playing=true;setPlaying(true);}
+    };
     document.addEventListener('visibilitychange',visibility);
     const render=()=>{
       animation=requestAnimationFrame(render);const c=clock.current,now=performance.now();
       if(c.playing&&c.clip&&rig.current){
         c.position=Math.min(c.clip.asset.duration,c.position+(now-c.last)/1000*c.rate);c.last=now;
         try{applyFixedMotion(rig.current,c.clip,c.position);}catch{c.playing=false;c.clip=null;rig.current.idle();setPlaying(false);setMotion(null);setError('动作播放失败，请重新加载。');}
-        if(c.clip&&c.position>=c.clip.asset.duration){c.playing=false;setPlaying(false);setPosition(c.position);}
+        if(c.clip&&c.position>=c.clip.asset.duration){
+          c.playing=false;setPlaying(false);setPosition(c.position);
+          if(!endedRef.current){endedRef.current=true;onEndedRef.current?.();}
+        }
         if(now-c.uiAt>80){c.uiAt=now;setPosition(c.position);}
       }
       controls.update();renderer.render(scene,camera);
@@ -131,12 +147,12 @@ const Avatar=forwardRef<AvatarHandle,{preview:MotionPreview|null;learning?:boole
   return <><div className={`avatar-host ${preview?'with-motion':''}`} ref={host} data-testid="avatar" data-model="anny-makehuman" data-ready={state==='ready'} data-motion-id={active?.id??''} data-playing={playing}>
     {state==='loading'&&<div className="avatar-unavailable" role="progressbar" aria-label="载入 Anny"><LoaderCircle className="spinning" size={28}/><strong>正在载入人物与服装…</strong></div>}
     {state==='error'&&<div className="avatar-unavailable" role="alert"><Box size={36}/><strong>暂时无法显示数字人</strong><span>请刷新重试或检查浏览器硬件加速，其他输入功能仍可使用。</span>{wardrobeStatus==='error'&&<button className="secondary-button" onClick={()=>void appearance.current?.retry()}>重新加载服装</button>}</div>}
-  </div>{!learning&&<AppearancePanel wardrobeStatus={wardrobeStatus} disabled={state!=='ready'} onChange={value=>appearance.current?.apply(value)}/>}{preview&&<section ref={panel} className="home-motion-controls" aria-label={learning?'学习动作示范控制':'首页动作试播'}>
+  </div>{!learning&&!bare&&<AppearancePanel wardrobeStatus={wardrobeStatus} disabled={state!=='ready'} onChange={value=>appearance.current?.apply(value)}/>}{!bare&&preview&&<section ref={panel} className="home-motion-controls" aria-label={learning?'学习动作示范控制':'首页动作试播'}>
     <div className="home-motion-title"><strong>{displayText??preview.label}</strong><span>动作试播 · 待核对</span></div>
     {loading||state==='loading'?<p aria-live="polite">{state==='loading'?'正在载入数字人…':'正在载入动作…'}</p>:error?<><p role="alert">{error}</p><button className="secondary-button" onClick={()=>setAttempt(v=>v+1)}>重新加载动作</button></>:state==='error'?<p>数字人暂不可用，请刷新后重试；文字说明仍可查看。</p>:<>
       <div className="home-motion-progress"><span data-testid={learning?'learning-motion-current':'home-motion-current'}>{position>= (active?.duration??Infinity)?'本段播放结束':playing?(learning?`正在表达：${word}`:'正在播放'):position>0?(learning?`已暂停：${word}`:'已暂停'):'准备就绪，点击播放'}</span><span>{position.toFixed(1)} / {(active?.duration??0).toFixed(1)} 秒</span></div>
       <input aria-label={`${context}进度`} type="range" min="0" max={active?.duration??0} step="0.01" value={position} disabled={!active} onChange={e=>{pause();const t=Number(e.target.value);clock.current.position=t;setPosition(t);if(rig.current&&clock.current.clip)applyFixedMotion(rig.current,clock.current.clip,t);}}/>
-      <div className="home-motion-buttons"><button className="primary-button" data-testid={learning?'learning-motion-play':'home-motion-play'} disabled={!active||playing} onClick={()=>play()}>{position>0&&position<(active?.duration??0)?'继续播放':'播放动作'}</button><button className="secondary-button" disabled={!playing} onClick={pause}>暂停动作</button><button className="secondary-button" disabled={!active} onClick={()=>play(true)}>重播动作</button><label>速度<select aria-label={`${context}速度`} value={rate} onChange={e=>{const value=Number(e.target.value);clock.current.rate=value;clock.current.last=performance.now();setRate(value);}}><option value="0.5">半速</option><option value="1">正常</option><option value="1.5">1.5 倍</option></select></label></div>
+      <div className="home-motion-buttons"><button className="primary-button" data-testid={learning?'learning-motion-play':'home-motion-play'} disabled={!active||playing} onClick={()=>{play();onControl?.('play');}}>{position>0&&position<(active?.duration??0)?'继续播放':'播放动作'}</button><button className="secondary-button" disabled={!playing} onClick={()=>{pause();onControl?.('pause');}}>暂停动作</button><button className="secondary-button" disabled={!active} onClick={()=>{play(true);onControl?.('replay');}}>重播动作</button><label>速度<select aria-label={`${context}速度`} value={rate} onChange={e=>{const value=Number(e.target.value);clock.current.rate=value;clock.current.last=performance.now();setRate(value);}}><option value="0.5">半速</option><option value="1">正常</option><option value="1.5">1.5 倍</option></select></label></div>
     </>}
   </section>}</>;
 });

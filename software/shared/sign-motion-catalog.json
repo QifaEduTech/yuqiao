@@ -4,17 +4,10 @@
   "purpose": "Independent preview action library. Adding an action does not train or expand recognition.",
   "entries": [
     {
-      "id": "csl.thanks",
-      "label": "谢谢",
+      "id": "csl.good",
+      "label": "好",
       "reviewRequired": true,
-      "asset": "anny/csl.thanks.json",
-      "version": "user-description-3"
-    },
-    {
-      "id": "csl.hello",
-      "label": "你好",
-      "reviewRequired": true,
-      "asset": "anny/csl.hello.json",
+      "asset": "anny/csl.good.json",
       "version": "user-description-1"
     },
     {
@@ -25,31 +18,10 @@
       "version": "user-description-1"
     },
     {
-      "id": "csl.sorry",
-      "label": "对不起",
+      "id": "csl.hello",
+      "label": "你好",
       "reviewRequired": true,
-      "asset": "anny/csl.sorry.json",
-      "version": "user-description-3"
-    },
-    {
-      "id": "csl.me",
-      "label": "我",
-      "reviewRequired": true,
-      "asset": "anny/csl.me.json",
-      "version": "user-description-1"
-    },
-    {
-      "id": "csl.love",
-      "label": "爱",
-      "reviewRequired": true,
-      "asset": "anny/csl.love.json",
-      "version": "user-description-2"
-    },
-    {
-      "id": "csl.you",
-      "label": "你",
-      "reviewRequired": true,
-      "asset": "anny/csl.you.json",
+      "asset": "anny/csl.hello.json",
       "version": "user-description-1"
     },
     {
@@ -60,18 +32,18 @@
       "version": "composed-2"
     },
     {
-      "id": "csl.good",
-      "label": "好",
+      "id": "csl.love",
+      "label": "爱",
       "reviewRequired": true,
-      "asset": "anny/csl.good.json",
-      "version": "user-description-1"
+      "asset": "anny/csl.love.json",
+      "version": "user-description-2"
     },
     {
-      "id": "csl.yes",
-      "label": "是",
+      "id": "csl.me",
+      "label": "我",
       "reviewRequired": true,
-      "asset": "anny/csl.yes.json",
-      "version": "user-description-2"
+      "asset": "anny/csl.me.json",
+      "version": "user-description-1"
     },
     {
       "id": "csl.not",
@@ -79,6 +51,20 @@
       "reviewRequired": true,
       "asset": "anny/csl.not.json",
       "version": "user-description-1"
+    },
+    {
+      "id": "csl.ref.bmcx.123",
+      "label": "报告",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.123.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.1606",
+      "label": "痛",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.1606.json",
+      "version": "user-standard-1"
     },
     {
       "id": "csl.ref.bmcx.1874",
@@ -107,6 +93,153 @@
       "reviewRequired": true,
       "asset": "anny/csl.ref.bmcx.1938.json",
       "version": "source-reference-1"
+    },
+    {
+      "id": "csl.ref.bmcx.1952",
+      "label": "给",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.1952.json",
+      "version": "source-reference-1"
+    },
+    {
+      "id": "csl.ref.bmcx.208",
+      "label": "可以",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.208.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.2379",
+      "label": "检查",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.2379.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.2512",
+      "label": "身份证",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.2512.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.3757",
+      "label": "有",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.3757.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.3758",
+      "label": "没有",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.3758.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.3786",
+      "label": "这里",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.3786.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.3789",
+      "label": "哪里",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.3789.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.3796",
+      "label": "什么",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.3796.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.3928",
+      "label": "发烧",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.3928.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.3964",
+      "label": "药",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.3964.json",
+      "version": "source-reference-1"
+    },
+    {
+      "id": "csl.ref.bmcx.3984",
+      "label": "医院",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.3984.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.3985",
+      "label": "门诊",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.3985.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.4039",
+      "label": "挂号",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.4039.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.4040",
+      "label": "过敏",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.4040.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.526",
+      "label": "医生",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.526.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.ref.bmcx.546",
+      "label": "志愿者",
+      "reviewRequired": true,
+      "asset": "anny/csl.ref.bmcx.546.json",
+      "version": "user-standard-1"
+    },
+    {
+      "id": "csl.sorry",
+      "label": "对不起",
+      "reviewRequired": true,
+      "asset": "anny/csl.sorry.json",
+      "version": "user-description-3"
+    },
+    {
+      "id": "csl.thanks",
+      "label": "谢谢",
+      "reviewRequired": true,
+      "asset": "anny/csl.thanks.json",
+      "version": "user-description-3"
+    },
+    {
+      "id": "csl.yes",
+      "label": "是",
+      "reviewRequired": true,
+      "asset": "anny/csl.yes.json",
+      "version": "user-description-2"
+    },
+    {
+      "id": "csl.you",
+      "label": "你",
+      "reviewRequired": true,
+      "asset": "anny/csl.you.json",
+      "version": "user-description-1"
     }
   ]
 }

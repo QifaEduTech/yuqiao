@@ -90,11 +90,30 @@ const proxyHeaders = `            proxy_set_header Host $host;
             proxy_read_timeout 300s;
             proxy_buffering off;`;
 
-const appLocations = `        location /api/ {
+const appLocations = `        location = /api/display/stream {
+            proxy_pass http://127.0.0.1:${apiPort};
+            proxy_http_version 1.1;
+            proxy_set_header Connection "";
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $yuqiao_forwarded_proto;
+            proxy_buffering off;
+            proxy_cache off;
+            proxy_read_timeout 3600s;
+            proxy_send_timeout 3600s;
+        }
+
+        location /api/ {
             proxy_pass http://127.0.0.1:${apiPort};
             proxy_http_version 1.1;
 ${proxyHeaders}
         }
+
+        location = /avatar { try_files /avatar.html =404; }
+        location = /camera { try_files /camera.html =404; }
+        location = /avatar/ { return 301 /avatar; }
+        location = /camera/ { return 301 /camera; }
 
         location / {
             try_files $uri $uri/ =404;
