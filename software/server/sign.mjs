@@ -4,7 +4,7 @@ import { mkdir, mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { recordSignDiagnostics } from './sign-diagnostics.mjs';
 import { signCatalog } from '../shared/sign-catalog.mjs';
-import {recordingConfig,recordingEntries,recordingBundle,recordingSnapshot,validateRecordingResult} from './recording-catalog.mjs';
+import {recordingConfig,recordingEntries,recordingBundle,recordingSnapshot,validateRecordingResult,recognitionEngine,activeEngine} from './recording-catalog.mjs';
 
 const failure = (message, status = 503) => Object.assign(new Error(message), { status });
 export function validateSequenceResult(result){
@@ -28,16 +28,17 @@ export function validateSignVideo(buffer, mime) {
 }
 
 export class SignService {
-  constructor(root, { diagnosticDir = null } = {}) { this.root = root; this.diagnosticDir = diagnosticDir; this.busy = false; this.child = null; }
+  constructor(root, { diagnosticDir = null,dataDir=resolve(root,'data') } = {}) { this.root = root;this.dataDir=dataDir; this.diagnosticDir = diagnosticDir; this.busy = false; this.child = null; }
   python() { return resolve(this.root, process.platform === 'win32' ? '.venv-sign/Scripts/python.exe' : '.venv-sign/bin/python'); }
-  installed() { try{if(!existsSync(this.python()))return false;recordingBundle(this.root);return true;}catch{return false;} }
-  status() { return { available: this.installed(), busy: this.busy, engine: 'Web realtime four-word replay', labels: recordingEntries.map(entry=>entry.text), catalog_version:recordingConfig.id, max_seconds: recordingConfig.maxSeconds, sequence_available:false, sequence_retired:true, experimental: true, standard_validated: false, diagnostic_version: 4 }; }
+  installed() { try{if(!existsSync(this.python()))return false;recordingBundle(this.root,this.dataDir);return true;}catch{return false;} }
+  status() { const engine=activeEngine(this.root,this.dataDir);return { available: this.installed(), busy: this.busy, engine: engine.engine,modelId:engine.id,modelCount:1, labels: engine.labels.map(entry=>entry.text), catalog_version:recordingConfig.id, max_seconds: recordingConfig.maxSeconds, sequence_available:false, sequence_retired:true, experimental: true, standard_validated: false, diagnostic_version: 4 }; }
   workerScript() { return 'server/recording_worker.py'; }
   timeoutMs() { return recordingConfig.timeoutMs; }
   tempRoot() { return resolve(this.root, '.runtime-logs/sign-tmp'); }
-  workerEnvironment(temp) { return { ...process.env, PYTHONIOENCODING: 'utf-8', PYTHONPYCACHEPREFIX: resolve(this.root, '.runtime-logs/pycache'), TEMP: temp, TMP: temp, KERAS_HOME: resolve(this.root, '.runtime-logs/keras'), MPLCONFIGDIR: resolve(this.root, '.runtime-logs/matplotlib'), TF_CPP_MIN_LOG_LEVEL: '3', CUDA_VISIBLE_DEVICES: '-1' }; }
+  workerEnvironment(temp) { return { ...process.env,YUQIAO_MODEL_DESCRIPTOR:JSON.stringify(activeEngine(this.root,this.dataDir)), PYTHONIOENCODING: 'utf-8', PYTHONPYCACHEPREFIX: resolve(this.root, '.runtime-logs/pycache'), TEMP: temp, TMP: temp, KERAS_HOME: resolve(this.root, '.runtime-logs/keras'), MPLCONFIGDIR: resolve(this.root, '.runtime-logs/matplotlib'), TF_CPP_MIN_LOG_LEVEL: '3', CUDA_VISIBLE_DEVICES: '-1' }; }
   async recognize(buffer, mime, signal, {sequence=false,models=[]}={}) {
     validateSignVideo(buffer, mime);
+    if(models.length)throw failure('统一模型模式不加载逐动作模型。',400);
     if(sequence)throw failure('多动作分段识别已停用，请使用单动作录像复核。',410);
     if (this.busy) throw failure('另一个动作实验正在处理，请稍后重试。', 429);
     if (!this.installed()) throw failure('动作实验模型环境尚未就绪。');
@@ -45,7 +46,7 @@ export class SignService {
     this.busy = true;
     let directory;
     try {
-      const bundle=recordingBundle(this.root);
+      const bundle=recordingBundle(this.root,this.dataDir),activeLabels=activeEngine(this.root,this.dataDir).labels;
       const temp = this.tempRoot();
       await mkdir(temp, { recursive: true });
       directory = await mkdtemp(join(temp, 'job-'));
@@ -72,7 +73,7 @@ export class SignService {
             const result = JSON.parse(output.trim());
             if (result.error) return rejectResult(failure(result.error, result.status || 422));
             if (code || !(sequence?['complete','partial','no_hands']:['candidate', 'uncertain', 'no_hands', 'unsupported']).includes(result.status)) throw Error('Bad result');
-            validateRecordingResult(result,models);
+            validateRecordingResult(result,activeLabels);
             if(result.pipeline_sha256!==bundle.sha256)throw Error('Recording pipeline changed');
             resolveResult(result);
           } catch { rejectResult(failure('模型未能完成处理，请重试。')); }
@@ -80,7 +81,7 @@ export class SignService {
         if (signal?.aborted) abort();
       });
       if (signal?.aborted) throw failure('动作识别已取消。', 499);
-      if(recordingBundle(this.root).sha256!==bundle.sha256)throw failure('模型或规则在识别期间更新，请重新识别；原录像已保留。',409);
+      if(recordingBundle(this.root,this.dataDir).sha256!==bundle.sha256)throw failure('模型或规则在识别期间更新，请重新识别；原录像已保留。',409);
       const custom=models.find(m=>m.text===result.candidate);
       result.modelSnapshot=custom?{modelId:custom.signId,modelVersion:custom.path.split(/[\\/]/).at(-2),modelSha256:custom.sha256,featureId:'self-service-body178-v1',pipelineId:bundle.id,pipelineSha256:bundle.sha256}:recordingSnapshot(bundle,result.candidate);
       if (this.diagnosticDir) {

@@ -46,7 +46,7 @@ test('已接入动作按视频推理，未训练的请仍拦截；登记不会�
     const changed=Buffer.from(video);changed[30]=5;assert.equal((await f.infer(cookie,r.id,changed)).status,409);
     const response=await f.infer(cookie,r.id);assert.equal(response.status,200);const result=await response.json();
     if(category==='please'){assert.equal(result.status,'unsupported');assert.equal(result.candidate,null);assert.equal(result.reason,'recording_action_not_connected');assert.equal(result.attempt,undefined);assert.equal(result.actionText,'请');}
-    else {assert.equal(result.candidate,'谢谢','必须使用推理结果，不能复制人工类别');assert.equal(result.attempt.candidate,'谢谢');assert.equal(result.attempt.snapshot.pipelineId,'realtime-four-words-recording-v1');}
+    else {assert.equal(result.candidate,'谢谢','必须使用推理结果，不能复制人工类别');assert.equal(result.attempt.candidate,'谢谢');assert.equal(result.attempt.snapshot.pipelineId,'unified-body178-recording-v1');}
   }
   assert.equal(f.state.calls,3);
 });
@@ -80,11 +80,11 @@ test('识别过程中删除源录像或注销，不得保存迟到的练习结�
   const db=new DatabaseSync(join(f.root,'app.sqlite'));assert.equal(db.prepare('SELECT COUNT(*) AS n FROM practice_attempts').get().n,0);db.close();
 });
 
-test('帮助需要我保存对应模型版本，旧你好历史快照不被改写',async t=>{
+test('各词保存同一统一模型版本，旧你好历史快照不被改写',async t=>{
  const f=await fixture(t),cookie=await f.register('Snapshots'),record=await f.upload(cookie),db=new DatabaseSync(join(f.root,'app.sqlite'));
  const userId=db.prepare('SELECT user_id FROM records WHERE id=?').get(record.id).user_id,id=randomUUID(),old={modelId:'legacy-model',modelVersion:'legacy-v1',modelSha256:'a'.repeat(64),featureId:'legacy-feature',dictionaryVersion:'old',dictionaryHash:'b'.repeat(64),motionVersion:null};
  db.prepare('INSERT INTO practice_attempts(id,record_id,user_id,status,candidate_id,candidate_text,snapshot,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?)').run(id,record.id,userId,'candidate','csl.hello','你好',JSON.stringify(old),1,1);db.close();
- for(const [word,model,feature] of [['帮助','help-video-tcn-development-v1','153'],['需要','need-directional-tcn-development-v1','171'],['我','me-body-video-tcn-development-v1','178']]){f.state.result={status:'candidate',candidate:word};const response=await f.infer(cookie,record.id);assert.equal(response.status,200);const {attempt}=await response.json();assert.equal(attempt.snapshot.modelId,model);assert.match(attempt.snapshot.featureId,new RegExp(feature));assert.equal(attempt.snapshot.pipelineModels.length,4);}
+ for(const word of ['谢谢','帮助','需要','我']){f.state.result={status:'candidate',candidate:word};const response=await f.infer(cookie,record.id);assert.equal(response.status,200);const {attempt}=await response.json();assert.equal(attempt.snapshot.modelId,'unified-body178-user-trial-2026-11-17');assert.match(attempt.snapshot.featureId,/178/);assert.equal(attempt.snapshot.pipelineModels.length,1);}
  const history=await(await f.req(`/api/records/${record.id}/practice`,{cookie})).json();const original=history.attempts.find(a=>a.id===id);assert.equal(original.candidate,'你好');assert.deepEqual(original.snapshot,old);
 });
 

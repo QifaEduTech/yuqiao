@@ -46,6 +46,24 @@ class ParagraphChecks(unittest.TestCase):
     def test_candidate_alone_is_not_committed(self):
         b=ParagraphBuffer();self.assertIsNone(b.push(0,base('未知'),True)['final'])
         out=b.push(.2,base(),False,True);self.assertEqual(out['wordCount'],0);self.assertIsNone(out['final'])
+    def test_auto_end_progress_resets_when_hands_return(self):
+        b=ParagraphBuffer();b.push(.1,{**base(),'event':event(1,'我',0,50)},True)
+        self.assertEqual(b.push(.2,base(),False)['autoEnd']['remainingMs'],2000)
+        self.assertEqual(b.push(.8,base(),False)['autoEnd']['remainingMs'],1400)
+        self.assertIsNone(b.push(.9,base(),True)['autoEnd'])
+        for t in [1.2,1.8,2.4,3.0]:self.assertIsNone(b.push(t,base(),True)['final'])
+        self.assertEqual(b.push(3.1,base(),False)['autoEnd']['remainingMs'],2000)
+        for t in [3.6,4.1,4.6]:self.assertIsNone(b.push(t,base(),False)['final'])
+        out=b.push(5.1,base(),False);self.assertEqual(out['final']['endReason'],'quiet');self.assertIsNone(out['autoEnd'])
+    def test_two_auto_paragraphs_need_no_manual_finish_and_keep_ids(self):
+        b=ParagraphBuffer();finals=[]
+        for index in range(2):
+            start=index*3
+            b.push(start+.1,{**base(),'event':event(index+1,'谢谢',start*1000,start*1000+50)},True)
+            for n in range(2,25):
+                out=b.push(start+n/10,base(),False)
+                if out['final']:finals.append(out['final'])
+        self.assertEqual([f['id'] for f in finals],[1,2]);self.assertTrue(all(f['endReason']=='quiet' and not f['partial'] for f in finals))
     def test_incomplete_candidate_conflict_or_gap_needs_review(self):
         for kind in ['candidate','conflict','gap']:
             b=ParagraphBuffer();b.push(.1,{**base(),'event':event(1,'甲',0,50)},True)

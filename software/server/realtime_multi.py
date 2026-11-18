@@ -61,8 +61,8 @@ class MultiLiveRecognizer:
         if self.last_time is not None and t-self.last_time>CONFIG['resetGapSeconds']:
             self.clear_segment();self.pending_events=[];self.reset_detectors()
         self.last_time=t
-        # Two confirmed completions can share a frame; emit the second next frame.
-        if self.pending_events:return self.emitted()
+        # Keep observing fresh frames even when a previous completion is queued.
+        # All emission paths drain the same FIFO, at most one event per frame.
         self.buffer.append((t,None if value is None else np.asarray(value).copy(),np.asarray(vector).copy(),aspect_ratio,deepcopy(me_input)))
         a=self.thanks.push(t,value,vector,aspect_ratio=aspect_ratio);b=self.help.push_features(t,vector,False,aspect_ratio=aspect_ratio)
         c=self.need.push_features(t,vector,aspect_ratio=aspect_ratio) if self.need is not None else None
@@ -164,6 +164,10 @@ class MultiLiveRecognizer:
             if self.missing_since is None:self.missing_since=t
             state='ending' if any(r['eventState']=='ending' for r in outputs) and not self.conflicted else 'waiting';reason='no_hands'
             if t-self.missing_since>=CONFIG['missingResetSeconds']:self.clear_segment();self.reset_detectors()
+        if self.pending_events:
+            queued=self.emitted(b)
+            if self.conflicted:queued['reason']='ambiguous_actions'
+            return queued
         status='candidate' if candidate else 'waiting' if not present else 'uncertain' if self.conflicted else 'observing'
         return {'status':status,'candidate':candidate,'reason':reason,'eventState':state,'event':None,'samples':max(a.get('samples',0),len(self.help.samples)),'handSamples':max(a.get('handSamples',0),sum(bool(h) for _,h in self.help.samples)),'helpEngine':'video-tcn','modelVersion':'v1','helpScore':b.get('helpScore'),'motionSupported':b.get('motionSupported'),'motionGuard':b.get('motionGuard')}
 

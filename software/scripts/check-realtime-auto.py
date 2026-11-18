@@ -82,6 +82,21 @@ class AutomaticTests(unittest.TestCase):
         self.frame(a='谢谢',stable=True);self.frame(b='帮助');self.frame(b='帮助')
         self.frame(present=False,event_b={'id':4,'text':'帮助','signId':'csl.ref.bmcx.1900','startMs':0,'endMs':300})
         self.clock+=2;self.assertIsNone(self.frame(present=False)['event'])
+    def test_queued_completion_does_not_drop_next_action_observation(self):
+        self.frame(a='谢谢',stable=True);self.frame(b='帮助');self.frame(b='帮助')
+        first=self.frame(present=False,event_b={'id':4,'text':'帮助','signId':'csl.ref.bmcx.1900','startMs':0,'endMs':300})['event']
+        second=self.frame(a='谢谢',stable=True)['event']
+        self.assertEqual([first['text'],second['text']],['谢谢','帮助'])
+        self.assertIsNotNone(self.live.active)
+        self.assertEqual(self.live.active['word'],'谢谢')
+        self.assertEqual(self.live.active['lastStable'],.4)
+        self.assertEqual(self.live.buffer[-1][0],.4)
+        self.assertIsNone(self.frame(a='谢谢',stable=True)['event'])
+    def test_fresh_conflict_is_reported_while_old_completion_drains(self):
+        self.frame(a='谢谢',stable=True);self.frame(b='帮助');self.frame(b='帮助')
+        self.frame(present=False,event_b={'id':4,'text':'帮助','signId':'csl.ref.bmcx.1900','startMs':0,'endMs':300})
+        out=self.frame(a='谢谢',b='帮助',stable=True)
+        self.assertEqual(out['event']['text'],'帮助');self.assertEqual(out['reason'],'ambiguous_actions');self.assertTrue(self.live.conflicted)
     def test_brief_wrong_candidate_does_not_poison_stable_word(self):
         self.frame(b='帮助');out=self.frame(a='谢谢',stable=True)
         self.assertEqual(out['candidate'],'谢谢');self.assertFalse(self.live.conflicted)

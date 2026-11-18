@@ -1,0 +1,33 @@
+{
+  "id": "unified-body178-local-required",
+  "engine": "unified-tcn",
+  "version": "v1",
+  "mode": "requires_local_weights",
+  "modelDirectory": "models/unified-sign/v1",
+  "featureProtocol": "hands-and-shoulder-relative-178-v1",
+  "seed": null,
+  "labels": [
+    {
+      "category": "thanks",
+      "text": "谢谢",
+      "signId": "csl.thanks"
+    },
+    {
+      "category": "help",
+      "text": "帮助",
+      "signId": "csl.ref.bmcx.1900"
+    },
+    {
+      "category": "need",
+      "text": "需要",
+      "signId": "csl.ref.bmcx.1874"
+    },
+    {
+      "category": "me",
+      "text": "我",
+      "signId": "csl.me"
+    }
+  ],
+  "weightsSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "notes": "Public source template. Supply authorized model files and matching descriptor or train a joint model using your own data. No private author weights included."
+}

@@ -9,13 +9,6 @@ import numpy
 
 root = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(root / 'server'))
-from help_tcn_inference import HelpTCN
-from need_tcn_inference import NeedTCN
-from me_tcn_inference import MeTCN
-from sign_worker import classifier
-
-HelpTCN()
-NeedTCN()
-MeTCN()
-classifier()
-print('Four model loads and Python imports passed; this is not accuracy validation.')
+from unified_live import load_model
+load_model()
+print('One unified model load and Python imports passed; this is not accuracy validation.')

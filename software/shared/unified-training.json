@@ -1,0 +1,22 @@
+{
+  "id": "unified-two-datasets-v2",
+  "maxActions": 64,
+  "allowBuiltinCollection": true,
+  "initialization": "random",
+  "requirePreviousModelLabels": false,
+  "classSelection": "all_ready_current_tasks_and_retained_archives",
+  "recallTarget": 0.9,
+  "precisionTarget": 0.9,
+  "maxFalsePositiveRate": 0.05,
+  "minTestPositive": 20,
+  "minTestNegative": 20,
+  "minTrainingPoolPerClass": 20,
+  "minInternalTrain": 10,
+  "minInternalValidation": 3,
+  "internalValidationFraction": 0.2,
+  "maxEpochs": 200,
+  "fitSeconds": 600,
+  "maxJobSamples": 3000,
+  "maxTotalFrames": 100000,
+  "policy": "Preserve videos and labels; train one joint model from scratch per controlled round. Collection tasks are not individual models."
+}

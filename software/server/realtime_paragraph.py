@@ -40,8 +40,13 @@ class ParagraphBuffer:
             # not convert that candidate into a confirmed word or silently omit it.
             partial=self.blocked or self.pending is not None
             self.serial+=1
-            final={'id':self.serial,'text':format_words(self.words),'words':list(self.words),'wordCount':len(self.words),'startMs':self.start,'endMs':self.end,'partial':bool(partial)}
+            final={'id':self.serial,'text':format_words(self.words),'words':list(self.words),'wordCount':len(self.words),'startMs':self.start,'endMs':self.end,'partial':bool(partial),'endReason':'limit' if self.limit else 'manual' if finish else 'quiet'}
             self.reset()
         elif finish and not self.words:self.reset()
         state='needs_review' if self.blocked else 'collecting' if self.words else 'empty'
-        return {'state':state,'text':format_words(self.words),'words':list(self.words),'wordCount':len(self.words),'final':final}
+        # The UI reports this observed no-hand interval; it must not run a
+        # speculative client timer that finishes without fresh recognition frames.
+        auto_end=None
+        if self.words and self.quiet is not None:
+            auto_end={'remainingMs':max(0,round((CONFIG['endQuietSeconds']-(t-self.quiet))*1000))}
+        return {'state':state,'text':format_words(self.words),'words':list(self.words),'wordCount':len(self.words),'final':final,'autoEnd':auto_end}

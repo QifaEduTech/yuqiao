@@ -1,55 +1,27 @@
 {
-  "updated": "2026-11-16",
-  "nextCaption": "三端与医院数字人场景已提供；新增26词按每天6词的计划由使用者采集训练。训练页采用任务卡片/六文件夹，自动轮次，不要求旧词补充检查。",
-  "currentRecognition": [
-    "谢谢",
-    "帮助",
-    "需要",
-    "我"
-  ],
-  "plannedBatches": [
-    [
-      "你",
-      "好",
-      "请",
-      "什么",
-      "志愿者",
-      "是"
-    ],
-    [
-      "不是",
-      "有",
-      "没有",
-      "可以",
-      "医院",
-      "挂号"
-    ],
-    [
-      "门诊",
-      "医生",
-      "哪里",
-      "这里",
-      "痛",
-      "发烧"
-    ],
-    [
-      "药",
-      "过敏",
-      "检查",
-      "报告",
-      "等候",
-      "给"
-    ],
-    [
-      "身份证",
-      "再见"
-    ]
+  "updated": "2026-11-18",
+  "nextCaption": "使用自己的视频训练一个统一模型；训练页仅训练集/测试集，达标归档原片保留。",
+  "recognition": "requires authorized local weights; no private checkpoints included",
+  "features": [
+    "unified action classifier",
+    "two datasets",
+    "joint scratch fitting",
+    "per-class completion gates",
+    "automatic card archival",
+    "explicit shared-negative grant",
+    "paragraph Chinese formatting",
+    "same-account display sync"
   ],
   "remaining": [
-    "20个自训练任务容量不足26词，需扩容与验证",
-    "跨电脑HTTPS摄像头与真人播报",
-    "显示端配对码/管理员固定绑定/指令去重",
-    "自然连续和跨使用者识别验证"
+    "real gesture and cross-user quality",
+    "professional motion review",
+    "cross-device HTTPS camera",
+    "Android deferred"
   ],
-  "note": "仅公开功能摘要，不携带完整私人项目台账、任务状态、采集登记或账号资料。安卓暂缓；自动批次不证明独立真实拍摄组。"
+  "cancelled": [
+    "pairing codes",
+    "fixed display binding",
+    "fixed hospital scene panel"
+  ],
+  "privateDataIncluded": false
 }

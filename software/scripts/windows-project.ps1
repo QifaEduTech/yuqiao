@@ -218,7 +218,7 @@ try {
   if (-not [Environment]::Is64BitOperatingSystem -or $env:PROCESSOR_ARCHITECTURE -eq 'ARM64') { throw 'This recipe requires Windows x64; ARM64 has not been validated.' }
   if ($Mode -eq 'Check') {
     foreach ($name in @('node','npm.cmd','py','winget','java','ollama','nginx')) { $item=Get-Command $name -ErrorAction SilentlyContinue; Write-Output ($name+': '+$(if($item){$item.Source}else{'not on PATH'})) }
-    foreach ($path in @('.venv/Scripts/python.exe','.venv-sign/Scripts/python.exe','models/sign-word-baseline/dynamic_gesture_classifier.tflite','models/help-video-tcn/v1/weights.npz','models/need-video-tcn/experimental-v1/weights.npz','models/me-video-tcn/experimental-v1/weights.npz','web/dist/index.html','tools/nginx/nginx.exe','tools/cloudflared/cloudflared.exe')) { Write-Output ($path+': '+(Test-Path -LiteralPath $path)) }
+    foreach ($path in @('.venv/Scripts/python.exe','.venv-sign/Scripts/python.exe','models/unified-sign/v1/model.json','models/unified-sign/v1/weights.npz','web/dist/index.html','tools/nginx/nginx.exe','tools/cloudflared/cloudflared.exe')) { Write-Output ($path+': '+(Test-Path -LiteralPath $path)) }
     Write-Output ('LAN IPv4: '+(Get-LanIp))
     Write-Output ('Nginx runtime: '+(Join-Path $env:LOCALAPPDATA 'Yuqiao\nginx-runtime'))
     Write-Output 'Check only: presence is not readiness. No secrets read, no downloads, no services changed.'
@@ -254,10 +254,9 @@ try {
       Invoke-Checked '.venv-anny/Scripts/python.exe' @('-m','pip','check')
       Invoke-Checked '.venv-anny/Scripts/python.exe' @('-c','import torch,numpy; print(torch.__version__); print(numpy.__version__)')
     }
-    if (-not (Test-Path 'models/sign-word-baseline/dynamic_gesture_classifier.tflite')) { Invoke-Checked 'node' @('scripts/setup-sign-assets.mjs') }
+    # Active recognition uses the trained unified model; do not reinstall retired weights.
     Invoke-Checked 'node' @('scripts/download-speech-mirror.mjs')
-    foreach ($path in @('models/help-video-tcn/v1/weights.npz','models/need-video-tcn/experimental-v1/weights.npz','models/me-video-tcn/experimental-v1/weights.npz')) { if (-not (Test-Path $path)) { throw "Copy trained model from the source project: $path (no public download)." } }
-    Invoke-Checked '.venv-sign/Scripts/python.exe' @('-B','scripts/check-windows-runtime.py')
+    if ((Test-Path 'models/unified-sign/v1/model.json') -and (Test-Path 'models/unified-sign/v1/weights.npz')) { Invoke-Checked '.venv-sign/Scripts/python.exe' @('-B','scripts/check-windows-runtime.py') } else { Write-Output 'Unified action weights are not supplied. Collection/training can run; recognition remains unavailable until a local model is configured.' }
     & (Join-Path $PSScriptRoot 'start-local-language.ps1') -Pull
     if ($LASTEXITCODE -ne 0) { throw 'Ollama model setup failed.' }
     Invoke-Checked 'npm.cmd' @('run','build')

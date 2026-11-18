@@ -14,7 +14,7 @@ test('表达接口确实委托模型服务、离线返回503、旧精确接口�
  t.after(async()=>{server.closeAllConnections();await new Promise(done=>server.close(done));assert.ok(root.startsWith(parent+sep));await rm(root,{recursive:true,force:true});});
  const request=body=>fetch(`http://127.0.0.1:${server.address().port}/api/sign/resolve`,{method:'POST',headers:{Origin:'http://127.0.0.1:5173','X-Yuqiao-Request':'1','Content-Type':'application/json'},body:JSON.stringify(body)});
  const r=await request({text:'多谢你了',mode:'expression'});assert.equal(r.status,200);assert.equal((await r.json()).expression.provider,'ollama');assert.equal(calls,1);
- const playback=await(await request({text:'多谢你了',mode:'playback'})).json();assert.ok(playback.preview);assert.equal(playback.expression,undefined);assert.equal(playback.engine,undefined);assert.equal(playback.missing,undefined);assert.equal(calls,2);
+ const playback=await(await request({text:'多谢你了',mode:'playback'})).json();assert.ok(playback.preview);assert.equal(playback.expression,undefined);assert.equal(playback.engine,undefined);assert.deepEqual(playback.missing,[]);assert.equal(calls,1);
  offline=true;assert.equal((await request({text:'谢谢',mode:'expression'})).status,503);
- const exact=await request({text:'谢谢'});assert.equal(exact.status,200);assert.equal((await exact.json()).preview.id,'csl.thanks');assert.equal(calls,3);
+ const exact=await request({text:'谢谢'});assert.equal(exact.status,200);assert.equal((await exact.json()).preview.id,'csl.thanks');assert.equal(calls,2);
 });

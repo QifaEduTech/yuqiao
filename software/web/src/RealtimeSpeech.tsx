@@ -1,10 +1,10 @@
 import {useEffect,useRef} from 'react';
 import {useLocalSpeechQueue} from './useLocalSpeechQueue';
-import type {CompletedParagraph} from '../../shared/realtime-paragraph.mjs';
+import type {OrganizedParagraph} from '../../shared/recognized-chinese.mjs';
 
 type Event={id:number;text:string;signId:string};
 type Result={seq:number;candidate:string|null;reason:string;eventState:string};
-export default function RealtimeSpeech({events,phase,result,paragraphs,compact=false}:{events:Event[];phase:string;result:Result|null;paragraphs?:CompletedParagraph[];compact?:boolean}){
+export default function RealtimeSpeech({events,phase,result,paragraphs,compact=false}:{events:Event[];phase:string;result:Result|null;paragraphs?:OrganizedParagraph[];compact?:boolean}){
   const lastParagraph=useRef(0);
   const speech=useLocalSpeechQueue(),seen=useRef(events.at(-1)?.id??0),spoken=useRef(new Set<string>()),completed=useRef(new Set<string>()),lastCandidate=useRef<string|null>(null),awaySince=useRef<number|null>(null);
   useEffect(()=>{
@@ -13,7 +13,7 @@ export default function RealtimeSpeech({events,phase,result,paragraphs,compact=f
       for(const paragraph of paragraphs){
         if(paragraph.id<=lastParagraph.current)continue;
         lastParagraph.current=paragraph.id;
-        if(!paragraph.partial)speech.enqueue(paragraph.text);
+        if(!paragraph.partial&&paragraph.chinese.status==='ready')speech.enqueue(paragraph.chinese.text);
       }
       return;
     }

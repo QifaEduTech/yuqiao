@@ -5,14 +5,16 @@ import {validLiveResult} from '../../shared/realtime-result.mjs';
 import type {HandTracking} from './RealtimeSkeleton';
 import targets from '../../shared/realtime-targets.json';
 import paragraphConfig from '../../shared/realtime-paragraph.json';
-import {validParagraph,type ParagraphResult,type CompletedParagraph} from '../../shared/realtime-paragraph.mjs';
+import {validParagraph,type ParagraphResult} from '../../shared/realtime-paragraph.mjs';
+import {organizeRecognizedWords,type OrganizedParagraph} from '../../shared/recognized-chinese.mjs';
+import recognitionEngine from '../../shared/recognition-engine.json';
 
 type WordEvent={id:number;signId:string;text:string;startMs:number;endMs:number};
 export type MeCheck={bodyVisible:boolean;chestReferenced?:boolean;frameSupported:boolean;stableSupported:boolean;modelScore:number|null;hands:{indexAngle:number|null;indexAngle2d?:number|null;indexExtended:boolean;indexPointing?:boolean;recedingIndex?:boolean;indexDepthFraction?:number|null;otherFingersFolded:boolean;towardChest?:boolean;nearBody:boolean;chestCosine?:number|null;shoulderCosine?:number|null;tipDistance?:number|null}[]};
 type Result={paragraph?:ParagraphResult;meCheck?:MeCheck|null;seq:number;status:'waiting'|'observing'|'candidate'|'uncertain';candidate:string|null;reason:string;processingMs:number;samples:number;handSamples:number;frames:number;event:WordEvent|null;eventState:string;handTracking?:HandTracking;helpScore?:number|null;helpEngine?:string;modelVersion?:string|null;motionSupported?:boolean|null;motionGuard?:string|null};
 export function useRealtimeSign(){
   const finishRequest=useRef(false);
-  const [paragraphs,setParagraphs]=useState<CompletedParagraph[]>([]),[finishing,setFinishing]=useState(false);
+  const [paragraphs,setParagraphs]=useState<OrganizedParagraph[]>([]),[finishing,setFinishing]=useState(false);
   const video=useRef<HTMLVideoElement>(null),streamRef=useRef<MediaStream|null>(null),session=useRef<string|null>(null),controller=useRef<AbortController|null>(null),generation=useRef(0),timer=useRef<ReturnType<typeof setTimeout>|null>(null),canvas=useRef<HTMLCanvasElement|null>(null),starting=useRef(false);
   const [phase,setPhase]=useState<'idle'|'permission'|'warming'|'running'|'error'>('idle'),[stream,setStream]=useState<MediaStream|null>(null),[result,setResult]=useState<Result|null>(null),[message,setMessage]=useState(''),[metrics,setMetrics]=useState({frames:0,fps:0,latencyMs:0});
   const [events,setEvents]=useState<WordEvent[]>([]);
@@ -44,7 +46,7 @@ export function useRealtimeSign(){
       session.current=ready.session;
 
       if(ready.protocol!==config.protocol||ready.flow!=='paragraph')throw Error('实时服务版本不匹配，请刷新页面。');
-      if(ready.target!=='auto'||ready.helpEngine!=='video-tcn'||!Array.isArray(ready.supportedActions)||ready.supportedActions.length<expected.length||expected.some(action=>!ready.supportedActions!.some(x=>x.text===action.text&&x.signId===action.signId)))throw Error('自动识别版本不匹配，请刷新页面。');
+      if(ready.target!=='auto'||ready.helpEngine!==recognitionEngine.engine||!Array.isArray(ready.supportedActions)||!ready.supportedActions.length||ready.supportedActions.length>64||ready.supportedActions.some(x=>typeof x.text!=='string'||!x.text||typeof x.signId!=='string'||!x.signId)||new Set(ready.supportedActions.map(x=>x.signId)).size!==ready.supportedActions.length)throw Error('自动识别版本不匹配，请刷新页面。');
       expected=ready.supportedActions!;
       clearTimeout(startupTimer);starting.current=false;setPhase('running');setMessage('');canvas.current=document.createElement('canvas');
       const started=performance.now();let seq=0,waitingSince=started,lastEventId=0,lastEventEnd=-1,lastParagraphId=0,lastParagraphEnd=-1;
@@ -54,7 +56,10 @@ export function useRealtimeSign(){
           const el=video.current,surface=canvas.current;if(!el||!surface)return;
           if(el.readyState<2||!el.videoWidth){if(began-waitingSince>5000)throw Error('摄像头画面暂不可读，请重新开启。');timer.current=setTimeout(()=>void loop(),100);return;}
           waitingSince=began;
-          const scale=Math.min(1,config.maxImageEdge/Math.max(el.videoWidth,el.videoHeight));surface.width=Math.round(el.videoWidth*scale);surface.height=Math.round(el.videoHeight*scale);
+          const scale=Math.min(1,config.maxImageEdge/Math.max(el.videoWidth,el.videoHeight)),width=Math.round(el.videoWidth*scale),height=Math.round(el.videoHeight*scale);
+          // Assigning even the same size clears/reinitializes the canvas backing
+          // store. Reuse it while camera dimensions stay unchanged.
+          if(surface.width!==width)surface.width=width;if(surface.height!==height)surface.height=height;
           const context=surface.getContext('2d');if(!context)throw Error('浏览器无法读取摄像头画面。');context.drawImage(el,0,0,surface.width,surface.height);
           const blob=await new Promise<Blob|null>(resolve=>surface.toBlob(resolve,'image/jpeg',.72));if(!active())return;if(!blob)throw Error('读取画面失败，请重试。');
           const captureMs=began-started,frameSeq=++seq;
@@ -62,13 +67,14 @@ export function useRealtimeSign(){
           let next:Result;const finish=finishRequest.current;finishRequest.current=false;
           try{next=await api<Result>('/api/sign/realtime/frames',{method:'POST',headers:{'Content-Type':'image/jpeg','X-Yuqiao-Live-Session':ready.session,'X-Yuqiao-Frame-Seq':String(frameSeq),'X-Yuqiao-Capture-Ms':captureMs.toFixed(2),...(finish?{'X-Yuqiao-Finish-Paragraph':'1'}:{})},body:blob,signal:current.signal});}finally{clearTimeout(timeout);}
           if(!active())return;
-          if(next.helpEngine!==undefined&&next.helpEngine!=='video-tcn')throw Error('自动识别结果版本不匹配，请重新开启。');
+          if(next.helpEngine!==undefined&&next.helpEngine!==recognitionEngine.engine)throw Error('自动识别结果版本不匹配，请重新开启。');
           if(next.seq!==frameSeq||!validLiveResult(next,expected.map(x=>x.text),expected.map(x=>x.signId),config.maxSamples))throw Error('实时结果不匹配，请重新开启。');
           if(!validParagraph(next.paragraph,expected.map(x=>x.text)))throw Error('段落结果不匹配，请重新开启。');
           const end=next.paragraph.final;
           if(end){
             if(end.id!==lastParagraphId+1||end.startMs<=lastParagraphEnd||end.endMs>Math.round(captureMs))throw Error('段落顺序不匹配，请重新开启。');
-            lastParagraphId=end.id;lastParagraphEnd=end.endMs;setParagraphs(previous=>[...previous,end].slice(-paragraphConfig.maxDisplayedParagraphs));
+            const organized={...end,chinese:organizeRecognizedWords(end.words,{partial:end.partial})};
+            lastParagraphId=end.id;lastParagraphEnd=end.endMs;setParagraphs(previous=>[...previous,organized].slice(-paragraphConfig.maxDisplayedParagraphs));
           }
           if(finish)setFinishing(false);
           if(next.event){

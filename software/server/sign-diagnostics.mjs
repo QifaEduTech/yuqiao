@@ -12,7 +12,7 @@ export async function recordSignDiagnostics(directory, result) {
   const codes = new Set(['hand_count', 'coverage', 'gap', 'score', 'margin', 'scope']);
   entry.checks = (result.checks || []).filter(item => codes.has(item.code)).map(item => ({ code: item.code, passed: item.passed === true }));
   entry.thresholds = { min_hand_samples: 8, active_coverage: .6, max_internal_gap_seconds: .6, score: .8, margin: .25 };
-  if(result.pipeline_id==='realtime-four-words-recording-v1'){
+  if(['realtime-four-words-recording-v1','unified-body178-recording-v1'].includes(result.pipeline_id)){
     entry.version=4;entry.thresholds={max_seconds:30,max_image_edge:640,sample_interval_seconds:.03};
     for(const key of ['observed_word_count','completed_event_count','conflict_frames'])entry[key]=Number.isInteger(result[key])?result[key]:null;
     entry.checks=(result.checks||[]).filter(c=>['single_action','no_conflict','candidate_evidence'].includes(c.code)).map(c=>({code:c.code,passed:c.passed===true}));

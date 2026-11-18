@@ -26,11 +26,6 @@ class HelpTCNLive(HelpLiveProbe):
         present=[t for t,h in samples if h]
         if len(present)<CONFIG['minHandSamples'] or present[-1]-present[0]<CONFIG['minSpanSeconds']:
             self.score=None;self.motion_supported=None;return False
-        frames=[];previous=None
-        for t,h in samples:
-            frame=h.get('features') if h else np.r_[np.zeros(152),min(t-previous if previous is not None else 1/30,1)*30]
-            frames.append(frame);previous=t
-        self.score=self.model.probability(frames)
         if self.motion_check:
             timeline=[(t,feature_hands(h['features'],float(h['aspect'][0])) if h else {}) for t,h in samples]
             evidence=inspect_help_motion(timeline);now=samples[-1][0]
@@ -38,7 +33,15 @@ class HelpTCNLive(HelpLiveProbe):
             # briefly while one hand naturally leaves the camera before the
             # other; requiring both in the very last frame loses valid endings.
             self.motion_supported=any(r['supported'] and r['lastEvidenceTime'] is not None and now-r['lastEvidenceTime']<=GUARD['maxEvidenceAgeSeconds'] for r in evidence['runs'])
+            # A failed mandatory motion guard already rejects this window.
+            # Skip stateless TCN work; None means not evaluated, not score zero.
+            if not self.motion_supported:self.score=None;return False
         else:self.motion_supported=None
+        frames=[];previous=None
+        for t,h in samples:
+            frame=h.get('features') if h else np.r_[np.zeros(152),min(t-previous if previous is not None else 1/30,1)*30]
+            frames.append(frame);previous=t
+        self.score=self.model.probability(frames)
         return self.score>=.5 and (not self.motion_check or self.motion_supported)
     def push_features(self,t,frame,thanks_candidate=False,aspect_ratio=9/16):
         frame=np.asarray(frame,dtype=np.float32)
@@ -48,5 +51,5 @@ class HelpTCNLive(HelpLiveProbe):
         result=super().push(t,{'features':frame,'aspect':np.array([aspect_ratio])} if present else {},thanks_candidate)
         if not present or thanks_candidate:self.score=None;self.motion_supported=None
         if result['reason']=='help_geometry':result['reason']='help_model'
-        elif result['reason']=='insufficient_help_geometry':result['reason']='help_model_collecting' if self.score is None else 'help_motion_required' if self.motion_supported is False else 'help_model_below_threshold'
+        elif result['reason']=='insufficient_help_geometry':result['reason']='help_motion_required' if self.motion_supported is False else 'help_model_collecting' if self.score is None else 'help_model_below_threshold'
         return {**result,'helpScore':self.score,'helpEngine':'video-tcn','modelVersion':'v1','motionSupported':self.motion_supported,'motionGuard':GUARD['id'] if self.motion_check else None}

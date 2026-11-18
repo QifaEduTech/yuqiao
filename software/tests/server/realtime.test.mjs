@@ -11,7 +11,7 @@ import {validLiveResult,validHandTracking,validMeCheck} from '../../shared/realt
 test('我检查只接受有界标量，停止或750ms过期后不留诊断',()=>{
   const check={bodyVisible:true,chestReferenced:true,frameSupported:false,stableSupported:false,modelScore:.9,hands:[{indexAngle:80,indexAngle2d:92,indexExtended:false,otherFingersFolded:true,towardChest:true,nearBody:true,chestCosine:.81,shoulderCosine:.6,tipDistance:.2}]};
   assert.ok(validMeCheck(check));assert.ok(validMeCheck(null));assert.equal(Boolean(validMeCheck({...check,modelScore:NaN})),false);assert.equal(Boolean(validMeCheck({...check,hands:[{...check.hands[0],indexAngle:181}]})),false);
-  const s=new RealtimeSignService(resolve('.'));s.active={lastSeen:Date.now(),lastMeCheck:check};assert.deepEqual(s.status().meCheck,check);s.active.lastSeen=Date.now()-800;assert.equal(s.status().meCheck,null);s.active=null;assert.equal(s.status().meCheck,null);
+  const s=new RealtimeSignService(resolve('.'));s.active={lastSeen:Date.now(),lastMeCheck:check};assert.equal(s.status().meCheck,null);s.active=null;assert.equal(s.status().engine,'unified-tcn');assert.equal(s.status().modelCount,1);
 });
 
 test('骨架协议限定两只手21个有限二维点，保持镜像约定',()=>{
@@ -43,11 +43,12 @@ test('自动结果按词语与ID配对校验，不接受范围外词或错配ID'
   assert.equal(Boolean(validLiveResult({...base,event:{...base.event,signId:ids[0]}},texts,ids,140)),false);
   assert.equal(Boolean(validLiveResult({...base,status:'candidate',candidate:'你好',event:null,eventState:'collecting'},texts,ids,140)),false);
 });
-test('帮助试验目标固定，空手不自动输出所选词，其他目标和谢谢结果不得混入',async t=>{
+test('统一模型是唯一生产识别入口，空手不出词，旧单目标拒绝',async t=>{
   const service=new RealtimeSignService(resolve('.'));if(!service.status().available){t.skip('本机环境缺失');return;}t.after(()=>service.close());
   await assert.rejects(service.start(undefined,'hello'),e=>e.status===400);
-  const ready=await service.start(undefined,'help');assert.equal(ready.target,'help');assert.equal(ready.targetText,'帮助');assert.equal(ready.targetSignId,'csl.ref.bmcx.1900');
-  assert.equal(ready.helpEngine,'video-tcn');assert.equal(ready.modelVersion,'v1');
+  await assert.rejects(service.start(undefined,'help'),e=>e.status===400);
+  const ready=await service.start();assert.equal(ready.target,'auto');assert.equal(ready.modelCount,1);
+  assert.equal(ready.helpEngine,'unified-tcn');assert.equal(ready.modelVersion,'v1');
   for(let seq=1;seq<=12;seq++){
     const result=await service.frame(ready.session,jpeg,seq,(seq-1)*100);assert.equal(result.candidate,null);assert.equal(result.event,null);assert.deepEqual(result.handTracking.hands,[]);
   }
@@ -55,10 +56,11 @@ test('帮助试验目标固定，空手不自动输出所选词，其他目标�
   assert.throws(()=>service.receive(session,{type:'frame',seq:1,status:'candidate',candidate:'谢谢',eventState:'collecting',processingMs:1,samples:30,handSamples:30,event:null}),/Invalid live response/);
 });
 
-test('帮助旧规则可显式回退，不静默替代视频模型',async t=>{
+test('旧规则回退和附加逐动作模型已停用',async t=>{
   const service=new RealtimeSignService(resolve('.'));t.after(()=>service.close());
-  const ready=await service.start(undefined,'help','geometry');assert.equal(ready.helpEngine,'geometry');
-  const result=await service.frame(ready.session,jpeg,1,0);assert.equal(result.helpEngine,'geometry');assert.equal(result.modelVersion,null);assert.equal(result.candidate,null);
+  await assert.rejects(service.start(undefined,'help','geometry'),e=>e.status===400);
+  await assert.rejects(service.start(undefined,'auto','video-tcn'),e=>e.status===400);
+  await assert.rejects(service.start(undefined,'auto',undefined,{models:[{text:'extra'}]}),e=>e.status===400);
 });
 test('实时JPEG尺寸和格式在解码前受限',()=>{
   assert.deepEqual(validateLiveJpeg(jpeg),{width:64,height:64});assert.throws(()=>validateLiveJpeg(Buffer.alloc(30)),e=>e.status===415);assert.throws(()=>validateLiveJpeg(Buffer.alloc(300000)),e=>e.status===415);

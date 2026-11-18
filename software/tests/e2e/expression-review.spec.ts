@@ -13,5 +13,5 @@ test('隐藏匹配、拟表达及模型信息，原话保留，桌面和手机�
  await page.screenshot({path:'.runtime-logs/autoplay-desktop.png',fullPage:true});await page.setViewportSize({width:390,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:'.runtime-logs/autoplay-mobile.png',fullPage:true});
 });
 test('不能完整表达时只提示修改，不播放认识的部分',async({page})=>{
- await page.goto('/');await submit(page,'你好呀，我不爱你');await expect(page.getByRole('status')).toContainText('暂时无法完整表达');await expect(page.getByTestId('home-motion-play')).toHaveCount(0);await expect(page.getByLabel('输入要表达的中文')).toHaveValue('你好呀，我不爱你');
+ await page.goto('/');await submit(page,'你好呀，我不爱你');await expect(page.getByTestId('input-feedback')).toContainText('暂时无法完整表达');await expect(page.getByTestId('home-motion-play')).toHaveCount(0);await expect(page.getByLabel('输入要表达的中文')).toHaveValue('你好呀，我不爱你');
 });

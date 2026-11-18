@@ -9,6 +9,8 @@ import { SettingsDialog } from './Settings';
 import signCatalog from '../../shared/sign-catalog.json';
 import type {MotionPreview} from './fixedMotionLibrary';
 import './learning.css';
+import {useDisplayChannel} from './useDisplayChannel';
+import {motionFeedback} from './motionFeedback';
 
 type Direction = 'to-sign' | 'to-text';
 const examples = [...signCatalog.entries.map(entry=>entry.text),'你好，我爱你','我需要帮助','好，请等候'];
@@ -37,30 +39,24 @@ export default function App() {
   const [motionMatch,setMotionMatch]=useState<PreviewMatch|null>(null);
   const [playbackRequest,setPlaybackRequest]=useState(0);
   const [matching,setMatching]=useState(false);
+  const activePreview=motionMatch?.preview??null;
   const media = useMediaCapture();
   const avatar = useRef<AvatarHandle>(null);
   const stage = useRef<HTMLElement>(null);
   const help = useRef<HTMLDialogElement>(null);
   const matchRevision=useRef(0);
   const matchRequest=useRef<AbortController|null>(null);
+  const remoteActive=useRef(false);
+  const display=useDisplayChannel(user?.id);
+  const displayNotice=display.notice;
+  const sendDisplay=useCallback((preview:MotionPreview|null)=>display.send({preview}),[display.send]);
+  const sendDisplayControl=useCallback((control:'play'|'pause'|'replay')=>{void display.send({control});},[display.send]);
   const invalidateMatch=useCallback(()=>{
-    avatar.current?.cancelMotion();
-    matchRevision.current++;matchRequest.current?.abort();matchRequest.current=null;
+    if(remoteActive.current)void display.send({preview:null});
+    remoteActive.current=false;
+    avatar.current?.cancelMotion();matchRevision.current++;matchRequest.current?.abort();matchRequest.current=null;
     setMotionMatch(null);setMatching(false);setSubmittedText('');setNotice('');
-  },[]);
-  // 端2 数字人显示端：只接收动作指令，不接收原话或录像。失败不影响本页播放。
-  const [displayNotice,setDisplayNotice]=useState('');
-  const sendDisplay=useCallback(async(preview:MotionPreview|null)=>{
-    try{
-      const result=await api<{delivered:number}>('/api/display/command',{method:'POST',body:JSON.stringify({preview})});
-      setDisplayNotice(preview&&result.delivered===0?'数字人端未连接，动作只在本页播放；打开 /avatar 并登录同一账号后会自动同步。':'');
-    }catch{
-      setDisplayNotice('数字人端指令发送失败，动作只在本页播放。');
-    }
-  },[]);
-  const sendDisplayControl=useCallback((control:'play'|'pause'|'replay')=>{
-    void api('/api/display/command',{method:'POST',body:JSON.stringify({control})}).catch(()=>{});
-  },[]);
+  },[display.send]);
   useEffect(()=>()=>{matchRevision.current++;matchRequest.current?.abort();},[]);
 
   useEffect(() => {
@@ -105,7 +101,7 @@ export default function App() {
   }
 
   function clearSession() {
-    sendDisplay(null);
+    if(!remoteActive.current)void sendDisplay(null);
     setSavedTextId('');
     invalidateMatch();
     media.clear();
@@ -125,8 +121,9 @@ export default function App() {
     try {
       const result=await api<PreviewMatch>('/api/sign/resolve',{method:'POST',body:JSON.stringify({text:input,mode:'playback'}),signal:controller.signal});
       if(revision!==matchRevision.current||controller.signal.aborted)return;
-      setMotionMatch(result);setPlaybackRequest(revision);sendDisplay(result.preview??null);
-      setNotice(result.preview?'':result.reason==='too_many_actions'||result.reason==='too_long'?'这段内容过长，请缩短后重试。':'暂时无法完整表达这段内容，请换一种说法或查阅手语词典。');
+      setMotionMatch(result);setPlaybackRequest(n=>n+1);
+      if(result.preview){remoteActive.current=true;void sendDisplay(result.preview);}
+      setNotice(motionFeedback(result));
     } catch(error) {
       if(revision===matchRevision.current)setNotice(controller.signal.reason==='timeout'?'处理超时，文字已保留，请重试。':error instanceof Error?error.message:'暂时无法准备动作，请重试。');
     } finally {clearTimeout(timeout);if(revision===matchRevision.current){matchRequest.current=null;setMatching(false);}}
@@ -154,7 +151,7 @@ export default function App() {
     </header>
     <aside className="home-navigation-dock" onKeyDown={event=>{if(event.key==='Escape'){setNavigationOpen(false);navigationToggle.current?.focus();}}}>
       <button ref={navigationToggle} className="navigation-toggle" aria-controls="home-navigation" aria-expanded={navigationOpen} onClick={()=>setNavigationOpen(open=>!open)}><ChevronRight size={17} style={{transform:navigationOpen?undefined:'rotate(180deg)'}}/>{navigationOpen?'收起导航':'展开导航'}</button>
-      <nav id="home-navigation" className="home-navigation" hidden={!navigationOpen} aria-label="主要功能"><a className="quiet-button" href="/training.html">动作训练</a><a className="quiet-button learning-entry" href="/learning.html" aria-label="手语学习"><Hand size={17}/><span>手语学习</span></a><a className="quiet-button" href="/sign-dictionary.html" aria-label="手语词典"><BookOpen size={17}/><span>手语词典</span></a><button className="quiet-button" disabled={saving} onClick={() => user ? setHistoryOpen(true) : setAuthOpen(true)}><Clock3 size={17} /><span>我的记录</span></button><a className="quiet-button" href="/anny-review.html"><Sparkles size={17}/>固定动作预览</a><a className="quiet-button" href="/avatar">数字人端</a><a className="quiet-button" href="/camera">摄像头端</a><a className="quiet-button" href="/hospital-scene.html">医院互助场景</a></nav>
+      <nav id="home-navigation" className="home-navigation" hidden={!navigationOpen} aria-label="主要功能"><a className="quiet-button" href="/training.html">动作训练</a><a className="quiet-button learning-entry" href="/learning.html" aria-label="手语学习"><Hand size={17}/><span>手语学习</span></a><a className="quiet-button" href="/sign-dictionary.html" aria-label="手语词典"><BookOpen size={17}/><span>手语词典</span></a><button className="quiet-button" disabled={saving} onClick={() => user ? setHistoryOpen(true) : setAuthOpen(true)}><Clock3 size={17} /><span>我的记录</span></button><a className="quiet-button" href="/anny-review.html"><Sparkles size={17}/>固定动作预览</a><a className="quiet-button" href="/avatar">数字人端</a><a className="quiet-button" href="/camera">摄像头端</a></nav>
     </aside>
 
     <main>
@@ -178,8 +175,8 @@ export default function App() {
           {direction === 'to-sign' ? <>
             <div className="stage-orbit orbit-one" /><div className="stage-orbit orbit-two" />
             <div className="stage-greeting"><span className="greeting-line" /><span>你好，我是语桥</span><small>很高兴与你见面</small></div>
-            <Avatar ref={avatar} preview={motionMatch?.preview??null} autoPlay requestId={playbackRequest} displayText={submittedText} onControl={sendDisplayControl} />
-            {!motionMatch?.preview&&<div className="avatar-caption"><span className="caption-dot" />{matching?'正在准备动作…':submittedText?'请修改内容后重试':'准备好，开始一段交流'}</div>}
+            <Avatar ref={avatar} preview={activePreview} autoPlay requestId={playbackRequest} displayText={submittedText} onControl={sendDisplayControl} />
+            {!activePreview&&<div className="avatar-caption"><span className="caption-dot" />{matching?'正在准备动作…':submittedText?'请修改内容后重试':'准备好，开始一段交流'}</div>}
           </> : <div className="realtime-placeholder"><Hand size={42}/><h2>实时手语试用</h2><p>开启摄像头，先尝试“谢谢”。<br/>持续处理画面，不需要录制或保存。</p><a className="primary-button" href="/realtime.html">进入实时试用<ArrowRight size={17}/></a><a className="text-button" href="/learning.html">前往手语学习</a></div>}
 
           <div className="stage-bottomline"><span>{direction === 'to-sign' ? '左键旋转 · 右键平移 · 滚轮缩放' : '单动作练习请进入手语学习'}</span><div>{direction === 'to-sign' && <button className="icon-button" title="恢复正面位置与缩放" aria-label="恢复正面视角" onClick={() => avatar.current?.resetView()}><RotateCcw size={16} /></button>}<button className="icon-button" title="全屏查看" aria-label="全屏查看" onClick={() => void fullscreen()}><Maximize2 size={16} /></button></div></div>
@@ -200,14 +197,14 @@ export default function App() {
           </> : <div className="realtime-note"><p>实时试用先只尝试“谢谢”，不要求登录或保存录像。</p><p>做完后让双手移出画面约一秒，候选稳定才记入文字；不是连续整句翻译，不自动播报。</p><p>四词录制练习、词典示范与个人反馈仍在手语学习中。</p></div>}
 
           {displayNotice && <div className="inline-notice" role="status">{displayNotice}</div>}
-          {(media.error || notice) && <div className={`inline-notice ${media.error ? 'notice-error' : ''}`} role="status">{media.error || notice}</div>}
+          {(media.error || notice) && <div className={`inline-notice ${media.error ? 'notice-error' : ''}`} role="status" data-testid="input-feedback">{media.error || notice}</div>}
 
           <div className="panel-bottom"><ShieldCheck size={15} /><span>输入由你开启，也可以随时清除。</span></div>
         </aside>
       </div>
 
 
-      <section className="conversation-strip" aria-label="当前内容"><div className="strip-icon"><MessageCircle size={21} /></div><div><span className="section-kicker">{motionMatch?.preview?'本次原话 · 保留输入内容':submittedText ? '本次原话 · 尚未转换' : '交流，从一句话开始'}</span><p>{submittedText || '选择一种方式，把你想表达的内容带到这里。'}</p></div><span className="strip-note">{motionMatch?.preview?'可暂停或重播':matching?'正在准备动作':submittedText?'请修改后重试':'每一种表达，都值得被理解'}</span></section>
+      <section className="conversation-strip" aria-label="当前内容"><div className="strip-icon"><MessageCircle size={21} /></div><div><span className="section-kicker">{motionMatch?.preview?'本次原话 · 保留输入内容':submittedText ? '本次原话 · 尚未转换' : '交流，从一句话开始'}</span><p>{submittedText || '选择一种方式，把你想表达的内容带到这里。'}</p></div><span className="strip-note">{activePreview?'可暂停或重播':matching?'正在准备动作':submittedText?'请修改后重试':'每一种表达，都值得被理解'}</span></section>
 
       <section className="stage-info"><span className="stage-number">02</span><div><strong>手语学习 · 从一个动作开始</strong><p>单动作录制与四词候选识别已移到学习模块。文字／语音到手语继续在这里使用；实时页已提供“谢谢”的停顿结束与去重试用，真实重复动作效果待核对。</p></div><a className="progress-tag" href="/anny-review.html"><Sparkles size={14} />固定动作预览</a></section>
     </main>

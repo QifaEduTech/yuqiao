@@ -28,6 +28,16 @@ export function resolveExpression(input){
   }).join('，');
  }
  const result=changes.length?resolveInputPreview(actionText):exact;
+ // A question mark is not a disposable separator. Location/what questions
+ // have explicit lexical actions; yes/no intonation cannot be invented.
+ const parts=input.split(/([，,。.!！?？、;；:：\n\r]+)/u),questionMissing=[];
+ for(let i=0;i<parts.length;i+=2){
+  if(!/[?？]/u.test(parts[i+1]||''))continue;
+  const clause=parts[i].trim(),mapped=byInput.get(clause)?.output??clause,plan=planMotionText(mapped);
+  const ids=plan.status==='single'?[plan.entry.id]:plan.status==='sequence'?plan.preview.steps.map(s=>s.id):[];
+  if(!ids.some(id=>['csl.ref.bmcx.3789','csl.ref.bmcx.3796'].includes(id)))questionMissing.push('疑问语气：'+clause+'？');
+ }
+ if(questionMissing.length)return {...result,status:'unsupported',entry:null,preview:null,expression:null,reason:'unsupported_question',missing:[...new Set([...(result.missing||[]),...questionMissing])]};
  if(!result.preview)return {...result,expression:null};
  const plan=planMotionText(actionText);
  const steps=plan.status==='sequence'?plan.preview.steps.map(step=>({id:step.id,label:catalog.entries.find(e=>e.id===step.id).label,version:step.version})):

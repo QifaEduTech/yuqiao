@@ -38,3 +38,8 @@ software/models/mediapipe-vision/
 software/web/public/local-vision/
 software/web/android-app/app/
 software/web/android-app/inference/
+
+# Private trained unified checkpoints are not public source artifacts.
+software/models/unified-sign/
+*.npz
+*.tflite

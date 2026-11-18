@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-18",
+  "baseCommit": "54c8d3baffe7ff976da40021f44ac6c4f8ad2618",
+  "targetBranch": "codex/web-public-delivery",
+  "scope": "Public source checkout; no private data or new trained weights",
+  "checks": {
+    "productionBuild": "passed: TypeScript and Vite; existing large-chunk warnings remain",
+    "publicEntryCheck": "passed; model explicitly reported as not supplied",
+    "nodeTests": {
+      "passed": 42,
+      "failed": 0,
+      "skipped": 0,
+      "files": [
+        "tests/server/common-expression.test.mjs",
+        "tests/server/sign-expression.test.mjs",
+        "tests/server/local-language.test.mjs",
+        "tests/server/motion-planner.test.mjs",
+        "tests/server/display-channel.test.mjs",
+        "tests/server/joint-training.test.mjs",
+        "tests/server/reusable-backgrounds.test.mjs",
+        "tests/server/two-datasets.test.mjs",
+        "tests/server/recognized-chinese.test.mjs"
+      ]
+    },
+    "publicFileAudit": "Changed/new text files checked for credentials, private machine paths and forbidden runtime/data artifacts; no matches",
+    "initialIssues": [
+      "Sandbox initially prevented test subprocesses; rerun with authorized process access passed",
+      "Initial build found three missing public action-description fields after sanitization; restored non-private UI fields and rebuilt successfully"
+    ]
+  },
+  "excluded": ["private videos", "database contents and backups", "credentials", "new unified weights", "shared background grants", "private Git history", "local environments"],
+  "limitations": [
+    "No private action training or real-camera accuracy evaluation performed for this delivery",
+    "No new browser end-to-end run or fresh-machine installation acceptance",
+    "Public recipients must train or supply their own authorized model",
+    "Legacy Android resources retained; Android development paused"
+  ]
+}

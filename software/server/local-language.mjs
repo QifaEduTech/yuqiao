@@ -4,6 +4,7 @@ import catalog from '../shared/sign-motion-catalog.json' with {type:'json'};
 import {readFileSync} from 'node:fs';
 import {resolveInputPreview} from '../shared/sign-preview.mjs';
 import {planMotionText} from '../shared/motion-planner.mjs';
+import {resolveExpression} from '../shared/sign-expression.mjs';
 
 const dictionary=JSON.parse(readFileSync(new URL('../shared/sign-dictionary.json',import.meta.url),'utf8'));
 export const vocabulary=windows.entries.map(window=>{
@@ -44,16 +45,17 @@ export function validateLanguagePlan(text,output,model=settings.model){
  }
  if(compact(units.map(u=>u.source).join(''))!==compact(text))throw invalid();
  const missing=units.flatMap(u=>u.missing);
- if(/[？?]/u.test(text))missing.push('疑问语气尚未完整表现');
+ const whole=resolveExpression(text);
+ if(whole.reason==='unsupported_question')missing.push(...whole.missing);
  for(const u of units){
   if(!u.actions.length&&!u.missing.length)throw invalid();
-  // Coverage is not semantic proof: reject common high-impact omissions too.
-  let protectedText=u.source.replaceAll('对不起','');
-  if(u.actions.includes('csl.not'))protectedText=protectedText.replaceAll('不是','');
-  if(/[不没未别勿无否]|\d|[A-Za-z]|[他她它您]|我们|你们|昨天|今天|明天|后天|现在|以前|以后|上午|下午|晚上|几点|叫|姓名|名字|姓|办理|办证|材料|多少钱|多少|请问|为什么|怎么|能否|是否|吗|么|呢|[？?]/u.test(protectedText))missing.push(u.source);
-  if(u.source.includes('我')&&!u.actions.includes('csl.me'))missing.push('“我”的含义未完整保留');
-  if(u.source.includes('你')&&!u.actions.includes('csl.you')&&!u.actions.includes('csl.hello'))missing.push('“你”的含义未完整保留');
-  if(/稍等|等一下|一会儿/u.test(u.source))missing.push('短暂等待的时长含义尚未制作');
+  // Only catalog coverage and reviewed, whole-clause mappings can establish
+  // a complete expression. An LLM must not hide unknown content behind IDs.
+  const grounded=resolveExpression(u.source);
+  if(grounded.preview){
+   const expected=grounded.expression.steps.map(step=>step.id);
+   if(JSON.stringify(expected)!==JSON.stringify(u.actions))throw invalid();
+  }else if(!u.missing.length){missing.push(...(grounded.missing?.length?grounded.missing:[u.source]));}
  }
  if(missing.length)return unavailable(missing);
  const steps=units.flatMap(u=>u.actions.map(id=>byId.get(id)));

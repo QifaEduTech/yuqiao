@@ -114,6 +114,8 @@ ${proxyHeaders}
         location = /camera { try_files /camera.html =404; }
         location = /avatar/ { return 301 /avatar; }
         location = /camera/ { return 301 /camera; }
+        location = /hospital-scene.html { return 302 /; }
+        location = /hospital-scene { return 302 /; }
 
         location / {
             try_files $uri $uri/ =404;

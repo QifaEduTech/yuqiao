@@ -18,6 +18,11 @@ test('段落协议拒绝额外补词、未知词、丢词、错误计数与非�
   const final={id:1,text:base.text,words:base.words,wordCount:2,startMs:0,endMs:100,partial:false};
   assert.ok(validParagraph({...result([]),final},['甲','乙']));
   for(const patch of [{partial:'false'},{id:0},{endMs:0},{text:'自动补出的句子。'}])assert.equal(Boolean(validParagraph({...result([]),final:{...final,...patch}},['甲','乙'])),false);
+  assert.ok(validParagraph({...base,autoEnd:{remainingMs:1200}},['甲','乙']));
+  for(const ms of [-1,2001,1.5,NaN,'1000'])assert.equal(validParagraph({...base,autoEnd:{remainingMs:ms}},['甲','乙']),false);
+  assert.equal(validParagraph({...result([]),autoEnd:{remainingMs:1000}},['甲','乙']),false);
+  assert.ok(validParagraph({...result([]),final:{...final,endReason:'quiet'}},['甲','乙']));
+  assert.equal(validParagraph({...result([]),final:{...final,endReason:'guessed'}},['甲','乙']),false);
 });
 test('服务拒绝错误表达方式，实际段落工作进程可以结束空段',async t=>{
   const service=new RealtimeSignService(resolve('.'));t.after(()=>service.close());

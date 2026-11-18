@@ -27,6 +27,7 @@ test('prepare-nginx writes an ASCII runtime config with the required proxy rules
     assert.match(conf, /proxy_read_timeout 300s;/);
     assert.match(conf, /try_files \$uri \$uri\/ =404;/);
     assert.match(conf, /X-Content-Type-Options nosniff/);
+    assert.ok(conf.includes('location = /hospital-scene.html { return 302 /; }'));
     assert.ok(conf.includes(`root "${runtime.replace(/\\/g, '/')}/web";`));
     assert.ok(!conf.includes('项目'), 'generated config must not contain the non-ASCII project path');
 

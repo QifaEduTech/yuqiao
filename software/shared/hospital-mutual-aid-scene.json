@@ -261,7 +261,8 @@
         "csl.me",
         "csl.ref.bmcx.1874",
         "csl.ref.bmcx.4039"
-      ]
+      ],
+      "coverageNote": "“第一次来”暂无对应动作，本句仅演示“我需要挂号”，请结合原文理解。"
     },
     {
       "role": "志愿者",
@@ -284,10 +285,11 @@
     {
       "role": "志愿者",
       "text": "挂号在门诊，请在这里等候。",
-      "signText": "挂号 门诊 这里 等候",
+      "signText": "挂号 门诊 请 这里 等候",
       "motionIds": [
         "csl.ref.bmcx.4039",
         "csl.ref.bmcx.3985",
+        "csl.ref.bmcx.1932",
         "csl.ref.bmcx.3786",
         "csl.ref.bmcx.1938"
       ]
@@ -339,7 +341,8 @@
       "motionIds": [
         "csl.ref.bmcx.3757",
         "csl.ref.bmcx.3964"
-      ]
+      ],
+      "coverageNote": "疑问语气尚未通过数字人表情表达，请结合原文“有药吗？”理解。"
     },
     {
       "role": "医生",

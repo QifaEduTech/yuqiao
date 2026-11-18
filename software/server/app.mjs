@@ -10,18 +10,21 @@ import { SpeechService, validatePcmWav } from './speech.mjs';
 import { SignService } from './sign.mjs';
 import { signCatalog } from '../shared/sign-catalog.mjs';
 import { resolveInputPreview } from '../shared/sign-preview.mjs';
+import {resolveExpression} from '../shared/sign-expression.mjs';
 import { LocalLanguageService } from './local-language.mjs';
 import { TtsService } from './tts.mjs';
 import {QwenUserKeys} from './qwen-user-keys.mjs';
 import {CaptchaStore} from './captcha.mjs';
 import {TrainingStore} from './training-store.mjs';
+import {JointTraining} from './joint-training.mjs';
+import {DisplayChannel} from './display-channel.mjs';
 import { VoiceService } from './voice.mjs';
 import { createPracticeStore } from './practice.mjs';
 import { createSampleStore } from './samples.mjs';
 import { RealtimeSignService,liveConfig,liveTargets } from './realtime.mjs';
 import {removeArchivedRecord} from './training-archive.mjs';
 import {loadHelpModelReview,removeHelpModelReview} from './help-model-review.mjs';
-import {recordingConfig,recordingEntries,recordingBundle,recordingSnapshot} from './recording-catalog.mjs';
+import {recordingConfig,recordingEntries,recordingBundle,recordingSnapshot,activeEngine} from './recording-catalog.mjs';
 
 const scrypt = promisify(deriveKey);
 const developmentActions=JSON.parse(readFileSync(new URL('../shared/sign-development-actions.json',import.meta.url),'utf8')).actions;
@@ -76,8 +79,8 @@ export async function createApp({ dataDir, publicDir, speechService, signService
   const projectRoot = fileURLToPath(new URL('../',import.meta.url));
   const speech = speechService || new SpeechService(projectRoot);
   const diagnosticDir = root === resolve(projectRoot, 'data') ? resolve(projectRoot, '.runtime-logs/sign-diagnostics') : join(root, 'sign-diagnostics');
-  const sign = signService || new SignService(projectRoot, { diagnosticDir });
-  const realtime=realtimeService||new RealtimeSignService(projectRoot);
+  const sign = signService || new SignService(projectRoot, { diagnosticDir,dataDir:root });
+  const realtime=realtimeService||new RealtimeSignService(projectRoot,{dataDir:root});
   const qwenKeys=qwenKeyStore||new QwenUserKeys(root);
   const tts=ttsService || new TtsService(projectRoot,{configLoader:(base,userId)=>qwenKeys.config(base,userId)});
   const voice=voiceService || new VoiceService(projectRoot);
@@ -94,9 +97,10 @@ export async function createApp({ dataDir, publicDir, speechService, signService
     CREATE TABLE IF NOT EXISTS voices (id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, sample_file TEXT NOT NULL, ref_text TEXT NOT NULL, name TEXT NOT NULL, note TEXT, duration REAL NOT NULL, revision INTEGER NOT NULL DEFAULT 1, status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','confirmed')), created_at INTEGER NOT NULL);
     CREATE INDEX IF NOT EXISTS records_user_time ON records(user_id,created_at DESC);
     CREATE INDEX IF NOT EXISTS voices_user_time ON voices(user_id,created_at DESC);`);
-  const practice=createPracticeStore(db,{signCatalog:{entries:recordingEntries},motionCatalog,dictionaryVersion:JSON.parse(dictionarySource).updated,dictionaryHash:digest(dictionarySource),snapshotForResult:result=>result.modelSnapshot??recordingSnapshot(recordingBundle(projectRoot),result.candidate),additionalEntriesForUser:id=>training.active(id).map(x=>({id:x.signId,text:x.text}))});
+  const practice=createPracticeStore(db,{signCatalog:{entries:recordingEntries},motionCatalog,dictionaryVersion:JSON.parse(dictionarySource).updated,dictionaryHash:digest(dictionarySource),snapshotForResult:result=>result.modelSnapshot??recordingSnapshot(recordingBundle(projectRoot,root),result.candidate),additionalEntriesForUser:()=>activeEngine(projectRoot,root).labels.map(x=>({id:x.signId,text:x.text}))});
   const samples=createSampleStore(db);
   const training=new TrainingStore({dataDir:root,projectRoot,db});
+  const joint=new JointTraining(training,{onPublished:()=>realtime.close()});
   db.exec(`CREATE TABLE IF NOT EXISTS video_save_keys (
     user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     save_key TEXT NOT NULL, record_id TEXT REFERENCES records(id) ON DELETE SET NULL,
@@ -121,7 +125,7 @@ export async function createApp({ dataDir, publicDir, speechService, signService
   db.prepare('DELETE FROM sessions WHERE expires_at < ?').run(Date.now());
   const throttle = new Map();
   // 端2 数字人显示端：同一账号的显示会话订阅动作指令；只转发动作，不保存输入。
-  const displayClients = new Map();
+  const displayChannel = new DisplayChannel();
   const dummySalt = randomBytes(16).toString('hex');
   const dummyHash = await scrypt('not-a-real-password', dummySalt, 64);
   function cookieToken(req) {
@@ -217,27 +221,31 @@ export async function createApp({ dataDir, publicDir, speechService, signService
       if(url.pathname.startsWith('/api/training/')){
         const user=requireUser(req);
         if(url.pathname==='/api/training/dictionary'&&method==='GET')return send(res,200,training.dictionary(url.searchParams.get('q')||'',url.searchParams.get('category')||'',Number(url.searchParams.get('page')||0),user.id));
-        if(url.pathname==='/api/training/state'&&method==='GET')return send(res,200,training.publicState(user.id));
+        if(url.pathname==='/api/training/state'&&method==='GET')return send(res,200,{...training.publicState(user.id),runtimeMode:'unified-tcn'});
         if(url.pathname==='/api/training/sources'&&method==='GET')return send(res,200,{sources:training.sources(user.id)});
+        if(url.pathname==='/api/training/joint/jobs'&&method==='POST')return send(res,200,joint.start(user.id));
+        if(url.pathname==='/api/training/bootstrap'&&method==='POST')return send(res,200,joint.bootstrap(user.id));
+        const archived=/^\/api\/training\/actions\/([a-f0-9-]{36})\/(archive|restore)$/.exec(url.pathname);
+        if(archived&&method==='POST')return send(res,200,archived[2]==='archive'?joint.archive(user.id,archived[1]):joint.restore(user.id,archived[1]));
         if(url.pathname==='/api/training/actions'&&method==='POST')return send(res,201,training.mutate(user.id,null,await readJson(req)));
         const action=/^\/api\/training\/actions\/([a-f0-9-]{36})(?:\/(jobs|activate))?$/.exec(url.pathname);
-        if(action&&method==='POST'){const body=await readJson(req);return send(res,200,action[2]==='jobs'?training.start(user.id,action[1],body.kind):action[2]==='activate'?training.activate(user.id,action[1],body.version):training.mutate(user.id,action[1],body));}
+        if(action&&method==='POST'){const body=await readJson(req);if(action[2]==='jobs'&&body.kind==='train'||action[2]==='activate'&&body.version)throw new HttpError(409,'当前已切换统一模型，逐动作训练和启用已停用。录像资料仍可采集保存，后续用于联合训练。');return send(res,200,action[2]==='jobs'?training.start(user.id,action[1],body.kind):action[2]==='activate'?training.activate(user.id,action[1],body.version):training.mutate(user.id,action[1],body));}
         const job=/^\/api\/training\/jobs\/([a-f0-9-]{36})\/cancel$/.exec(url.pathname);
         if(job&&method==='POST')return send(res,200,training.cancel(user.id,job[1]));
         throw new HttpError(404,'训练接口不存在。');
       }
       if (url.pathname === '/api/speech/status' && method === 'GET') return send(res, 200, speech.status());
-      if (url.pathname === '/api/sign/status' && method === 'GET') return send(res, 200, {...sign.status(),labels:[...recordingEntries.map(e=>e.text),...training.active(userFor(req)?.id).map(e=>e.text)]});
-      if(url.pathname==='/api/sign/realtime/status'&&method==='GET')return send(res,200,{...realtime.status(),labels:[...Object.values(liveTargets).map(x=>x.text),...training.active(userFor(req)?.id).map(x=>x.text)]});
+      if (url.pathname === '/api/sign/status' && method === 'GET') return send(res, 200, sign.status());
+      if(url.pathname==='/api/sign/realtime/status'&&method==='GET')return send(res,200,realtime.status());
       if(url.pathname==='/api/sign/help-model-review'&&method==='GET'){
         const user=requireUser(req);const result=await loadHelpModelReview({db,dataDir:root,projectRoot,userId:user.id});
         if(userFor(req)?.id!==user.id)throw new HttpError(401,'登录已失效，请重新登录。');
         return send(res,200,result);
       }
       if(url.pathname==='/api/sign/realtime/sessions'&&method==='POST'){
-        const body=await readJson(req);if(!body||Array.isArray(body)||Object.keys(body).some(k=>!['target','helpEngine','flow'].includes(k))||(body.flow!==undefined&&!['words','paragraph'].includes(body.flow))||(body.target!==undefined&&!['auto','thanks','help'].includes(body.target))||(body.helpEngine!==undefined&&(body.target!=='help'||!['video-tcn','geometry'].includes(body.helpEngine))))throw new HttpError(400,'启动参数无效。');
+        const body=await readJson(req);if(!body||Array.isArray(body)||Object.keys(body).some(k=>!['target','helpEngine','flow'].includes(k))||(body.flow!==undefined&&!['words','paragraph'].includes(body.flow))||(body.target!==undefined&&body.target!=='auto')||(body.helpEngine!==undefined&&body.helpEngine!=='unified-tcn'))throw new HttpError(400,'当前仅支持统一模型自动识别。');
         const controller=new AbortController(),cancel=()=>{if(!res.writableEnded)controller.abort();};res.on('close',cancel);
-        try{const result=await realtime.start(controller.signal,body.target??'auto',body.helpEngine,{models:training.active(userFor(req)?.id),ownerId:userFor(req)?.id??null,flow:body.flow??'words'});if(res.destroyed){realtime.stop(result.session);return;}return send(res,201,result);}finally{res.off('close',cancel);}
+        try{const result=await realtime.start(controller.signal,body.target??'auto',body.helpEngine,{models:[],ownerId:userFor(req)?.id??null,flow:body.flow??'words'});if(res.destroyed){realtime.stop(result.session);return;}return send(res,201,result);}finally{res.off('close',cancel);}
       }
       if(url.pathname==='/api/sign/realtime/sessions'&&method==='DELETE')return send(res,200,realtime.stop(req.headers['x-yuqiao-live-session']));
       if(url.pathname==='/api/sign/realtime/frames'&&method==='POST'){
@@ -283,7 +291,7 @@ export async function createApp({ dataDir, publicDir, speechService, signService
         }
         finally {res.off('close',cancel);}
       }
-      if (url.pathname === '/api/sign/catalog' && method === 'GET') return send(res, 200, {version:recordingConfig.id,entries:[...recordingEntries,...training.active(userFor(req)?.id).map(x=>({id:x.signId,text:x.text,category:'self-trained'}))],capabilities:{singleActionClassification:'experimental',multipleActionsInOneVideo:'rejected',sameAsRealtime:true,defaultSpeech:'connected',signPlayback:'authored_unverified',personalVoice:'retired'}});
+      if (url.pathname === '/api/sign/catalog' && method === 'GET') return send(res, 200, {version:recordingConfig.id,entries:activeEngine(projectRoot,root).labels.map(x=>({id:x.signId,text:x.text,category:x.category})),capabilities:{singleActionClassification:'experimental',multipleActionsInOneVideo:'rejected',sameAsRealtime:true,defaultSpeech:'connected',signPlayback:'authored_unverified',personalVoice:'retired'}});
       if (url.pathname === '/api/sign/resolve' && method === 'POST') {
         const body=await readJson(req);
         const text=textValue(body.text,2000);
@@ -291,12 +299,15 @@ export async function createApp({ dataDir, publicDir, speechService, signService
         const controller=new AbortController(),cancel=()=>controller.abort();
         res.on('close',cancel);
         try{
-          const result=await language.resolve(text,controller.signal);
+          const known=body.mode==='playback'&&text.length<=500?resolveExpression(text):null;
+          const result=known&&(known.preview||['too_many_actions','too_long','unsupported_question'].includes(known.reason))
+            ?{...known,engine:{provider:known.expression?.changes.length?'phrase-rules':'catalog'}}
+            :await language.resolve(text,controller.signal);
           if(!res.destroyed&&!controller.signal.aborted){
             if(body.mode==='playback'){
               // Backend diagnostics only: no original text, names or private media.
-              console.info('Motion planning:',JSON.stringify({status:result.status,model:result.engine?.model,actions:result.expression?.steps.map(s=>s.id)??[],reason:result.reason??null}));
-              return send(res,200,{status:result.status,preview:result.preview,reason:result.reason});
+              console.info('Motion planning:',JSON.stringify({status:result.status,provider:result.engine?.provider,model:result.engine?.model,actions:result.expression?.steps.map(s=>s.id)??[],reason:result.reason??null}));
+              return send(res,200,{status:result.status,preview:result.preview,reason:result.reason,missing:result.missing??[]});
             }
             return send(res,200,result);
           }
@@ -310,7 +321,7 @@ export async function createApp({ dataDir, publicDir, speechService, signService
       }
       if (url.pathname === '/api/sign/sequences') throw new HttpError(410, '多动作录像识别已停用，请进入手语学习进行单动作练习。');
       if (url.pathname === '/api/sign/experiments' && method === 'POST') {
-        const modelOwner=userFor(req)?.id,customModels=training.active(modelOwner);
+        const modelOwner=userFor(req)?.id,customModels=[];
         const recordId=req.headers['x-yuqiao-record-id'];
         let practiceUser=null,sourceRecord=null,sampleRevision=null;
         if(recordId!==undefined){
@@ -331,7 +342,7 @@ export async function createApp({ dataDir, publicDir, speechService, signService
           // never to supply a candidate or correct a model prediction.
           const registration=samples.get(practiceUser.id,recordId);sampleRevision=registration.revision;const registered=registration.sample;
           const developmentTarget=registered&&developmentActions.find(a=>a.category===registered.category);
-          if(developmentTarget&&![...recordingEntries,...training.active(practiceUser.id)].some(e=>e.id===developmentTarget.signId||e.text===developmentTarget.text)){
+          if(developmentTarget&&!activeEngine(projectRoot,root).labels.some(e=>e.signId===developmentTarget.signId||e.text===developmentTarget.text)){
             return send(res,200,{status:'unsupported',candidate:null,reason:'recording_action_not_connected',actionText:developmentTarget.text,realtimeAvailable:Object.hasOwn(liveTargets,registered.category)});
           }
         }
@@ -543,60 +554,18 @@ export async function createApp({ dataDir, publicDir, speechService, signService
       }
       if (url.pathname === '/api/auth/logout' && method === 'POST') {
         const token = cookieToken(req);
-        if (token) db.prepare('DELETE FROM sessions WHERE token_hash=?').run(digest(token));
+        if (token) { displayChannel.revokeSession(digest(token)); db.prepare('DELETE FROM sessions WHERE token_hash=?').run(digest(token)); }
         res.setHeader('Set-Cookie', 'yuqiao_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0');
         return send(res, 200, { ok: true });
       }
-      if (url.pathname === '/api/display/stream' && method === 'GET') {
-        const user = requireUser(req);
-        res.writeHead(200, {
-          'Content-Type': 'text/event-stream; charset=utf-8',
-          'Cache-Control': 'no-cache, no-transform',
-          'Connection': 'keep-alive',
-          'X-Accel-Buffering': 'no',
-        });
-        res.write('retry: 3000\n\nevent: ready\ndata: {}\n\n');
-        const clients = displayClients.get(user.id) ?? new Set();
-        displayClients.set(user.id, clients);
-        clients.add(res);
-        const heartbeat = setInterval(() => { try { res.write(': ping\n\n'); } catch { /* closed */ } }, 20000);
-        const close = () => {
-          clearInterval(heartbeat);
-          clients.delete(res);
-          if (!clients.size) displayClients.delete(user.id);
-        };
-        req.on('close', close);
-        res.on('error', close);
-        return;
+      if(url.pathname==='/api/display/state'&&method==='GET'){
+        const user=requireUser(req);return send(res,200,displayChannel.status(user.id));
       }
-      if (url.pathname === '/api/display/command' && method === 'POST') {
-        const user = requireUser(req);
-        const body = await readJson(req);
-        if (body.control !== undefined) {
-          if (!['play', 'pause', 'replay'].includes(body.control)) throw new HttpError(400, '动作控制无效。');
-          const controlPayload = JSON.stringify({ control: body.control, sentAt: Date.now() });
-          const controlClients = displayClients.get(user.id);
-          for (const client of controlClients ?? []) { try { client.write(`event: command\ndata: ${controlPayload}\n\n`); } catch { /* closed */ } }
-          return send(res, 200, { delivered: controlClients?.size ?? 0 });
-        }
-        const preview = body.preview ?? null;
-        if (preview !== null) {
-          if (typeof preview !== 'object' || Array.isArray(preview) || preview.status !== 'authored_unverified') throw new HttpError(400, '动作指令无效。');
-          const steps = preview.kind === 'sequence' ? preview.steps : null;
-          const ids = steps ? (Array.isArray(steps) ? steps.map(step => step?.id) : []) : [preview.id];
-          if (!ids.length || ids.length > 10 || ids.some(id => !motionCatalog.entries.some(entry => entry.id === id))) throw new HttpError(400, '动作指令包含未知动作。');
-          if (typeof preview.label !== 'string' || !preview.label.trim() || preview.label.length > 200) throw new HttpError(400, '动作指令无效。');
-          if (steps) {
-            if (!(Number(preview.duration) > 0 && Number(preview.duration) <= 30)) throw new HttpError(400, '动作指令时长无效。');
-            if (steps.some(step => !step || !motionCatalog.entries.some(entry => entry.id === step.id && entry.version === step.version))) throw new HttpError(400, '动作指令版本不匹配。');
-          } else if (!motionCatalog.entries.some(entry => entry.id === preview.id && entry.version === preview.version)) {
-            throw new HttpError(400, '动作指令版本不匹配。');
-          }
-        }
-        const payload = JSON.stringify({ preview, sentAt: Date.now() });
-        const clients = displayClients.get(user.id);
-        for (const client of clients ?? []) { try { client.write(`event: command\ndata: ${payload}\n\n`); } catch { /* closed */ } }
-        return send(res, 200, { delivered: clients?.size ?? 0 });
+      if(url.pathname==='/api/display/stream'&&method==='GET'){
+        const user=requireUser(req);displayChannel.connect(user.id,res,()=>userFor(req)?.id===user.id,digest(cookieToken(req)));return;
+      }
+      if(url.pathname==='/api/display/command'&&method==='POST'){
+        const user=requireUser(req);return send(res,200,displayChannel.command(user.id,await readJson(req),motionCatalog));
       }
       if (url.pathname === '/api/records' && method === 'GET') {
         const user = requireUser(req);
@@ -774,6 +743,6 @@ export async function createApp({ dataDir, publicDir, speechService, signService
   });
   server.requestTimeout = 45000;
   server.headersTimeout = 10000;
-  server.on('close', () => { training.close(); captcha.close(); language.close(); speech.close(); sign.close(); realtime.close(); tts.close(); voice.close(); db.close(); });
+  server.on('close', () => { displayChannel.close(); training.close(); captcha.close(); language.close(); speech.close(); sign.close(); realtime.close(); tts.close(); voice.close(); db.close(); });
   return server;
 }

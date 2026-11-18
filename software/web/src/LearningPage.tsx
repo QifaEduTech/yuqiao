@@ -1,18 +1,15 @@
 import LearningPreview from './LearningPreview';
 import {useCallback,useEffect,useRef,useState} from 'react';
-import {ArrowLeft,ArrowRight,BookOpen,Camera,Clock3,Hand,LogOut,Maximize2,RotateCcw,Save,ShieldCheck,Square,Trash2,UserRound,Video} from 'lucide-react';
+import {ArrowLeft,ArrowRight,BookOpen,Camera,Clock3,LogOut,Maximize2,RotateCcw,Save,ShieldCheck,Square,Trash2,UserRound,Video} from 'lucide-react';
 import {api,ApiError,type SavedRecord,type User} from './api';
 import {AuthDialog,HistoryDialog} from './Account';
 import {SettingsDialog} from './Settings';
 import {useMediaCapture} from './useMediaCapture';
 import {VideoPreprocessing} from './VideoPreprocessing';
-import realtimeTargets from '../../shared/realtime-targets.json';
-const recordingEntries=Object.values(realtimeTargets).map(t=>({id:t.signId,text:t.text}));
 import {readVideoDuration} from './video/preprocess';
 
 export default function LearningPage(){
   const media=useMediaCapture();
-  const [supportedWords,setSupportedWords]=useState(recordingEntries.map(e=>e.text));
   const [user,setUser]=useState<User|null>(null),[authOpen,setAuthOpen]=useState(false),[historyOpen,setHistoryOpen]=useState(false),[settingsOpen,setSettingsOpen]=useState(false);
   const [avatarUrl,setAvatarUrl]=useState<string|null>(null);
   const [step,setStep]=useState<'capture'|'review'|'saved'>('capture'),[note,setNote]=useState(''),[notice,setNotice]=useState(''),[saving,setSaving]=useState(false);
@@ -39,7 +36,7 @@ export default function LearningPage(){
       void api<{user:User|null}>('/api/auth/me',{signal:controller.signal}).then(value=>{
         if(controller.signal.aborted)return;
         if(owner.current&&owner.current.id!==value.user?.id){clear();setHistoryOpen(false);setSettingsOpen(false);}
-        owner.current=value.user;setUser(value.user);void api<{labels:string[]}>('/api/sign/status',{signal:controller.signal}).then(s=>{if(!controller.signal.aborted&&Array.isArray(s.labels))setSupportedWords(s.labels);}).catch(()=>{});
+        owner.current=value.user;setUser(value.user);
       }).catch(()=>{});
     };
     const leave=()=>{revision.current++;request.current?.abort();setRecognition(null);};
@@ -97,8 +94,8 @@ export default function LearningPage(){
       <button className="quiet-button" aria-label="我的记录" title="我的记录" disabled={saving} onClick={()=>user?setHistoryOpen(true):setAuthOpen(true)}><Clock3 size={17}/><span>我的记录</span></button>
       {user?<><button className="account-name account-settings-entry" disabled={saving} title="账号设置" onClick={()=>setSettingsOpen(true)}>{avatarUrl?<img className="account-avatar" src={avatarUrl} alt=""/>:<UserRound size={15}/>} {user.username}</button><button className="quiet-button" aria-label="退出登录" disabled={saving} onClick={()=>void logout()}><LogOut size={17}/></button></>:<button className="account-button" disabled={saving} onClick={()=>setAuthOpen(true)}><UserRound size={16}/>登录 / 注册</button>}
     </div></header>
-    <main><section className="intro"><div><div className="eyebrow"><span/> 手语学习 · 单动作练习</div><h1>一个动作，<span>慢慢练好。</span></h1><p>每次录一个完整动作，保存与识别分开操作。需要识别时，再点击开始识别。</p></div><div className="intro-note"><Hand size={24}/><div><strong>当前账号可识别</strong><span>{supportedWords.join(' · ')}</span></div></div></section>
-      <div className="learning-toolbar"><div className="learning-vocabulary" aria-label="当前可识别词语">{supportedWords.map(text=><span key={text}>{text}</span>)}</div><button className="quiet-button" disabled={saving} onClick={()=>{clear();setNotice('本次练习已清空，摄像头已关闭。已保存录像可在“我的记录”中删除。');}}><Trash2 size={16}/>清空本次练习</button></div>
+    <main><section className="intro"><div><div className="eyebrow"><span/> 手语学习 · 单动作练习</div><h1>一个动作，<span>慢慢练好。</span></h1></div></section>
+      <div className="learning-toolbar" style={{justifyContent:'flex-end'}}><button className="quiet-button" disabled={saving} onClick={()=>{clear();setNotice('本次练习已清空，摄像头已关闭。已保存录像可在“我的记录”中删除。');}}><Trash2 size={16}/>清空本次练习</button></div>
       <div className="learning-split"><LearningPreview/><div className="workspace learning-practice"><section className="stage camera-stage" ref={stage} aria-label="学习摄像头取景区域"><div className="stage-topline"><span className="stage-label"><Camera size={15}/>练习取景区</span><span className={`stage-badge ${capturing?'is-recording':''}`}>{capturing?<>录制中 {timer}</>:media.status==='preview'?'摄像头已开启':media.recordingUrl?'本次录制已结束':'摄像头未开启'}</span></div>
         <div className="camera-content">{media.stream?<><video className="camera-live" ref={liveVideo} autoPlay playsInline muted aria-label="摄像头实时预览"/><div className="viewfinder"><i/><i/><i/><i/></div><span className="camera-guide">让面部、双手与上半身完整入镜</span></>:media.recordingUrl?<video className="camera-replay" src={media.recordingUrl} controls playsInline aria-label="本段手语录像预览"/>:<div className="camera-empty"><div className="camera-icon"><Camera size={35}/></div><h2>先练一个完整动作</h2><p>开启摄像头后调整位置。<br/>准备好，再开始录制。</p><button className="primary-button" disabled={requesting||saving} onClick={()=>void media.open('video')}><Camera size={17}/>{requesting?'等待设备授权…':'开启摄像头'}</button><span><ShieldCheck size={14}/>仅确认保存后写入当前账号</span></div>}</div>
         <div className="stage-bottomline"><span>{media.recordingUrl?'先回看，确认双手和动作完整':'光线均匀 · 背景简洁 · 不采集声音'}</span><button className="icon-button" aria-label="全屏查看" onClick={()=>void fullscreen()}><Maximize2 size={16}/></button></div>

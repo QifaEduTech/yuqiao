@@ -6,10 +6,10 @@ import {resolve} from 'node:path';
 import {SignService} from './sign.mjs';
 import {validLiveResult} from '../shared/realtime-result.mjs';
 import {validParagraph} from '../shared/realtime-paragraph.mjs';
+import {recognitionEngine,activeEngine} from './recording-catalog.mjs';
 
 export const liveConfig=JSON.parse(readFileSync(new URL('../shared/realtime-sign.json',import.meta.url),'utf8'));
 export const liveTargets=JSON.parse(readFileSync(new URL('../shared/realtime-targets.json',import.meta.url),'utf8'));
-const helpRuntime=JSON.parse(readFileSync(new URL('../shared/help-runtime.json',import.meta.url),'utf8'));
 const fail=(status,message)=>Object.assign(new Error(message),{status});
 export function validateLiveJpeg(buffer){
   if(buffer.length<4||buffer.length>liveConfig.maxJpegBytes||buffer[0]!==255||buffer[1]!==216)throw fail(415,'实时画面格式或大小无效。');
@@ -31,18 +31,17 @@ export function validateLiveJpeg(buffer){
 }
 
 export class RealtimeSignService{
-  constructor(root){this.root=root;this.runtime=new SignService(root);this.active=null;}
-  status(){return {available:this.runtime.installed(),busy:!!this.active,protocol:liveConfig.protocol,labels:Object.values(liveTargets).map(x=>x.text),experimental:true,recording:false,meCheck:this.active&&Date.now()-this.active.lastSeen<750?this.active.lastMeCheck??null:null};}
+  constructor(root,{dataDir=resolve(root,'data')}={}){this.root=root;this.dataDir=dataDir;this.runtime=new SignService(root,{dataDir});this.active=null;}
+  status(){const engine=activeEngine(this.root,this.dataDir);return {available:this.runtime.installed(),busy:!!this.active,protocol:liveConfig.protocol,labels:engine.labels.map(x=>x.text),engine:engine.engine,modelId:engine.id,modelCount:1,experimental:true,recording:false,meCheck:null};}
   owned(token){if(typeof token!=='string'||!this.active||this.active.token!==token)throw fail(404,'实时会话已结束，请重新开启。');return this.active;}
-  async start(signal,target='auto',helpEngine=helpRuntime.defaultEngine,{models=[],ownerId=null,flow='words'}={}){
+  async start(signal,target='auto',helpEngine=recognitionEngine.engine,{models=[],ownerId=null,flow='words'}={}){
     if(!['words','paragraph'].includes(flow)||flow==='paragraph'&&target!=='auto')throw fail(400,'不支持这个实时表达方式。');
-    if(!['auto','thanks','help'].includes(target))throw fail(400,'不支持这个实时试验动作。');
-    if(target==='auto'&&helpEngine!=='video-tcn')throw fail(400,'自动识别使用当前已接入的模型。');
-    if(!helpRuntime.engines.includes(helpEngine))throw fail(400,'不支持这个帮助版本。');
+    if(target!=='auto'||helpEngine!==recognitionEngine.engine||models.length)throw fail(400,'当前使用统一模型，不再加载逐动作模型或旧规则引擎。');
     if(this.active)throw fail(429,'另一个窗口正在使用实时识别，请先停止。');
     if(!this.runtime.installed())throw fail(503,'本机识别环境尚未就绪。');
     if(signal?.aborted)throw fail(499,'开启已取消。');
-    const session={ownerId,models,flow,lastParagraphId:0,actions:[...Object.values(liveTargets),...models],target,helpEngine:target==='help'||target==='auto'?helpEngine:null,token:randomBytes(32).toString('base64url'),child:null,pending:null,buffer:'',ready:false,lastSeq:0,lastTimestamp:-1,lastSeen:Date.now(),frames:0,lastEventId:0,lastEventEnd:-1};this.active=session;
+    const engine=activeEngine(this.root,this.dataDir);
+    const session={ownerId,models,flow,lastParagraphId:0,actions:engine.labels,target,helpEngine:helpEngine,token:randomBytes(32).toString('base64url'),child:null,pending:null,buffer:'',ready:false,lastSeq:0,lastTimestamp:-1,lastSeen:Date.now(),frames:0,lastEventId:0,lastEventEnd:-1};this.active=session;
     const directory=resolve(this.root,'.runtime-logs/realtime-tmp');
     try{
       await mkdir(directory,{recursive:true});
@@ -60,7 +59,7 @@ export class RealtimeSignService{
       try{await session.readyPromise;if(signal?.aborted||this.active!==session)throw fail(499,'开启已取消。');}
       finally{clearTimeout(timeout);signal?.removeEventListener('abort',cancel);}
       session.idle=setInterval(()=>{if(Date.now()-session.lastSeen>liveConfig.sessionIdleMs)this.end(session,fail(408,'实时会话因闲置已结束。'));},2000);session.idle.unref();
-      return {session:session.token,target,flow,helpEngine:session.helpEngine,modelVersion:session.helpEngine==='video-tcn'?'v1':null,targetText:liveTargets[target]?.text??null,targetSignId:liveTargets[target]?.signId??null,supportedActions:session.actions.map(x=>({text:x.text,signId:x.signId})),protocol:liveConfig.protocol,frameIntervalMs:liveConfig.frameIntervalMs,maxImageEdge:liveConfig.maxImageEdge};
+      return {session:session.token,target,flow,helpEngine:session.helpEngine,recognitionEngine:engine.engine,modelCount:1,modelVersion:engine.version,targetText:null,targetSignId:null,supportedActions:session.actions.map(x=>({text:x.text,signId:x.signId})),protocol:liveConfig.protocol,frameIntervalMs:liveConfig.frameIntervalMs,maxImageEdge:liveConfig.maxImageEdge};
     }catch(error){this.end(session,error);throw error;}
   }
   receive(session,message){

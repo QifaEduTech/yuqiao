@@ -27,8 +27,9 @@ export default defineConfig(({ mode }) => {
   plugins: [react(), {
     name: 'yuqiao-entry-alias',
     configureServer(server) {
-      server.middlewares.use((request, _response, next) => {
+      server.middlewares.use((request, response, next) => {
         const url = request.url || '';
+        if(['/hospital-scene.html','/hospital-scene'].includes(url.split('?')[0])){response.writeHead(302,{Location:'/'});response.end();return;}
         for (const entry of ['avatar', 'camera']) {
           if (url === `/${entry}` || url.startsWith(`/${entry}?`)) {
             request.url = `/${entry}.html${url.slice(entry.length + 1)}`;
@@ -37,6 +38,9 @@ export default defineConfig(({ mode }) => {
         }
         next();
       });
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use((request,response,next)=>{if(['/hospital-scene.html','/hospital-scene'].includes((request.url||'').split('?')[0])){response.writeHead(302,{Location:'/'});response.end();return;}next();});
     },
   }],
   server: {
@@ -48,7 +52,7 @@ export default defineConfig(({ mode }) => {
   build: {
     ...(android ? {outDir:localPath('./web/android-app/app/'),emptyOutDir:true} : {}),
     rollupOptions: {
-      input: android ? {app:frontendRoot+'/android-offline.html'} : Object.fromEntries(Object.entries({main:'index.html',mobile:'android.html',account:'android-account.html',offline:'android-offline.html',learning:'learning.html',training:'training.html',realtime:'realtime.html',camera:'camera.html',avatar:'avatar.html',review:'model-review.html',anny:'anny-review.html',dictionary:'sign-dictionary.html',continuous:'continuous-review.html',hospital:'hospital-scene.html'}).map(([name,file])=>[name,frontendRoot+'/'+file])),
+      input: android ? {app:frontendRoot+'/android-offline.html'} : Object.fromEntries(Object.entries({main:'index.html',mobile:'android.html',account:'android-account.html',offline:'android-offline.html',learning:'learning.html',training:'training.html',realtime:'realtime.html',camera:'camera.html',avatar:'avatar.html',review:'model-review.html',anny:'anny-review.html',dictionary:'sign-dictionary.html',continuous:'continuous-review.html'}).map(([name,file])=>[name,frontendRoot+'/'+file])),
       output: {
         manualChunks: { three: ['three'] },
       },

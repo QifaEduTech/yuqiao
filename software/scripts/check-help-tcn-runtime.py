@@ -41,13 +41,17 @@ class ModelRuntimeTests(unittest.TestCase):
         for i in range(90):live.push_features(i/30,frame)
         result=live.push_features(3,frame,True);self.assertIsNone(result['candidate']);self.assertIsNone(result['helpScore']);self.assertFalse(live.qualified)
     def test_high_model_score_cannot_pass_static_single_lateral_or_jitter(self):
+        class CountingHigh:
+            def __init__(self):self.calls=0
+            def probability(self,x):self.calls+=1;return .84
         for mode in ['static','single','lateral','opposed','jitter']:
-            live=HelpTCNLive(High());rows=shapes.timeline(mode if mode!='jitter' else 'static');outputs=[]
+            model=CountingHigh();live=HelpTCNLive(model);rows=shapes.timeline(mode if mode!='jitter' else 'static');outputs=[]
             for i,(t,hands) in enumerate(rows):
                 if mode=='jitter':hands={side:(h-h[0])*(1+.01*np.sin(i))+h[0]+[.001*np.sin(i),0,0] for side,h in hands.items()}
                 outputs.append(live.push_features(t,vector(hands),aspect_ratio=1))
             self.assertTrue(all(x['candidate'] is None for x in outputs),mode)
-            self.assertTrue(any(x['helpScore']==.84 and x['motionSupported'] is False for x in outputs),mode)
+            self.assertTrue(any(x['helpScore'] is None and x['motionSupported'] is False and x['reason']=='help_motion_required' for x in outputs),mode)
+            self.assertEqual(model.calls,0,mode)
             self.assertTrue(all(live.push_features(3+i/10,np.zeros(153))['event'] is None for i in range(10)))
     def test_real_bilateral_motion_can_emit_with_high_model_score(self):
         live=HelpTCNLive(High());outputs=[live.push_features(t,vector(h),aspect_ratio=1) for t,h in shapes.timeline()]

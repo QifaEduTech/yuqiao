@@ -31,6 +31,8 @@ const Avatar=forwardRef<AvatarHandle,{preview:MotionPreview|null;learning?:boole
   const autoStarted=useRef('');
   // 显示端在后台标签页收到指令时不强行播放；回到前台再开始一次。
   const pendingAuto=useRef('');
+  const autoPlayRef=useRef(autoPlay);
+  autoPlayRef.current=autoPlay;
   const endedRef=useRef(false);
   const onEndedRef=useRef(onEnded);
   onEndedRef.current=onEnded;
@@ -39,7 +41,7 @@ const Avatar=forwardRef<AvatarHandle,{preview:MotionPreview|null;learning?:boole
   const [motion,setMotion]=useState<FixedMotionAsset|null>(null),[loading,setLoading]=useState(false),[error,setError]=useState('');
   const [playing,setPlaying]=useState(false),[position,setPosition]=useState(0),[rate,setRate]=useState(1),[attempt,setAttempt]=useState(0);
   const cancelMotion=useCallback(()=>{
-    generation.current++;clock.current.clip=null;clock.current.playing=false;clock.current.position=0;endedRef.current=false;
+    generation.current++;clock.current.clip=null;clock.current.playing=false;clock.current.position=0;endedRef.current=false;pendingAuto.current='';
     motionRequest.current?.abort();motionRequest.current=null;
     rig.current?.idle();setPlaying(false);setPosition(0);setMotion(null);setLoading(false);setError('');
     host.current?.querySelector('canvas')?.setAttribute('aria-label','Anny 数字人，双臂自然下垂，双手与腿留有间距');
@@ -49,7 +51,7 @@ const Avatar=forwardRef<AvatarHandle,{preview:MotionPreview|null;learning?:boole
     if(!preview||!panel.current){if(host.current)host.current.style.bottom='';stage?.style.removeProperty('--appearance-bottom');return;}
     const reserve=()=>{if(host.current&&panel.current){const height=panel.current.getBoundingClientRect().height;host.current.style.bottom=`${height+77}px`;stage?.style.setProperty('--appearance-bottom',`${height+85}px`);}};
     reserve();const observer=new ResizeObserver(reserve);observer.observe(panel.current);return()=>observer.disconnect();
-  },[preview?.id]);
+  },[preview?.id,bare]);
   useEffect(()=>{
     cancelMotion();if(!preview||state!=='ready')return;
     const epoch=generation.current,controller=new AbortController();motionRequest.current=controller;setLoading(true);
@@ -58,7 +60,7 @@ const Avatar=forwardRef<AvatarHandle,{preview:MotionPreview|null;learning?:boole
       clock.current.clip=loadFixedMotion(rig.current,asset);endedRef.current=false;setMotion(asset);setLoading(false);
       host.current?.querySelector('canvas')?.setAttribute('aria-label',`Anny 数字人，${displayText??asset.label}动作试播，内容待核对`);
       const autoKey=`${requestId}:${attempt}:${preview.id}:${preview.version}`;
-      if(autoPlay&&!learning&&autoStarted.current!==autoKey){
+      if(autoPlayRef.current&&!learning&&autoStarted.current!==autoKey){
         autoStarted.current=autoKey;
         if(document.hidden)pendingAuto.current=autoKey;
         else{
@@ -68,8 +70,8 @@ const Avatar=forwardRef<AvatarHandle,{preview:MotionPreview|null;learning?:boole
       }
     }).catch(caught=>{if(epoch!==generation.current)return;controller.abort();clock.current.clip=null;rig.current?.idle();setLoading(false);setError(caught instanceof Error?caught.message:'动作加载失败，请重试。');});
     return()=>{controller.abort();generation.current++;clock.current.playing=false;clock.current.clip=null;rig.current?.idle();};
-  },[preview?.id,preview?.label,preview?.version,preview?.status,state,attempt,cancelMotion,autoPlay,requestId,displayText,learning]);
-  const pause=()=>{clock.current.playing=false;setPlaying(false);setPosition(clock.current.position);};
+  },[preview?.id,preview?.label,preview?.version,preview?.status,state,attempt,cancelMotion,requestId,displayText,learning]);
+  const pause=()=>{pendingAuto.current='';clock.current.playing=false;setPlaying(false);setPosition(clock.current.position);};
   const play=(restart=false)=>{
     const c=clock.current;if(!c.clip||!rig.current||state!=='ready')return;
     if(restart||c.position>=c.clip.asset.duration)c.position=0;

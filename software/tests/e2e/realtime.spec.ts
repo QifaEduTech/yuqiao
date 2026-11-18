@@ -13,7 +13,7 @@ async function trackCamera(page:Page){
 }
 async function fakeSession(page:Page){
   const counts={starts:0,stops:0};
-  await page.route('**/api/sign/realtime/sessions',r=>{if(r.request().method()==='DELETE'){counts.stops++;return r.fulfill({json:{paragraph:{state:'empty',text:'',words:[],wordCount:0,final:null},ok:true}});}counts.starts++;expect(r.request().postDataJSON().target).toBe('auto');return r.fulfill({status:201,json:{session:'test-session',flow:'paragraph',target:'auto',helpEngine:'video-tcn',supportedActions:[{text:'谢谢',signId:'csl.thanks'},{text:'帮助',signId:'csl.ref.bmcx.1900'},{text:'需要',signId:'csl.ref.bmcx.1874'},{text:'我',signId:'csl.me'}],protocol:2,frameIntervalMs:30,maxImageEdge:640}});});
+  await page.route('**/api/sign/realtime/sessions',r=>{if(r.request().method()==='DELETE'){counts.stops++;return r.fulfill({json:{paragraph:{state:'empty',text:'',words:[],wordCount:0,final:null},ok:true}});}counts.starts++;expect(r.request().postDataJSON().target).toBe('auto');return r.fulfill({status:201,json:{session:'test-session',flow:'paragraph',target:'auto',helpEngine:'unified-tcn',supportedActions:[{text:'谢谢',signId:'csl.thanks'},{text:'帮助',signId:'csl.ref.bmcx.1900'},{text:'需要',signId:'csl.ref.bmcx.1874'},{text:'我',signId:'csl.me'}],protocol:2,frameIntervalMs:30,maxImageEdge:640}});});
   return counts;
 }
 const start=(page:Page)=>page.getByRole('button',{name:'开启摄像头并实时识别',exact:true}).click();
@@ -24,7 +24,7 @@ test('同一会话自动识别谢谢需要帮助交替与重复，无动作或�
     const seq=Number(r.request().headers()['x-yuqiao-frame-seq']),time=Math.round(Number(r.request().headers()['x-yuqiao-capture-ms']));
     const event=emit&&word?{id:++id,text:word,signId:word==='我'?'csl.me':word==='谢谢'?'csl.thanks':word==='需要'?'csl.ref.bmcx.1874':'csl.ref.bmcx.1900',startMs:lastEnd+1,endMs:time}:null;
     if(event){emit=false;word=null;lastEnd=time;}
-    return r.fulfill({json:{paragraph:{state:'empty',text:'',words:[],wordCount:0,final:null},seq,status:word?'candidate':'waiting',candidate:word,helpEngine:'video-tcn',reason:word?'target':'no_hands',processingMs:5,samples:30,handSamples:word?30:0,event,eventState:event?'emitted':'collecting'}});
+    return r.fulfill({json:{paragraph:{state:'empty',text:'',words:[],wordCount:0,final:null},seq,status:word?'candidate':'waiting',candidate:word,helpEngine:'unified-tcn',reason:word?'target':'no_hands',processingMs:5,samples:30,handSamples:word?30:0,event,eventState:event?'emitted':'collecting'}});
   });
   await page.goto('/realtime.html');await expect(page.getByRole('combobox')).toHaveCount(0);await expect(page.getByLabel('当前自动识别范围')).toContainText('谢谢');await expect(page.getByLabel('当前自动识别范围')).toContainText('帮助');await start(page);
   const words:string[]=[];
@@ -44,7 +44,7 @@ test('短暂竞争继续观察，可恢复稳定候选而不要求重做',async(
 
 test('竞争证据只提示重做，不猜词或追加文字',async({page})=>{
   await trackCamera(page);await fakeSession(page);
-  await page.route('**/api/sign/realtime/frames',r=>r.fulfill({json:{paragraph:{state:'empty',text:'',words:[],wordCount:0,final:null},seq:Number(r.request().headers()['x-yuqiao-frame-seq']),status:'uncertain',candidate:null,helpEngine:'video-tcn',reason:'ambiguous_actions',processingMs:5,samples:30,handSamples:30,event:null,eventState:'reset_required'}}));
+  await page.route('**/api/sign/realtime/frames',r=>r.fulfill({json:{paragraph:{state:'empty',text:'',words:[],wordCount:0,final:null},seq:Number(r.request().headers()['x-yuqiao-frame-seq']),status:'uncertain',candidate:null,helpEngine:'unified-tcn',reason:'ambiguous_actions',processingMs:5,samples:30,handSamples:30,event:null,eventState:'reset_required'}}));
   await page.goto('/realtime.html');await start(page);await expect(page.getByTestId('realtime-status')).toContainText('竞争证据');await expect(page.getByTestId('realtime-candidate')).toHaveText('等待动作');await expect(page.getByTestId('realtime-event-count')).toHaveText('当前显示 0 次动作');
 });
 
@@ -62,7 +62,7 @@ test('顺序切换提示继续完成，按顺序记入谢谢和帮助',async({pa
 
 test('帮助模型高分但双手运动未通过时不出候选或文字',async({page})=>{
   await trackCamera(page);await fakeSession(page);
-  await page.route('**/api/sign/realtime/frames',r=>r.fulfill({json:{paragraph:{state:'empty',text:'',words:[],wordCount:0,final:null},seq:Number(r.request().headers()['x-yuqiao-frame-seq']),status:'observing',candidate:null,helpEngine:'video-tcn',modelVersion:'v1',helpScore:.91,motionSupported:false,motionGuard:'bilateral-motion-v1',reason:'motion_required',processingMs:5,samples:60,handSamples:60,event:null,eventState:'collecting'}}));
+  await page.route('**/api/sign/realtime/frames',r=>r.fulfill({json:{paragraph:{state:'empty',text:'',words:[],wordCount:0,final:null},seq:Number(r.request().headers()['x-yuqiao-frame-seq']),status:'observing',candidate:null,helpEngine:'unified-tcn',modelVersion:'v1',helpScore:.91,motionSupported:false,motionGuard:'bilateral-motion-v1',reason:'motion_required',processingMs:5,samples:60,handSamples:60,event:null,eventState:'collecting'}}));
   await page.goto('/realtime.html');await start(page);
   await expect(page.getByTestId('help-model-score')).toContainText('0.910');await expect(page.getByTestId('help-model-score')).toContainText('未通过');
   await expect(page.getByTestId('realtime-picture-status')).toContainText('尚未确认有效动作');await expect(page.getByTestId('realtime-candidate')).toHaveText('等待动作');await expect(page.getByTestId('realtime-event-count')).toHaveText('当前显示 0 次动作');
@@ -72,7 +72,7 @@ test('不用选择即可识别帮助，候选与事件分开显示，停止清�
   await trackCamera(page);await fakeSession(page);let mode='empty';
   await page.route('**/api/sign/realtime/frames',r=>{
     const seq=Number(r.request().headers()['x-yuqiao-frame-seq']),time=Math.round(Number(r.request().headers()['x-yuqiao-capture-ms']));const event=mode==='emit'?{id:1,text:'帮助',signId:'csl.ref.bmcx.1900',startMs:0,endMs:time}:null;if(event)mode='empty';
-    return r.fulfill({json:{paragraph:{state:'empty',text:'',words:[],wordCount:0,final:null},seq,helpEngine:'video-tcn',helpScore:mode==='candidate'?.84:null,status:mode==='candidate'?'candidate':'waiting',candidate:mode==='candidate'?'帮助':null,reason:'no_hands',processingMs:5,samples:0,handSamples:0,event,eventState:event?'emitted':'collecting'}});
+    return r.fulfill({json:{paragraph:{state:'empty',text:'',words:[],wordCount:0,final:null},seq,helpEngine:'unified-tcn',helpScore:mode==='candidate'?.84:null,status:mode==='candidate'?'candidate':'waiting',candidate:mode==='candidate'?'帮助':null,reason:'no_hands',processingMs:5,samples:0,handSamples:0,event,eventState:event?'emitted':'collecting'}});
   });
   await page.goto('/realtime.html');await expect(page.getByRole('heading',{name:'把想说的话，连起来。'})).toBeVisible();await start(page);
   await expect(page.getByRole('combobox')).toHaveCount(0);await expect(page.getByTestId('realtime-candidate')).toHaveText('等待动作');await expect(page.getByTestId('realtime-event-count')).toHaveText('当前显示 0 次动作');
@@ -86,7 +86,7 @@ test('自动会话拒绝未支持词和旧单目标启动回应',async({page})=>
   await trackCamera(page);await fakeSession(page);
   await page.route('**/api/sign/realtime/frames',r=>r.fulfill({json:{paragraph:{state:'empty',text:'',words:[],wordCount:0,final:null},seq:Number(r.request().headers()['x-yuqiao-frame-seq']),status:'candidate',candidate:'你好',reason:'target',processingMs:5,samples:30,handSamples:30,event:null,eventState:'collecting'}}));
   await page.goto('/realtime.html');await start(page);await expect(page.getByRole('alert')).toContainText('不匹配');
-  await page.unroute('**/api/sign/realtime/sessions');await page.route('**/api/sign/realtime/sessions',r=>r.fulfill({json:{paragraph:{state:'empty',text:'',words:[],wordCount:0,final:null},session:'old',protocol:2,frameIntervalMs:30,maxImageEdge:640,helpEngine:'video-tcn',target:'thanks',targetText:'谢谢',targetSignId:'csl.thanks'}}));
+  await page.unroute('**/api/sign/realtime/sessions');await page.route('**/api/sign/realtime/sessions',r=>r.fulfill({json:{paragraph:{state:'empty',text:'',words:[],wordCount:0,final:null},session:'old',protocol:2,frameIntervalMs:30,maxImageEdge:640,helpEngine:'unified-tcn',target:'thanks',targetText:'谢谢',targetSignId:'csl.thanks'}}));
   await start(page);await expect(page.getByRole('alert')).toContainText('版本不匹配');
 });
 
