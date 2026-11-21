@@ -6,6 +6,7 @@ import {resolve,join,sep} from 'node:path';
 import {once} from 'node:events';
 import {RealtimeSignService,validateLiveJpeg} from '../../server/realtime.mjs';
 import {createApp} from '../../server/app.mjs';
+import {activeEngine} from '../../server/recording-catalog.mjs';
 import {validLiveResult,validHandTracking,validMeCheck} from '../../shared/realtime-result.mjs';
 
 test('我检查只接受有界标量，停止或750ms过期后不留诊断',()=>{
@@ -48,7 +49,7 @@ test('统一模型是唯一生产识别入口，空手不出词，旧单目标�
   await assert.rejects(service.start(undefined,'hello'),e=>e.status===400);
   await assert.rejects(service.start(undefined,'help'),e=>e.status===400);
   const ready=await service.start();assert.equal(ready.target,'auto');assert.equal(ready.modelCount,1);
-  assert.equal(ready.helpEngine,'unified-tcn');assert.equal(ready.modelVersion,'v1');
+  assert.equal(ready.helpEngine,'unified-tcn');assert.equal(ready.modelVersion,activeEngine(resolve('.')).version);
   for(let seq=1;seq<=12;seq++){
     const result=await service.frame(ready.session,jpeg,seq,(seq-1)*100);assert.equal(result.candidate,null);assert.equal(result.event,null);assert.deepEqual(result.handTracking.hands,[]);
   }
@@ -70,7 +71,7 @@ test('实时JPEG尺寸和格式在解码前受限',()=>{
 test('实际持久进程复用、无手拒识、限流、会话隔离和关闭释放，不写画面文件',async t=>{
   const service=new RealtimeSignService(resolve('.'));if(!service.status().available){t.skip('本机识别环境缺失');return;}t.after(()=>service.close());
   const started=await service.start();const pid=service.active.child.pid;
-  assert.equal(started.target,'auto');assert.deepEqual(started.supportedActions.map(x=>x.text),['谢谢','帮助','需要','我']);
+  assert.equal(started.target,'auto');assert.deepEqual(started.supportedActions.map(x=>x.text),service.status().labels);
   await assert.rejects(service.start(),e=>e.status===429);await assert.rejects(service.frame('wrong',jpeg,1,0),e=>e.status===404);
   const pending=service.frame(started.session,jpeg,1,0);await assert.rejects(service.frame(started.session,jpeg,2,100),e=>e.status===429);
   let result=await pending;assert.equal(result.candidate,null);assert.deepEqual(result.handTracking,{width:64,height:64,mirrored:true,hands:[]});
@@ -94,4 +95,34 @@ test('实时接口无需账号且不创建记录，写请求仍校验来源和�
   assert.equal(flowRequested,'paragraph');
   assert.equal((await fetch(url+'/api/sign/realtime/sessions',{method:'POST',body:JSON.stringify({flow:'made-up'}),headers:{...headers,'Content-Type':'application/json'}})).status,400);
   assert.deepEqual(await readdir(join(root,'media')),[]);
+});
+
+test('录像和实时接口完成时在后台整理同一句话，保留原词及补出的词',async t=>{
+ const parent=resolve('.runtime-logs/realtime-api-tests');
+ await mkdir(parent,{recursive:true});
+ const root=await mkdtemp(join(parent,'sentence-'));
+ const words=['我','帮助','我','发烧'];
+ const original={id:1,words,wordCount:4,text:'我帮助我发烧。',partial:false,startMs:0,endMs:3000};
+ const sign={async recognize(_video,_mime,_signal,options){
+  assert.equal(options.paragraph,true);
+  return {kind:'recorded-sign-paragraph',status:'recognized',paragraph:original};
+ },close(){}};
+ const realtime={async frame(){
+  return {paragraph:{state:'empty',text:'',words:[],wordCount:0,final:original}};
+ },close(){}};
+ const server=await createApp({dataDir:root,publicDir:resolve('web/public'),signService:sign,realtimeService:realtime});
+ server.listen(0,'127.0.0.1');await once(server,'listening');
+ t.after(async()=>{server.closeAllConnections();await new Promise(r=>server.close(r));assert.ok(root.startsWith(parent+sep));await rm(root,{recursive:true,force:true});});
+ const url='http://127.0.0.1:'+server.address().port,headers={Origin:'http://127.0.0.1:5173','X-Yuqiao-Request':'1'};
+ const account=await fetch(url+'/api/auth/register',{method:'POST',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify({username:'sentence_test',password:'test-passphrase-2026'})});
+ assert.equal(account.status,201);
+ const recorded=await fetch(url+'/api/sign/paragraph',{method:'POST',headers:{...headers,'Content-Type':'video/webm',Cookie:account.headers.get('set-cookie').split(';')[0]},body:Buffer.alloc(32)});
+ const live=await fetch(url+'/api/sign/realtime/frames',{method:'POST',headers:{...headers,'Content-Type':'image/jpeg'},body:jpeg});
+ assert.equal(recorded.status,200);assert.equal(live.status,200);
+ const recordedParagraph=(await recorded.json()).paragraph,liveFinal=(await live.json()).paragraph.final;
+ assert.deepEqual(recordedParagraph,liveFinal);
+ assert.deepEqual(recordedParagraph.words,words);
+ assert.equal(recordedParagraph.text,original.text);
+ assert.equal(recordedParagraph.chinese.text,'我发烧了，我需要帮助。');
+ assert.deepEqual(recordedParagraph.chinese.inferredWords,['需要']);
 });

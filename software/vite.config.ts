@@ -29,6 +29,7 @@ export default defineConfig(({ mode }) => {
     configureServer(server) {
       server.middlewares.use((request, response, next) => {
         const url = request.url || '';
+        if(['/android-web','/android-web/','/android-web/index.html'].includes(url.split('?')[0])){response.writeHead(302,{Location:'/android.html'});response.end();return;}
         if(['/hospital-scene.html','/hospital-scene'].includes(url.split('?')[0])){response.writeHead(302,{Location:'/'});response.end();return;}
         for (const entry of ['avatar', 'camera']) {
           if (url === `/${entry}` || url.startsWith(`/${entry}?`)) {
@@ -40,6 +41,7 @@ export default defineConfig(({ mode }) => {
       });
     },
     configurePreviewServer(server) {
+      server.middlewares.use((request,response,next)=>{if(['/android-web','/android-web/','/android-web/index.html'].includes((request.url||'').split('?')[0])){response.writeHead(302,{Location:'/android.html'});response.end();return;}next();});
       server.middlewares.use((request,response,next)=>{if(['/hospital-scene.html','/hospital-scene'].includes((request.url||'').split('?')[0])){response.writeHead(302,{Location:'/'});response.end();return;}next();});
     },
   }],
@@ -52,7 +54,7 @@ export default defineConfig(({ mode }) => {
   build: {
     ...(android ? {outDir:localPath('./web/android-app/app/'),emptyOutDir:true} : {}),
     rollupOptions: {
-      input: android ? {app:frontendRoot+'/android-offline.html'} : Object.fromEntries(Object.entries({main:'index.html',mobile:'android.html',account:'android-account.html',offline:'android-offline.html',learning:'learning.html',training:'training.html',realtime:'realtime.html',camera:'camera.html',avatar:'avatar.html',review:'model-review.html',anny:'anny-review.html',dictionary:'sign-dictionary.html',continuous:'continuous-review.html'}).map(([name,file])=>[name,frontendRoot+'/'+file])),
+      input: android ? {app:frontendRoot+'/android-offline.html'} : Object.fromEntries(Object.entries({main:'index.html',mobile:'android.html',account:'android-account.html',offline:'android-offline.html',learning:'learning.html',training:'training.html',realtime:'realtime.html',liveRecognition:'live-recognition.html',camera:'camera.html',avatar:'avatar.html',review:'model-review.html',anny:'anny-review.html',dictionary:'sign-dictionary.html',continuous:'continuous-review.html'}).map(([name,file])=>[name,frontendRoot+'/'+file])),
       output: {
         manualChunks: { three: ['three'] },
       },

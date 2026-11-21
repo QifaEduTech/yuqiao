@@ -1,11 +1,11 @@
 {
-  "version": "recognized-chinese-1",
+  "version": "recognized-chinese-3",
   "maxWords": 60,
   "maxCharacters": 500,
   "subjects": ["我", "你"],
   "predicates": ["需要", "有", "没有", "是", "不是", "爱"],
   "verbs": ["帮助", "给", "检查", "挂号", "等候"],
-  "symptoms": ["痛", "发烧", "过敏"],
+  "symptoms": ["痛", "过敏"],
   "places": ["医院", "门诊", "挂号", "医生", "报告", "药", "身份证"],
   "needObjects": ["帮助", "挂号", "检查", "医生", "药", "报告", "身份证", "志愿者"],
   "greetings": ["你好", "谢谢", "对不起", "再见", "好"],
@@ -13,6 +13,9 @@
   "rules": [
     {"id":"subject-predicate-object","pattern":["$subject","$predicate","$object"],"order":[0,1,2]},
     {"id":"predicate-object","pattern":["$predicate","$object"],"order":[0,1]},
+    {"id":"subject-need-doctor-help","pattern":["$subject","需要","医生","帮助"],"order":[0,1,2,3]},
+    {"id":"need-doctor-help","pattern":["需要","医生","帮助"],"order":[0,1,2]},
+    {"id":"subject-fever","pattern":["$subject","发烧"],"order":[0,1,"了"]},
     {"id":"subject-symptom","pattern":["$subject","$symptom"],"order":[0,1]},
     {"id":"local-pain","pattern":["这里","痛"],"order":[0,1]},
     {"id":"subject-local-pain","pattern":["$subject","这里","痛"],"order":[0,1,2]},

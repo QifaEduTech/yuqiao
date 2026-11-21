@@ -18,8 +18,9 @@ test('常见就医原话由实际接口完整拼接，两端同步；编辑、�
   await expect(page.getByRole('button',{name:'播放整段',exact:true})).toHaveCount(0);
   await expect(page.getByTestId('avatar')).toHaveCount(1);
   const oldPage=await page.request.get('/hospital-scene.html',{maxRedirects:0});expect(oldPage.status()).toBe(302);expect(oldPage.headers().location).toBe('/');
-  for(const text of ['我想挂号','请帮帮我','我没有过敏','挂号在哪里？']){
+  for(const text of ['我想挂号','请帮帮我','我没有过敏','挂号在哪里？','我想请医生帮忙','请志愿者帮我挂号','请问门诊在哪里？']){
    await submit(page,text);await motion(page,text);await motion(display,text);await expect(page.getByLabel('输入要表达的中文')).toHaveValue(text);await expect(page.locator('.home-motion-title strong')).toHaveText(text);
+   if(text==='我想请医生帮忙')await page.screenshot({path:'.runtime-logs/free-expression-desktop.png',fullPage:true});
    await page.getByLabel('输入要表达的中文').fill(text+' ');await stopped(page);await stopped(display);
   }
   await submit(page,'我想挂号');await motion(display,'我想挂号');await page.getByRole('button',{name:'提交文字',exact:true}).click();await motion(display,'我想挂号');

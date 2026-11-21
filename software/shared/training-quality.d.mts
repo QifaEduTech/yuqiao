@@ -1,0 +1,2 @@
+export type QualityFailure={actionId:string;text:string;recordId:string;split:string;number:number;reason:string};
+export function trainingQualityFailures(actions:{id:string;text:string;samples:{recordId:string;split:string;start:number;end:number;sourceHash?:string;qualityUpdatedAt?:number}[]}[],jobs:{createdAt:number;report:{quality?:{recordId:string;passed:boolean;reason:string;start?:number;end?:number;sourceHash?:string}[]}|null}[]):QualityFailure[];

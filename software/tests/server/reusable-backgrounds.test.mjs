@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {collectReusableBackgrounds,validateReusableBackgrounds} from '../../server/reusable-backgrounds.mjs';
-import {JointTraining} from '../../server/joint-training.mjs';
+import {JointTraining,jointPlanFingerprint} from '../../server/joint-training.mjs';
 import {resolve} from 'node:path';
 import engine from '../../shared/recognition-engine.json' with {type:'json'};
 import {mkdtemp,mkdir,writeFile,rm} from 'node:fs/promises';
@@ -15,6 +15,41 @@ function fixture(){
  const store={root:resolve('.'),data:resolve('.runtime-logs/nonexistent-background-test'),db:{prepare(sql){return {all(owner){assert.match(sql,/user_id=\?/);return rows.filter(r=>r.user_id===owner&&r.active);},get(id,owner){return rows.find(r=>r.record_id===id&&r.user_id===owner);}};}},source(owner,id){const r=records.get(id);if(!r||r.owner!==owner)throw Error('wrong owner');return r;},read(){return structuredClone(state);},preflight(owner,a){return {samples:a.samples.map(s=>({...s,path:'/fixture/'+s.recordId}))};}};
  return {store,state,rows,records,add};
 }
+test('训练好时排除旧点赞背景及任务关联，其他词表仍按原登记复用',()=>{
+ const f=fixture();
+ const descriptions=['点赞','纯点赞动作','静态点赞、不弯拇指','保持点赞并移动整手','保持点赞并移动整只手'];
+ for(const [i,detail] of descriptions.entries())f.add('thumb'+i,{category:'other',detail});
+ for(let i=0;i<4;i++)f.add('bg'+i);
+ const all=collectReusableBackgrounds(f.store,'alice',f.state,engine.labels).samples;
+ assert.equal(all.length,9);
+ const labels=[{signId:'csl.good',text:'好'}];
+ assert.deepEqual(collectReusableBackgrounds(f.store,'alice',f.state,labels).samples.map(x=>x.recordId),['bg0','bg1','bg2','bg3']);
+ assert.throws(()=>validateReusableBackgrounds(f.store,'alice',f.state,all,labels),/重叠/);
+ f.state.actions=[{...labels[0],id:'good',samples:[
+   ...[0,1,2,3].map(i=>({recordId:'pos'+i,sourceHash:'pos'+i,label:1,split:'train',start:0,end:2})),
+   {recordId:'thumb0',sourceHash:'hash-thumb0',legacyRevision:1,label:0,split:'train',start:0,end:2}
+ ]}];
+ const plan=new JointTraining(f.store).prepare('alice');
+ assert.ok(plan.samples.every(x=>!x.recordId.startsWith('thumb')));
+});
+test('已用测试保留原登记并跳过本轮，不能混入训练或靠跳过测试重复刷分',()=>{
+ const f=fixture();for(let i=0;i<4;i++)f.add('background-'+i);
+ const samples=Array.from({length:4},(_,i)=>({recordId:'train-'+i,sourceHash:'train-'+i,split:'train',label:1,start:0,end:2,group:'auto',realGroupConfirmed:false}));
+ samples.push({recordId:'used',sourceHash:'used',split:'test',label:1,start:0,end:2},{recordId:'fresh',sourceHash:'fresh',split:'test',label:1,start:0,end:2});
+ f.state.actions=[{id:'you',signId:'csl.you',text:'你',samples,revision:1}];f.state.seenTests=['used'];const original=structuredClone(f.state),joint=new JointTraining(f.store),first=joint.prepare('alice');
+ assert.equal(first.datasetSummary.test,1);assert.equal(first.datasetSummary.excludedUsedTests,1);assert.ok(!first.samples.some(s=>s.recordId==='used'));assert.equal(first.excludedTests[0].recordId,'used');assert.deepEqual(f.state,original);
+ f.state.seenTests.push('fresh');const second=joint.prepare('alice');assert.equal(second.datasetSummary.test,0);assert.equal(jointPlanFingerprint(first.labels,first.samples,first.excludedTests),jointPlanFingerprint(second.labels,second.samples,second.excludedTests));
+ f.state.seenTraining=['used'];assert.throws(()=>joint.prepare('alice'),/测试集视频已用于训练/);
+});
+
+test('导入正例与旧共享背景保留同一个真实拍摄组，内部划分不泄漏',()=>{
+ const f=fixture(),groups=['capture:20261020:105442:16a321','capture:20261021:105442:16a322'];
+ for(let i=0;i<4;i++)f.add('bg-'+i,{batch:groups[i%2]});
+ f.state.actions=[{id:'help',signId:'csl.ref.bmcx.1900',text:'帮助',samples:Array.from({length:4},(_,i)=>({recordId:'p-'+i,sourceHash:'p-'+i,split:'train',label:1,start:0,end:2,realGroupConfirmed:true,group:'legacy:12345678:'+groups[i%2],importedFrom:{recordId:'source-'+i}}))}];
+ const plan=new JointTraining(f.store).prepare('alice');
+ for(const group of groups){const members=plan.samples.filter(s=>s.group===group);assert.equal(members.length,4);assert.equal(new Set(members.map(s=>s.split)).size,1);}
+});
+
 test('仅复用同账号明确旧反例，去重，排除测试/正例/不确定和损坏来源',()=>{
  const f=fixture();f.add('good');f.add('other',{category:'other',detail:'挥动其他动作'});f.add('foreign',{},'bob');f.add('uncertain',{category:'uncertain'});f.add('unfinished',{complete:false});f.add('known',{category:'other',detail:'我'});f.add('bad');f.records.get('bad').sha256='changed';f.add('test');f.add('positive');
  f.state.actions=[{id:'a',samples:[{recordId:'test',sourceHash:'hash-test',split:'test',label:0},{recordId:'positive',sourceHash:'hash-positive',split:'train',label:1}]}];
@@ -42,6 +77,12 @@ test('新模型可从一个新动作开始，空四词卡和不足量任务不�
  const positives=Array.from({length:20},(_,i)=>({recordId:'good-'+i,sourceHash:'good-'+i,label:1,split:'train',start:0,end:2,group:'自动轮次',realGroupConfirmed:false}));
  f.state.actions=[{id:'good',signId:'csl.good',text:'好',revision:1,samples:positives},...engine.labels.map((l,i)=>({id:'old-'+i,...l,revision:1,samples:[]})),{id:'new',signId:'csl.you',text:'你',revision:1,samples:[{...positives[0],recordId:'you',sourceHash:'you'}]}];
  const plan=new JointTraining(f.store).prepare('alice');assert.deepEqual(plan.labels.map(l=>l.text),['好']);assert.equal(plan.pendingActions.length,5);assert.equal(plan.datasetSummary.reusedBackgrounds,20);assert.equal(f.state.actions.length,6);
+ const retired=f.state.actions.at(-1);
+ retired.samples=positives.map((s,i)=>({...s,recordId:'you-'+i,sourceHash:'you-'+i}));
+ f.state.excludedModelSignIds=[retired.signId];
+ const next=new JointTraining(f.store).prepare('alice');
+ assert.deepEqual(next.labels.map(l=>l.text),['好']);assert.equal(next.pendingActions.length,4);
+ assert.ok(next.samples.every(s=>!s.recordId.startsWith('you-')));assert.equal(retired.samples.length,20);
 });
 test('只复用显式授权的跨账号背景，撤销授权或源账号移除后停止复用',async t=>{
  const f=fixture(),parent=resolve('.runtime-logs/shared-background-tests');await mkdir(parent,{recursive:true});const dir=await mkdtemp(join(parent,'case-'));f.store.data=dir;t.after(async()=>{assert.ok(dir.startsWith(parent+sep));await rm(dir,{recursive:true,force:true});});

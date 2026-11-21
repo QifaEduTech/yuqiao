@@ -31,6 +31,12 @@ test('播放API直接处理确定说法，未覆盖内容返回具体缺项，�
  t.after(async()=>{server.closeAllConnections();await new Promise(r=>server.close(r));assert.ok(root.startsWith(parent+sep));await rm(root,{recursive:true,force:true});});
  const request=async text=>{const r=await fetch('http://127.0.0.1:'+server.address().port+'/api/sign/resolve',{method:'POST',headers:{Origin:'http://127.0.0.1:5183','X-Yuqiao-Request':'1','Content-Type':'application/json'},body:JSON.stringify({text,mode:'playback'})});assert.equal(r.status,200);return r.json();};
  assert.ok((await request('我想挂号')).preview);assert.ok((await request('请帮帮我')).preview);assert.ok((await request('我没有过敏')).preview);assert.equal(calls,0);
+ for(const text of ['我想请医生帮忙','请志愿者帮我挂号','请问门诊在哪里？']){
+  const result=await request(text);
+  assert.equal(result.preview?.id,resolveExpression(text).preview.id);
+  assert.equal(Object.hasOwn(result,'expression'),false);
+ }
+ assert.equal(calls,0);
  const missing=await request('我需要轮椅');assert.equal(missing.preview,null);assert.deepEqual(missing.missing,['轮椅']);assert.equal(calls,1);
  assert.equal((await request('你'.repeat(11))).reason,'too_many_actions');assert.equal((await request('对不起'.repeat(8))).reason,'too_long');assert.equal((await request('有药吗？')).reason,'unsupported_question');assert.equal(calls,1);
 });

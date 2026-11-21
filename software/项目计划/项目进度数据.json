@@ -1,27 +1,28 @@
 {
-  "updated": "2026-11-18",
-  "nextCaption": "使用自己的视频训练一个统一模型；训练页仅训练集/测试集，达标归档原片保留。",
-  "recognition": "requires authorized local weights; no private checkpoints included",
+  "updated": "2026-11-21",
+  "nextCaption": "配置本机授权权重或采集资料联合训练，随后验证两种手语转文字模式。",
+  "entries": {
+    "recording": "/realtime.html",
+    "live": "/live-recognition.html",
+    "androidBrowser": "/android.html",
+    "training": "/training.html"
+  },
   "features": [
-    "unified action classifier",
-    "two datasets",
-    "joint scratch fitting",
-    "per-class completion gates",
-    "automatic card archival",
-    "explicit shared-negative grant",
-    "paragraph Chinese formatting",
-    "same-account display sync"
+    "整段录像识别",
+    "独立实时识别",
+    "后台中文整理",
+    "训练页和录制",
+    "训练数据",
+    "模型迭代",
+    "训练成绩",
+    "安卓浏览器预览",
+    "文字到数字人"
   ],
+  "rawDataIncluded": false,
+  "publishedWeights": false,
   "remaining": [
-    "real gesture and cross-user quality",
-    "professional motion review",
-    "cross-device HTTPS camera",
-    "Android deferred"
-  ],
-  "cancelled": [
-    "pairing codes",
-    "fixed display binding",
-    "fixed hospital scene panel"
-  ],
-  "privateDataIncluded": false
+    "真人连续效果与独立准确率验收",
+    "专业动作核验",
+    "原生安卓打包"
+  ]
 }

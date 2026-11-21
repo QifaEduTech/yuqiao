@@ -16,7 +16,7 @@ def load_model():
     directory=ROOT/ENGINE['modelDirectory']
     if hashlib.sha256((directory/'weights.npz').read_bytes()).hexdigest()!=ENGINE['weightsSha256']:raise ValueError('active_unified_hash')
     meta=json.loads((directory/'model.json').read_text(encoding='utf8'))
-    if meta['protocol']=='joint-body178-tcn-v2':
+    if meta['protocol'] in ('joint-body178-tcn-v2','joint-body178-tcn-v3'):
         from joint_model import JointTCN
         if meta['labels']!=ENGINE['labels']:raise ValueError('joint_label_mismatch')
         return JointTCN(directory)
@@ -53,9 +53,13 @@ class UnifiedLiveRecognizer:
         ready=bool(result['candidate'] and self.stream.qualified==result['candidate'])
         return self._result(candidate,None,'ready_to_finish' if ready else 'ending' if not present and self.stream.qualified else 'collecting' if present else 'waiting','target' if candidate else 'no_supported_action' if present else 'no_hands',present)
     def finish_for_paragraph(self,t):
-        s=self.stream
-        if s.conflict or not s.qualified or s.proposed!=s.qualified or s.last_support is None or t-s.last_support>.4:return None
-        event=self._event({'label':s.qualified,'start':s.started,'end':t})
+        return self._finish_explicit(t,False)
+    def finish_recording(self,t):
+        return self._finish_explicit(t,True)
+    def _finish_explicit(self,t,allow_missing):
+        raw=self.stream.finish_explicit(t,allow_missing=allow_missing)
+        if raw is None:return None
+        event=self._event(raw)
         if event is None:return None
-        s.reset();self.last_candidate=None;self.last_count=0;self.last_hands=0
+        self.last_candidate=None;self.last_count=0;self.last_hands=0
         return self._result(None,event,'emitted','action_finished',True)

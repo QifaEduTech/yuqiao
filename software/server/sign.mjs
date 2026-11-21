@@ -4,6 +4,7 @@ import { mkdir, mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { recordSignDiagnostics } from './sign-diagnostics.mjs';
 import { signCatalog } from '../shared/sign-catalog.mjs';
+import {validParagraph} from '../shared/realtime-paragraph.mjs';
 import {recordingConfig,recordingEntries,recordingBundle,recordingSnapshot,validateRecordingResult,recognitionEngine,activeEngine} from './recording-catalog.mjs';
 
 const failure = (message, status = 503) => Object.assign(new Error(message), { status });
@@ -36,7 +37,7 @@ export class SignService {
   timeoutMs() { return recordingConfig.timeoutMs; }
   tempRoot() { return resolve(this.root, '.runtime-logs/sign-tmp'); }
   workerEnvironment(temp) { return { ...process.env,YUQIAO_MODEL_DESCRIPTOR:JSON.stringify(activeEngine(this.root,this.dataDir)), PYTHONIOENCODING: 'utf-8', PYTHONPYCACHEPREFIX: resolve(this.root, '.runtime-logs/pycache'), TEMP: temp, TMP: temp, KERAS_HOME: resolve(this.root, '.runtime-logs/keras'), MPLCONFIGDIR: resolve(this.root, '.runtime-logs/matplotlib'), TF_CPP_MIN_LOG_LEVEL: '3', CUDA_VISIBLE_DEVICES: '-1' }; }
-  async recognize(buffer, mime, signal, {sequence=false,models=[]}={}) {
+  async recognize(buffer, mime, signal, {sequence=false,paragraph=false,models=[]}={}) {
     validateSignVideo(buffer, mime);
     if(models.length)throw failure('统一模型模式不加载逐动作模型。',400);
     if(sequence)throw failure('多动作分段识别已停用，请使用单动作录像复核。',410);
@@ -55,7 +56,7 @@ export class SignService {
       if (signal?.aborted) throw failure('动作识别已取消。', 499);
       const result = await new Promise((resolveResult, rejectResult) => {
         let output = '', failureReason;
-        const child = spawn(this.python(), ['-u', resolve(this.root, this.workerScript()), file,...(models.length?[JSON.stringify(models)]:[]),...(sequence?['--sequence']:[])], {
+        const child = spawn(this.python(), ['-u', resolve(this.root, this.workerScript()), file,...(paragraph?['--paragraph']:[])], {
           cwd: this.root, windowsHide: true, stdio: ['ignore', 'pipe', 'ignore'],
           env: this.workerEnvironment(temp),
         });
@@ -72,8 +73,15 @@ export class SignService {
           try {
             const result = JSON.parse(output.trim());
             if (result.error) return rejectResult(failure(result.error, result.status || 422));
-            if (code || !(sequence?['complete','partial','no_hands']:['candidate', 'uncertain', 'no_hands', 'unsupported']).includes(result.status)) throw Error('Bad result');
-            validateRecordingResult(result,activeLabels);
+            if (code) throw Error('Bad result');
+            if(paragraph){
+              const final=result.paragraph;
+              if(result.kind!=='recorded-sign-paragraph'||!['recognized','uncertain','no_hands'].includes(result.status)||
+                  (result.status==='recognized')!==(final!==null)||!Number.isFinite(result.duration_seconds)||
+                  result.duration_seconds<.5||result.duration_seconds>recordingConfig.maxSeconds+.25||
+                  !validParagraph({state:'empty',text:'',words:[],wordCount:0,final},activeLabels.map(l=>l.text))||
+                  (final&&(final.id!==1||final.endMs>Math.round(result.duration_seconds*1000)||!['manual','limit'].includes(final.endReason))))throw Error('Bad paragraph result');
+            }else validateRecordingResult(result,activeLabels);
             if(result.pipeline_sha256!==bundle.sha256)throw Error('Recording pipeline changed');
             resolveResult(result);
           } catch { rejectResult(failure('模型未能完成处理，请重试。')); }
@@ -84,7 +92,7 @@ export class SignService {
       if(recordingBundle(this.root,this.dataDir).sha256!==bundle.sha256)throw failure('模型或规则在识别期间更新，请重新识别；原录像已保留。',409);
       const custom=models.find(m=>m.text===result.candidate);
       result.modelSnapshot=custom?{modelId:custom.signId,modelVersion:custom.path.split(/[\\/]/).at(-2),modelSha256:custom.sha256,featureId:'self-service-body178-v1',pipelineId:bundle.id,pipelineSha256:bundle.sha256}:recordingSnapshot(bundle,result.candidate);
-      if (this.diagnosticDir) {
+      if (this.diagnosticDir&&!paragraph) {
         try { result.diagnostic_id = await recordSignDiagnostics(this.diagnosticDir, result); result.diagnostic_saved = true; }
         catch { result.diagnostic_saved = false; }
       }

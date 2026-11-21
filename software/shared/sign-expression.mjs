@@ -2,11 +2,12 @@ import rules from './sign-expression-rules.json' with {type:'json'};
 import catalog from './sign-motion-catalog.json' with {type:'json'};
 import {planMotionText} from './motion-planner.mjs';
 import {resolveInputPreview} from './sign-preview.mjs';
+import {expandedExpressionRules} from './sign-expression-phrases.mjs';
 
 // Rules apply to entire punctuation-delimited clauses, never to a substring.
 // No stopword removal, fuzzy matching, unknown-word deletion or LLM inference.
 const byInput=new Map();
-for(const rule of rules.rules){
+for(const rule of [...rules.rules,...expandedExpressionRules]){
  if(!rule.id||!rule.note||planMotionText(rule.output).status==='unsupported')throw Error('Invalid expression rule: '+rule.id);
  for(const input of rule.inputs){if(!input||byInput.has(input))throw Error('Duplicate expression phrase');byInput.set(input,rule);}
 }

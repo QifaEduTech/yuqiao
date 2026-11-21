@@ -1,5 +1,4 @@
 import {test,expect} from '@playwright/test';
-import {testWav} from './helpers/localSpeech';
 import {resolveInputPreview} from '../../shared/sign-preview.mjs';
 
 // Use the catalog's real preview assets; isolate text planning latency from
@@ -40,32 +39,10 @@ test('无需配对仍隔离不同账号，旧配对接口不存在',async({page,
  }finally{await other.close();}
 });
 
-test('摄像头端自动取流，候选不播报，确认成段后整理并播报，停止释放设备',async({page})=>{
-  const speech:string[]=[];let candidate:string|null=null,frames=0,finish=false;
-  await page.addInitScript(()=>{
-    const original=HTMLMediaElement.prototype.play;
-    (window as any).__cameraPlays=0;
-    HTMLMediaElement.prototype.play=function(){if(this.tagName==='AUDIO'){(window as any).__cameraPlays++;this.dispatchEvent(new Event('play'));return Promise.resolve();}return original.call(this);};
-  });
-  await page.route('**/api/tts/status',r=>r.fulfill({json:{available:true,voice:'模拟音色'}}));
-  await page.route('**/api/tts/synthesize',r=>{const b=r.request().postDataJSON();speech.push(b.text);return r.fulfill({json:{...b,mime:'audio/wav',audio:testWav(),voice:'模拟音色'}});});
-  await page.route('**/api/sign/realtime/sessions',r=>r.fulfill({json:r.request().method()==='DELETE'?{ok:true}:{session:'camera-simulated',flow:'paragraph',protocol:2,target:'auto',helpEngine:'unified-tcn',supportedActions:[{text:'谢谢',signId:'csl.thanks'},{text:'帮助',signId:'csl.ref.bmcx.1900'},{text:'需要',signId:'csl.ref.bmcx.1874'},{text:'我',signId:'csl.me'}]}}));
-  await page.route('**/api/sign/realtime/frames',r=>{frames++;const final=finish?{id:1,text:'谢谢。',words:['谢谢'],wordCount:1,startMs:1,endMs:Math.round(Number(r.request().headers()['x-yuqiao-capture-ms'])),partial:false}:null;finish=false;return r.fulfill({json:{seq:Number(r.request().headers()['x-yuqiao-frame-seq']),status:candidate?'candidate':'observing',candidate,reason:candidate?'target':'no_hands',event:null,eventState:candidate?'ready_to_finish':'collecting',samples:30,handSamples:30,processingMs:1,paragraph:{state:'empty',text:'',words:[],wordCount:0,final}}});});
-  await page.goto('/camera');
-  await expect(page.locator('.camera-entry-status')).toHaveAttribute('data-phase','running');
-  await expect.poll(()=>frames).toBeGreaterThan(2);
-  candidate='谢谢';const before=frames;await expect.poll(()=>frames).toBeGreaterThan(before+5);expect(speech).toEqual([]);candidate=null;finish=true;await expect.poll(()=>speech.length).toBe(1);
-  await expect.poll(()=>page.evaluate(()=>(window as any).__cameraPlays)).toBe(1);
-  await expect(page.getByTestId('paragraph-final')).toHaveText('谢谢。');expect(speech).toEqual(['谢谢。']);
-  await page.evaluate(()=>{(window as any).__cameraTracks=(document.querySelector('video')!.srcObject as MediaStream).getTracks();});
-  await page.getByRole('button',{name:'停止摄像头'}).click();
-  await expect.poll(()=>page.evaluate(()=>(window as any).__cameraTracks.every((t:MediaStreamTrack)=>t.readyState==='ended'))).toBe(true);
-  expect(speech).toEqual(['谢谢。']);
-});
-
 test('摄像头拒绝权限时明确提示',async({page})=>{
   await page.addInitScript(()=>{navigator.mediaDevices.getUserMedia=()=>Promise.reject(new DOMException('denied','NotAllowedError'));});
   await page.goto('/camera');
-  await expect(page.getByText('摄像头权限未获允许，请在地址栏检查权限。')).toBeVisible();
-  await expect(page.getByRole('button',{name:'重新开启摄像头'})).toBeVisible();
+  await page.getByRole('button',{name:'开启摄像头',exact:true}).click();
+  await expect(page.getByRole('alert')).toContainText('设备访问未获允许');
+  await expect(page.getByRole('button',{name:'开启摄像头',exact:true})).toBeVisible();
 });

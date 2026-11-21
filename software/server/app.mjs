@@ -22,9 +22,10 @@ import { VoiceService } from './voice.mjs';
 import { createPracticeStore } from './practice.mjs';
 import { createSampleStore } from './samples.mjs';
 import { RealtimeSignService,liveConfig,liveTargets } from './realtime.mjs';
-import {removeArchivedRecord} from './training-archive.mjs';
-import {loadHelpModelReview,removeHelpModelReview} from './help-model-review.mjs';
+import {deleteOwnedRecord} from './record-deletion.mjs';
+import {loadHelpModelReview} from './help-model-review.mjs';
 import {recordingConfig,recordingEntries,recordingBundle,recordingSnapshot,activeEngine} from './recording-catalog.mjs';
+import {organizeCompletedParagraph} from '../shared/recognized-chinese.mjs';
 
 const scrypt = promisify(deriveKey);
 const developmentActions=JSON.parse(readFileSync(new URL('../shared/sign-development-actions.json',import.meta.url),'utf8')).actions;
@@ -253,7 +254,12 @@ export async function createApp({ dataDir, publicDir, speechService, signService
         if(req.headers['content-type']!=='image/jpeg')throw new HttpError(415,'实时画面仅支持JPEG。');
         const frame=await readBody(req,liveConfig.maxJpegBytes);
         const controller=new AbortController(),cancel=()=>{if(!res.writableEnded)controller.abort();};res.on('close',cancel);
-        try{const result=await realtime.frame(req.headers['x-yuqiao-live-session'],frame,Number(req.headers['x-yuqiao-frame-seq']),Number(req.headers['x-yuqiao-capture-ms']),controller.signal,{finishParagraph:req.headers['x-yuqiao-finish-paragraph']==='1'});if(!res.destroyed)return send(res,200,result);return;}finally{res.off('close',cancel);}
+        try{
+          const result=await realtime.frame(req.headers['x-yuqiao-live-session'],frame,Number(req.headers['x-yuqiao-frame-seq']),Number(req.headers['x-yuqiao-capture-ms']),controller.signal,{finishParagraph:req.headers['x-yuqiao-finish-paragraph']==='1'});
+          if(res.destroyed)return;
+          const paragraph=result.paragraph;
+          return send(res,200,paragraph?.final?{...result,paragraph:{...paragraph,final:organizeCompletedParagraph(paragraph.final)}}:result);
+        }finally{res.off('close',cancel);}
       }
       if (url.pathname === '/api/profile/tts-key' && ['GET','PUT','DELETE'].includes(method)) {
         const user=requireUser(req);
@@ -319,7 +325,21 @@ export async function createApp({ dataDir, publicDir, speechService, signService
       if (url.pathname === '/api/continuous/experiments' && method === 'POST') {
         throw new HttpError(410, '该模型已删除，请进入手语学习使用四词单动作识别。');
       }
-      if (url.pathname === '/api/sign/sequences') throw new HttpError(410, '多动作录像识别已停用，请进入手语学习进行单动作练习。');
+      if (url.pathname === '/api/sign/sequences') throw new HttpError(410, '此接口已停用，请到手语转文字页面确认整段录像。');
+      if(url.pathname==='/api/sign/paragraph'&&method==='POST'){
+        const owner=requireUser(req).id;
+        const mime=req.headers['content-type']?.split(';')[0];
+        if(!['video/webm','video/mp4'].includes(mime))throw new HttpError(415,'请选择 WebM 或 MP4 视频。');
+        const controller=new AbortController(),cancel=()=>{if(!res.writableEnded)controller.abort();};
+        res.on('close',cancel);
+        try{
+          const video=await readBody(req,MAX_VIDEO);
+          const result=await sign.recognize(video,mime,controller.signal,{paragraph:true});
+          if(res.destroyed||controller.signal.aborted)return;
+          if(userFor(req)?.id!==owner)throw new HttpError(401,'登录已失效，请重新登录。');
+          return send(res,200,result.paragraph?{...result,paragraph:organizeCompletedParagraph(result.paragraph)}:result);
+        }finally{res.off('close',cancel);}
+      }
       if (url.pathname === '/api/sign/experiments' && method === 'POST') {
         const modelOwner=userFor(req)?.id,customModels=[];
         const recordId=req.headers['x-yuqiao-record-id'];
@@ -725,12 +745,7 @@ export async function createApp({ dataDir, publicDir, speechService, signService
           return stream.pipe(res);
         }
         if (!match[2] && method === 'DELETE') {
-          if (record.media_file) await unlink(join(mediaDir, record.media_file)).catch(error => { if (error.code !== 'ENOENT') throw error; });
-          await unlink(join(root, 'sign-motions', `${record.id}.json`)).catch(error => { if (error.code !== 'ENOENT') throw error; });
-          db.prepare('DELETE FROM records WHERE id=? AND user_id=?').run(record.id, user.id);
-          removeArchivedRecord(root,record.id);
-          await removeHelpModelReview(root,record.id);
-          return send(res, 200, { ok: true });
+          return send(res,200,await deleteOwnedRecord({db,dataDir:root,training,owner:user.id,recordId:record.id}));
         }
       }
       throw new HttpError(404, '接口不存在。');

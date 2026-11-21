@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-21",
+  "baseCommit": "b70ef1acabf483e2b904e7c13b9dab48d477cdc7",
+  "verification": {
+    "build": "passed",
+    "publicEntry": "passed without supplied model",
+    "server": {
+      "passed": 48,
+      "skippedWithoutLocalModel": 2
+    },
+    "python": {
+      "passed": 30,
+      "scope": "paragraph and evaluation with local Python environment"
+    },
+    "browser": {
+      "passed": 11,
+      "accountSetup": 1,
+      "scope": "isolated simulated recognition and audio plus actual browser media controls"
+    }
+  },
+  "restrictions": [
+    "public source only: no original training weights, video, private DB or credentials",
+    "no new-machine or human sign recognition acceptance"
+  ]
+}

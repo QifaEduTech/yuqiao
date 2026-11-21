@@ -16,6 +16,15 @@ class Checks(unittest.TestCase):
                 r=stream.push(i/30,x[0] if i<45 else np.zeros(178,np.float32))
                 if r['event']:events.append(r['event'])
             self.assertEqual(len(events),1)
+            # An anonymous reject row must not become an output word or allow
+            # the strongest remaining word to inherit its probability.
+            if c<=63:
+                arrays['reject.weight']=np.zeros((2,64),np.float32)
+                arrays['reject.bias']=np.array([12,8],np.float32)
+                retired=JointTCN(arrays=arrays,classes=c)
+                self.assertEqual(retired.classify(x),0)
+                self.assertEqual(len(retired.probabilities(x)),c)
+                self.assertAlmostEqual(float(retired.probabilities(x).sum()),1,places=5)
     def test_real_scratch_fit_export_with_no_test_input(self):
         parent=ROOT/'.runtime-logs/joint-fit-tests';parent.mkdir(parents=True,exist_ok=True)
         with tempfile.TemporaryDirectory(dir=parent) as tmp:

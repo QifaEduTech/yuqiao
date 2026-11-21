@@ -32,7 +32,7 @@ export function HistoryVideoRecognition({record,disabled,speechEnabled=true}:{re
   }
   return <section className="history-recognition" aria-label="重新识别已保存录像">
     <h3>重新识别这段录像</h3>
-    <p>与实时试用统一支持谢谢、帮助、需要、我。请确认录像中只做了一个完整动作；多动作录像不在此拼句。</p>
+    <p>录像与摄像头使用同一版动作模型。请确认录像中只做了一个完整动作；多动作录像不在此拼句。</p>
     <button className="primary-button" disabled={disabled||loading} onClick={()=>void recognize()}>{loading?'正在读取录像…':'重新识别录像'}</button>
     {(loading||blob)&&<button className="text-button" disabled={disabled} onClick={cancel}>停止并清除本次结果</button>}
     <p>使用已保存的视频，不必重新录制。原录像和备注保留，识别结果需重新核对。</p>

@@ -27,7 +27,7 @@ function ConnectedAccount({onAvatarChange}:{onAvatarChange?:(avatar:string|null)
  useEffect(()=>{void refresh();const onVisible=()=>{if(!document.hidden)void refresh();};document.addEventListener('visibilitychange',onVisible);return()=>{generation.current++;controller.current?.abort();document.removeEventListener('visibilitychange',onVisible);};},[refresh]);
  async function logout(){
   generation.current++;controller.current?.abort();setLoading(false);setLogoutBusy(true);setError('');setHistory(false);setSettings(false);
-  try{await api('/api/auth/logout',{method:'POST'});setUser(null);setCount(null);updateAvatar(null);}catch(e){setError(e instanceof Error?e.message:'退出失败，请重试。');}finally{setLogoutBusy(false);}
+  try{await api('/api/auth/logout',{method:'POST'});setUser(null);setCount(null);updateAvatar(null);window.dispatchEvent(new Event('yuqiao-auth-changed'));}catch(e){setError(e instanceof Error?e.message:'退出失败，请重试。');}finally{setLogoutBusy(false);}
  }
  function signedIn(value:User){setUser(value);setAuth(false);void refresh();}
  return <section className="mobile-account" aria-label="移动端账号"><div className="mobile-user-card"><span><UserAvatar src={avatar} size={32}/></span><div><h1>{user?.username??'你好，欢迎来到语桥'}</h1><p>{user?'已登录 · 与Web共用账号':'登录后查看你的资料与记录'}</p></div></div>

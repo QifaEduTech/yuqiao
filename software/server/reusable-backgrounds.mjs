@@ -2,7 +2,22 @@ import {createHash} from 'node:crypto';
 import {readFileSync,existsSync} from 'node:fs';
 import {resolve} from 'node:path';
 const digest=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
-const allowed=(p,labels)=>p?.reviewed===true&&p.complete===true&&!p.excluded&&['background','other'].includes(p.category)&&!labels.some(l=>l.text===p.detail?.trim());
+// These reviewed descriptions were collected as negatives for the earlier
+// vocabulary. With “好” in the task, the thumb-up pose is a target feature.
+const thumbUpDescriptions=new Set(['点赞','纯点赞动作','静态点赞、不弯拇指','保持点赞并移动整手','保持点赞并移动整只手']);
+function overlapsTarget(detail,labels){
+ const description=typeof detail==='string'?detail.trim():'';
+ return labels.some(l=>l.text===description || ((l.signId==='csl.good'||l.text==='好')&&thumbUpDescriptions.has(description)));
+}
+const allowed=(p,labels)=>p?.reviewed===true&&p.complete===true&&!p.excluded&&['background','other'].includes(p.category)&&!overlapsTarget(p.detail,labels);
+
+export function registeredNegativeOverlaps(store,owner,sample,labels){
+ if(sample.label!==0||!sample.legacyRevision||!['train','validation'].includes(sample.split))return false;
+ const row=store.db.prepare('SELECT active,payload FROM sign_samples WHERE record_id=? AND user_id=?').get(sample.recordId,owner);
+ if(!row?.active)return false;
+ const registration=JSON.parse(row.payload);
+ return overlapsTarget(registration.detail,labels);
+}
 export function backgroundOwnerState(store,owner){
  const file=resolve(store.data,'training-workbench',createHash('sha256').update(owner).digest('hex'),'state.json');
  return existsSync(file)?JSON.parse(readFileSync(file,'utf8')):{actions:[],archivedActions:[],seenTraining:[],seenTests:[]};
@@ -71,6 +86,7 @@ export function validateReusableBackgrounds(store,owner,state,samples,labels=[])
   if(sample.sharedBackground){const grant=grants(store);if(!grant||sample.sharedGrantId!==grant.id||!grant.entries.some(e=>e.sourceOwnerId===sourceOwner&&sameSource(e,sample)))throw Error('共享背景授权已改变，未发布本轮模型。');sourceState=backgroundOwnerState(store,sourceOwner);if(!verifiedShared.has(sourceOwner))verifiedShared.set(sourceOwner,collectReusableBackgrounds(store,sourceOwner,sourceState,labels,{includeShared:false}).samples);if(!verifiedShared.get(sourceOwner).some(s=>sameSource(s,sample)))throw Error('共享背景被移除或改作其他用途，未发布本轮模型。');}
   const source=store.source(sourceOwner,sample.recordId),row=store.db.prepare('SELECT active,payload,revision FROM sign_samples WHERE record_id=? AND user_id=?').get(sample.recordId,sourceOwner);
   if(source.sha256!==sample.sourceHash||(row?.revision??0)!==sample.legacyRevision)throw Error('复用的背景资料已改变，请重新检查后训练。');
+  if(row?.active&&overlapsTarget(JSON.parse(row.payload).detail,labels))throw Error('旧背景与本轮目标动作重叠，请重新准备资料。');
   if(sample.reuseOrigin==='legacy_background'&&(!row?.active||digest(JSON.parse(row.payload))!==sample.registrationDigest))throw Error('旧背景登记已改变，未发布本轮模型。');
   if(sample.reuseOrigin==='workbench_negative'){
    const action=[...sourceState.actions,...(sourceState.archivedActions??[]).filter(a=>a.includeInJointTraining)].find(a=>a.id===sample.reuseActionId);

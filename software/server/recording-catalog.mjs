@@ -19,7 +19,7 @@ export function recordingBundle(root,dataDir=resolve(root,'data')){
  const paths=[...new Set(['shared/recording-recognition.json',...recordingConfig.sources,model.manifest,model.weights])].sort();
  const fingerprints=paths.map(path=>[path,hash(readFileSync(resolve(root,path)))]),hashes=new Map(fingerprints);
  const meta=json(resolve(root,model.manifest));
- if(meta.sha256!==engine.weightsSha256||hashes.get(model.weights)!==meta.sha256||!['unified-body178-tcn-v1','joint-body178-tcn-v2'].includes(meta.protocol))throw Error('Unified model checksum or protocol mismatch');
+ if(meta.sha256!==engine.weightsSha256||hashes.get(model.weights)!==meta.sha256||!['unified-body178-tcn-v1','joint-body178-tcn-v2','joint-body178-tcn-v3'].includes(meta.protocol))throw Error('Unified model checksum or protocol mismatch');
  const models=[{modelId:engine.id,modelVersion:engine.version,modelSha256:meta.sha256,featureId:engine.featureProtocol,labels:engine.labels.map(e=>e.text)}];
  return {id:recordingConfig.id,sha256:hash(JSON.stringify(fingerprints)),models};
 }

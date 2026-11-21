@@ -5,7 +5,8 @@ import config from './recognized-chinese.json' with {type:'json'};
 const classes={subject:config.subjects,predicate:config.predicates,verb:config.verbs,symptom:config.symptoms,place:config.places,needObject:config.needObjects};
 for(const rule of config.rules){
  const indices=rule.order.filter(v=>typeof v==='number').sort((a,b)=>a-b);
- if(indices.length!==rule.pattern.length||indices.some((v,i)=>v!==i)||rule.order.some(v=>typeof v!=='number'&&v!=='在'))throw Error('Invalid Chinese coverage rule: '+rule.id);
+ const allowedInsertion=rule.id==='subject-fever'?'了':'在';
+ if(indices.length!==rule.pattern.length||indices.some((v,i)=>v!==i)||rule.order.some(v=>typeof v!=='number'&&v!==allowedInsertion))throw Error('Invalid Chinese coverage rule: '+rule.id);
 }
 const reserved=new Set(config.reserved),greetings=new Set(config.greetings);
 const matches=(token,word)=>token==='$object'?!reserved.has(word):token.startsWith('$')?classes[token.slice(1)]?.includes(word):token===word;
@@ -46,4 +47,47 @@ export function organizeRecognizedWords(input,{partial=false}={}){
  const clauses=solutions[0],indices=clauses.flatMap(c=>c.sourceIndices).sort((a,b)=>a-b),text=joinClauses(clauses);
  if(indices.length!==words.length||indices.some((v,i)=>v!==i)||text.length>config.maxCharacters)return review('invalid_coverage');
  return {...base,text,status:'ready',reason:clauses.some(c=>c.ruleId.includes('need')&&c.ruleId!=='subject-predicate-object')?'word_order':'punctuation',clauses};
+}
+
+// Match two grounded clauses in either order. Within the help clause only
+// the order of the already identified role, request and verb is normalized.
+function feverHelp(words){
+ for(const feverStart of [0,words.length-2]){
+  if(words[feverStart]!=='我'||words[feverStart+1]!=='发烧')continue;
+  const requestStart=feverStart===0?2:0;
+  const request=words.slice(requestStart,feverStart===0?words.length:feverStart);
+  const hasSubject=request[0]==='我';
+  const body=hasSubject?request.slice(1):request;
+  if(!body.includes('帮助')||body.some(w=>!['需要','医生','帮助'].includes(w))||new Set(body).size!==body.length)continue;
+  const needs=body.includes('需要');
+  const hasDoctor=body.includes('医生');
+  const ordered=[...(hasSubject?['我']:[]),...(needs?['需要']:[]),...(hasDoctor?['医生']:[]),'帮助'];
+  return {
+   inferredWords:needs?[]:['需要'],
+   clauses:[
+    {ruleId:'subject-fever',text:'我发烧了',sourceIndices:[feverStart,feverStart+1],inserted:['了'],question:false},
+    {ruleId:'fever-help-request',text:(hasSubject?'我':'')+'需要'+(hasDoctor?'医生':'')+'帮助',
+     sourceIndices:ordered.map(word=>requestStart+request.indexOf(word)),inserted:needs?[]:['需要'],question:false},
+   ],
+  };
+ }
+ return null;
+}
+
+export function organizeUtterance(input,{partial=false}={}){
+ const original=organizeRecognizedWords(input,{partial});
+ const {sourceWords:words,sourceText}=original;
+ if(!sourceText)return original;
+ const repair=feverHelp(words);
+ if(repair){
+  return {...original,...repair,text:joinClauses(repair.clauses),status:'ready',
+   reason:repair.inferredWords.length?'contextual_need':'word_order'};
+ }
+ if(original.status==='ready')return original;
+ const formatted=partial?organizeRecognizedWords(words):original;
+ return {...original,text:formatted.status==='ready'?formatted.text:sourceText};
+}
+
+export function organizeCompletedParagraph(paragraph){
+ return {...paragraph,chinese:organizeUtterance(paragraph.words,{partial:paragraph.partial})};
 }

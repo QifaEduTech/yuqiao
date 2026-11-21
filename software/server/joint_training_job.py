@@ -7,8 +7,10 @@ import cv2,numpy as np
 from sign_worker import hand_graph
 from body_tracking import pose_graph
 from unified_observation import observe_unified_bgr
-from unified_runtime import quality,UnifiedStream
+from unified_runtime import quality,quality_feedback
 from joint_model import JointTCN
+from joint_evaluation import evaluate_joint,select_end_policy
+from joint_iteration import compare,load_reference
 ROOT=Path(__file__).resolve().parents[1]
 def emit(v):print(json.dumps(v,ensure_ascii=False),flush=True)
 def decode(sample):
@@ -46,9 +48,13 @@ def main():
     for i,sample in enumerate(plan['samples']):
         if time.monotonic()-began>1500:raise ValueError('本轮检查达到时间上限，资料已保留。')
         emit({'type':'progress','progress':int(45*i/len(plan['samples'])),'message':f'检查视频 {i+1}/{len(plan["samples"])}'})
-        data=decode(sample);frames+=len(data['frames'])
+        identity={k:sample[k] for k in ('recordId','sourceHash','start','end')}
+        try:data=decode(sample)
+        except ValueError as error:
+            quality_report.append({**identity,'passed':False,'reason':str(error)[:250]});continue
+        frames+=len(data['frames'])
         if frames>plan['policy']['maxTotalFrames']:raise ValueError('本轮总帧数超过上限，请分批整理资料。')
-        q=quality(data['frames']);quality_report.append({'recordId':sample['recordId'],'passed':bool(q['passed'] or not sample['label']),'reason':'通过' if q['passed'] or not sample['label'] else '双手或身体参照不足，请补录清晰动作。'})
+        q=quality(data['frames']);quality_report.append({**identity,'passed':bool(q['passed'] or not sample['label']),'reason':'通过' if not sample['label'] else quality_feedback(q),'metrics':q})
         rows.append({**sample,**data})
     if any(not q['passed'] for q in quality_report):
         emit({'type':'result','ok':True,'report':{'trained':False,'passed':False,'quality':quality_report,'testEvaluated':False},'message':'部分目标视频质量不足，任务保留，请补录后继续。'});return
@@ -63,25 +69,34 @@ def main():
     finally:
         if child.poll() is None:child.kill()
         child.stdin.close()
-    emit({'type':'progress','progress':85,'message':'用最后测试视频检查召回率…'})
-    model=JointTCN(directory);counts=[{'tp':0,'fn':0,'fp':0,'tn':0} for _ in plan['labels']];details=[];tests=[r for r in rows if r['split']=='test']
-    for row in tests:
-        live=UnifiedStream(model);events=[];seen=set();conflict=False
-        for t,frame in zip(row['times'],row['frames']):
-            r=live.push(t,frame);conflict|=r['conflict']
-            if r['candidate']:seen.add(r['candidate'])
-            if r['event']:events.append(r['event']['label']);seen.add(r['event']['label'])
-        for i,c in enumerate(counts,1):
-            correct=events==[i] and seen=={i} and not conflict if row['label']==i else i not in seen and not conflict
-            c['tp' if row['label']==i and correct else 'fn' if row['label']==i else 'tn' if correct else 'fp']+=1
-        details.append({'recordId':row['recordId'],'correct':events==[row['label']] and not conflict if row['label'] else not seen and not conflict,'reason':'需要检查动作完成/收手边界' if row['label'] and events!=[row['label']] else '已检查'})
-    per=[]
-    for label,c in zip(plan['labels'],counts):
-        recall=c['tp']/max(1,c['tp']+c['fn']);precision=c['tp']/max(1,c['tp']+c['fp']);fpr=c['fp']/max(1,c['fp']+c['tn'])
-        policy=plan['policy']
-        per.append({**label,'counts':c,'recall':recall,'precision':precision,'falsePositiveRate':fpr,'passed':c['tp']+c['fn']>=policy['minTestPositive'] and c['fp']+c['tn']>=policy['minTestNegative'] and recall>=policy['recallTarget'] and precision>=policy['precisionTarget'] and fpr<=policy['maxFalsePositiveRate']})
-    passed=bool(per) and all(c['passed'] for c in per)
-    emit({'type':'result','ok':True,'message':'全部动作检查达标，正在保存并归档资料。' if passed else '本轮未全部达标，任务保留，请补充失败动作后继续。','report':{'trained':True,'passed':passed,'testEvaluated':bool(tests),'perClass':per,'quality':quality_report,'details':details,'modelSha256':fit['sha256'],'epochs':fit['epochs'],'seconds':fit['seconds'],'initialization':'random','testedHashes':[r['sourceHash'] for r in tests]}})
+    model=JointTCN(directory);tests=[r for r in rows if r['split']=='test']
+    emit({'type':'progress','progress':80,'message':'用训练集内部检查比较动作收尾方式…'})
+    metadata_path=directory/'model.json'
+    metadata=json.loads(metadata_path.read_text(encoding='utf8'))
+    reference=plan.get('iterationReference')
+    prior=None
+    if reference and not reference.get('unavailable'):
+        prior=load_reference(reference['directory'],reference['referenceHash'])
+        if getattr(prior,'cadence_alignment',False):
+            model.cadence_alignment=True
+            metadata['cadenceAlignment']='within-tracked-run-v1'
+        if getattr(prior,'confirmed_evidence',False):
+            model.confirmed_evidence=True
+            metadata['streamConfirmation']='confirmed-evidence-v1'
+    boundary=select_end_policy(rows,model,plan['labels'],plan['policy'])
+    metadata['endPolicy']=boundary['selected']
+    metadata['endValidation']=boundary
+    metadata_path.write_text(json.dumps(metadata,ensure_ascii=False),encoding='utf8')
+    emit({'type':'progress','progress':85,'message':'用留出的测试视频检查识别和收尾…'})
+    model=JointTCN(directory)
+    comparison=None
+    if prior is not None:
+        comparison=compare(rows,model,plan['labels'],prior,reference['labels'],plan['policy'],set(reference['excluded']))
+        comparison.update(referenceHash=reference['referenceHash'],candidateHash=fit['sha256'])
+    evaluation=evaluate_joint(tests,model,plan['labels'],plan['policy'])
+    passed=bool(evaluation['perClass']) and all(c['passed'] for c in evaluation['perClass'])
+    emit({'type':'result','ok':True,'message':'全部动作检查达标，正在保存并归档资料。' if passed else '本轮未全部达标，请分别查看录像识别与自动收尾结果。','report':{'trained':True,'passed':passed,'iterationComparison':comparison,'testEvaluated':bool(tests),**evaluation,'quality':quality_report,'modelSha256':fit['sha256'],'epochs':fit['epochs'],'seconds':fit['seconds'],'initialization':'random','testedHashes':[r['sourceHash'] for r in tests]}})
+
 
 if __name__=='__main__':
     try:main()

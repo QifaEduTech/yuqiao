@@ -13,7 +13,7 @@ export function splitJointTrainingPool(samples,labels,policy){
  if(test.some(s=>poolHashes.has(s.sourceHash)))throw fail('同一原视频不能同时进入训练集和测试集。');
  const total=Array(labels.length+1).fill(0);
  for(const s of pool)total[s.label]++;
- for(let i=0;i<total.length;i++)if(total[i]<policy.minTrainingPoolPerClass)throw fail((i?labels[i-1].text:'共享背景/其他动作')+'的训练集至少需要'+policy.minTrainingPoolPerClass+'条视频；这是起步数量，不代表已经充分训练。');
+ for(let i=0;i<total.length;i++)if(total[i]<policy.minInternalTrain+policy.minInternalValidation)throw fail((i?labels[i-1].text:'共享背景/其他动作')+'的资料还不能分开用于训练和内部检查，请增加不同来源的视频；这不是最佳数量要求。');
  const groups=new Map();
  for(const s of pool){const group=s.realGroupConfirmed?'real:'+s.group:'source:'+s.sourceHash;const rows=groups.get(group)??[];rows.push(s);groups.set(group,rows);}
  const target=total.map(n=>Math.max(policy.minInternalValidation,Math.ceil(n*policy.internalValidationFraction))),held=total.map(()=>0),selected=new Set();

@@ -78,7 +78,7 @@
     }
   ],
   "publicTrainingPolicy": {
-    "updated": "2026-11-18",
+    "updated": "2026-11-21",
     "engine": "unified-tcn",
     "datasets": [
       "train",
@@ -87,6 +87,8 @@
     "maxTasks": 64,
     "recallTarget": 0.9,
     "automaticArchive": "cards only; retain source media",
-    "rawDataIncluded": false
+    "rawDataIncluded": false,
+    "counts": "actual",
+    "replacement": "paired_internal_comparison"
   }
 }

@@ -1,0 +1,15 @@
+{
+  "id": "hospital-training-30-v1",
+  "title": "30个动作统一训练",
+  "source": "Existing four targets plus the user-approved 26-word collection plan",
+  "batches": [
+    ["我", "你", "需要", "帮助", "谢谢", "请"],
+    ["好", "是", "不是", "有", "没有", "可以"],
+    ["医院", "挂号", "门诊", "医生", "志愿者", "等候"],
+    ["哪里", "这里", "什么", "痛", "发烧", "过敏"],
+    ["药", "检查", "报告", "给", "身份证", "再见"]
+  ],
+  "model": "One multiclass model for all ready actions plus shared background; never one model per word",
+  "sampleCount": "Flexible, no fixed20; keep distinct training/internal-check sources and independent test data",
+  "batchMeaning": "Collection suggestions, not separate models or a guarantee of passing in one day"
+}

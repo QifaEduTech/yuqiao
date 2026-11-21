@@ -1,5 +1,5 @@
 {
-  "id": "unified-two-datasets-v2",
+  "id": "unified-flexible-training-v3",
   "maxActions": 64,
   "allowBuiltinCollection": true,
   "initialization": "random",
@@ -8,15 +8,14 @@
   "recallTarget": 0.9,
   "precisionTarget": 0.9,
   "maxFalsePositiveRate": 0.05,
-  "minTestPositive": 20,
-  "minTestNegative": 20,
-  "minTrainingPoolPerClass": 20,
-  "minInternalTrain": 10,
-  "minInternalValidation": 3,
+  "minTestPositive": 1,
+  "minTestNegative": 1,
+  "minInternalTrain": 1,
+  "minInternalValidation": 1,
   "internalValidationFraction": 0.2,
   "maxEpochs": 200,
   "fitSeconds": 600,
   "maxJobSamples": 3000,
   "maxTotalFrames": 100000,
-  "policy": "Preserve videos and labels; train one joint model from scratch per controlled round. Collection tasks are not individual models."
+  "policy": "No fixed optimal training or test sample count. Fit and internal holdout each need a distinct source per class; test metrics need their actual denominators. These are technical requirements, not evidence of sufficient data. Preserve videos and labels; train one joint model from scratch per controlled round."
 }

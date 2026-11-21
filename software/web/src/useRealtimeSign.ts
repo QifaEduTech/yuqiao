@@ -5,13 +5,14 @@ import {validLiveResult} from '../../shared/realtime-result.mjs';
 import type {HandTracking} from './RealtimeSkeleton';
 import targets from '../../shared/realtime-targets.json';
 import paragraphConfig from '../../shared/realtime-paragraph.json';
-import {validParagraph,type ParagraphResult} from '../../shared/realtime-paragraph.mjs';
-import {organizeRecognizedWords,type OrganizedParagraph} from '../../shared/recognized-chinese.mjs';
+import {validParagraph,type CompletedParagraph,type ParagraphResult} from '../../shared/realtime-paragraph.mjs';
+import {organizeCompletedParagraph,type OrganizedParagraph} from '../../shared/recognized-chinese.mjs';
 import recognitionEngine from '../../shared/recognition-engine.json';
 
 type WordEvent={id:number;signId:string;text:string;startMs:number;endMs:number};
 export type MeCheck={bodyVisible:boolean;chestReferenced?:boolean;frameSupported:boolean;stableSupported:boolean;modelScore:number|null;hands:{indexAngle:number|null;indexAngle2d?:number|null;indexExtended:boolean;indexPointing?:boolean;recedingIndex?:boolean;indexDepthFraction?:number|null;otherFingersFolded:boolean;towardChest?:boolean;nearBody:boolean;chestCosine?:number|null;shoulderCosine?:number|null;tipDistance?:number|null}[]};
-type Result={paragraph?:ParagraphResult;meCheck?:MeCheck|null;seq:number;status:'waiting'|'observing'|'candidate'|'uncertain';candidate:string|null;reason:string;processingMs:number;samples:number;handSamples:number;frames:number;event:WordEvent|null;eventState:string;handTracking?:HandTracking;helpScore?:number|null;helpEngine?:string;modelVersion?:string|null;motionSupported?:boolean|null;motionGuard?:string|null};
+type OrganizedResult=Omit<ParagraphResult,'final'>&{final:(CompletedParagraph&Partial<Pick<OrganizedParagraph,'chinese'>>)|null};
+type Result={paragraph?:OrganizedResult;meCheck?:MeCheck|null;seq:number;status:'waiting'|'observing'|'candidate'|'uncertain';candidate:string|null;reason:string;processingMs:number;samples:number;handSamples:number;frames:number;event:WordEvent|null;eventState:string;handTracking?:HandTracking;helpScore?:number|null;helpEngine?:string;modelVersion?:string|null;motionSupported?:boolean|null;motionGuard?:string|null};
 export function useRealtimeSign(){
   const finishRequest=useRef(false);
   const [paragraphs,setParagraphs]=useState<OrganizedParagraph[]>([]),[finishing,setFinishing]=useState(false);
@@ -73,7 +74,7 @@ export function useRealtimeSign(){
           const end=next.paragraph.final;
           if(end){
             if(end.id!==lastParagraphId+1||end.startMs<=lastParagraphEnd||end.endMs>Math.round(captureMs))throw Error('段落顺序不匹配，请重新开启。');
-            const organized={...end,chinese:organizeRecognizedWords(end.words,{partial:end.partial})};
+            const organized=end.chinese?{...end,chinese:end.chinese}:organizeCompletedParagraph(end);
             lastParagraphId=end.id;lastParagraphEnd=end.endMs;setParagraphs(previous=>[...previous,organized].slice(-paragraphConfig.maxDisplayedParagraphs));
           }
           if(finish)setFinishing(false);

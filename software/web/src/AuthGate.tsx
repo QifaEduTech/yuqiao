@@ -11,15 +11,16 @@ const entryPaths:Record<AuthEntry,string>={normal:'/',avatar:'/avatar',camera:'/
  * 这不是权限校验的唯一防线，后端接口仍逐个要求会话；这里只负责页面入口。
  * 当前三端共用同一账号空间；分端账号隔离尚未实现。
  */
-export function AuthGate({entry,children}:{entry:AuthEntry;children:ReactNode}){
+export function AuthGate({entry,children,mobile=false}:{entry:AuthEntry;children:ReactNode;mobile?:boolean}){
   const [user,setUser]=useState<User|null|undefined>(undefined);
   const [error,setError]=useState('');
   const [target,setTarget]=useState<AuthEntry>(entry);
   const redirectAfterAuth=useCallback((chosen:AuthEntry)=>{
+    if(mobile)return;
     const next=new URLSearchParams(location.search).get('next');
     if(next&&next.startsWith('/')&&!next.startsWith('//')&&next!==location.pathname+location.search)location.replace(next);
     else if(chosen!==entry)location.replace(entryPaths[chosen]);
-  },[entry]);
+  },[entry,mobile]);
   const check=useCallback(()=>{
     setUser(undefined);setError('');
     void api<{user:User|null}>('/api/auth/me')
@@ -42,16 +43,16 @@ export function AuthGate({entry,children}:{entry:AuthEntry;children:ReactNode}){
 
   if(user===undefined) return <main className="auth-gate"><section className="auth-card auth-card-loading" aria-live="polite">
     <div className="auth-brand"><span className="auth-mark" aria-hidden="true" /><strong>语桥</strong><small>YUQIAO</small></div>
-    <p className="auth-message">正在打开{authEntries[entry].name}…</p>
+    <p className="auth-message">正在打开{mobile?'安卓端':authEntries[entry].name}…</p>
   </section></main>;
 
-  if(!user) return <main className="auth-gate"><section className="auth-card" aria-label={`登录并选择进入的端，当前选择${authEntries[target].name}`}>
+  if(!user) return <main className="auth-gate"><section className="auth-card" aria-label={mobile?'安卓端登录':`登录并选择进入的端，当前选择${authEntries[target].name}`}>
     <div className="auth-brand"><span className="auth-mark" aria-hidden="true" /><strong>语桥</strong><small>YUQIAO</small></div>
-    <div className="auth-entries" role="group" aria-label="选择进入的端">
+    {mobile?<h1 className="auth-heading">安卓端登录</h1>:<div className="auth-entries" role="group" aria-label="选择进入的端">
       {entryOrder.map(id=><button key={id} type="button" className={`auth-entry-option ${target===id?'selected':''}`} aria-pressed={target===id} onClick={()=>setTarget(id)}>
         <strong>{authEntries[id].name}</strong><span>{authEntries[id].description}</span>
       </button>)}
-    </div>
+    </div>}
     <AuthForm entry={target} onSignedIn={next=>{setUser(next);redirectAfterAuth(target);}} />
   </section></main>;
 

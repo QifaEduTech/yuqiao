@@ -27,6 +27,23 @@ class Stub:
     def begin_segment(self,*a):pass
 
 class ParagraphChecks(unittest.TestCase):
+    def test_recorded_pause_does_not_split_and_repeated_words_stay_in_order(self):
+        b=ParagraphBuffer(auto_finish=False)
+        words=['我','发烧','我','需要','医生','帮助']
+        events={3:words[0],6:words[1],30:words[2],33:words[3],36:words[4],39:words[5]}
+        index=0
+        for tick in range(1,40):
+            w=events.get(tick)
+            result=base()
+            if w:
+                index+=1
+                result['event']=event(index,w,tick*100-50,tick*100)
+            r=b.push(tick/10,result,bool(w),finish=tick==39)
+            self.assertIsNone(r['autoEnd'])
+            if tick<39:self.assertIsNone(r['final'])
+        self.assertEqual(r['final']['words'],words)
+        self.assertFalse(r['final']['partial'])
+
     def test_arbitrary_order_and_repetition_are_not_a_fixed_sentence(self):
         for words in [['我','需要','帮助','谢谢'],['没有','医院','门诊','医生'],['挂号','挂号','不','可以'],['自定义甲','自定义乙']]:
             b=ParagraphBuffer()

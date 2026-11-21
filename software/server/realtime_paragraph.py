@@ -9,7 +9,8 @@ def format_words(words):
     return text+'。' if text else ''
 
 class ParagraphBuffer:
-    def __init__(self):
+    def __init__(self, *, auto_finish=True):
+        self.auto_finish=auto_finish
         self.serial=0;self.last_event_id=0;self.last_event_end=-1;self.last_time=None;self.reset()
     def reset(self):self.words=[];self.start=None;self.end=None;self.quiet=None;self.blocked=False;self.last_activity=None;self.limit=False;self.pending=None
     def push(self,t,result,present,finish=False):
@@ -33,7 +34,7 @@ class ParagraphBuffer:
             self.quiet=None
         elif self.quiet is None:self.quiet=t
         if self.words and self.start is not None and t-self.start/1000>CONFIG['maxSeconds']:self.limit=True;self.blocked=True
-        ended=bool(self.words) and self.quiet is not None and t-self.quiet>=CONFIG['endQuietSeconds']-1e-6
+        ended=self.auto_finish and bool(self.words) and self.quiet is not None and t-self.quiet>=CONFIG['endQuietSeconds']-1e-6
         final=None
         if (finish or ended or self.limit) and self.words:
             # Finishing while an unconfirmed candidate is still in progress does
@@ -47,6 +48,6 @@ class ParagraphBuffer:
         # The UI reports this observed no-hand interval; it must not run a
         # speculative client timer that finishes without fresh recognition frames.
         auto_end=None
-        if self.words and self.quiet is not None:
+        if self.auto_finish and self.words and self.quiet is not None:
             auto_end={'remainingMs':max(0,round((CONFIG['endQuietSeconds']-(t-self.quiet))*1000))}
         return {'state':state,'text':format_words(self.words),'words':list(self.words),'wordCount':len(self.words),'final':final,'autoEnd':auto_end}

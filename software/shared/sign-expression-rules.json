@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "expression-rules-2",
+  "version": "expression-rules-3",
   "rules": [
     {
       "id": "greeting",

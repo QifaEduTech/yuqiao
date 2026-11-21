@@ -168,8 +168,8 @@ export default function App() {
       <div className="workspace" role="tabpanel" id="workspace" aria-labelledby={`${direction}-tab`}>
         <section className={`stage ${direction === 'to-text' ? 'camera-stage' : motionMatch?.preview?'has-home-motion':''}`} ref={stage} aria-label={direction === 'to-sign' ? '数字人展示区域' : '摄像头取景区域'}>
           <div className="stage-topline">
-            <span className="stage-label">{direction === 'to-sign' ? <><span className="status-dot" />数字人空间</> : <><Camera size={15} />实时交流</>}</span>
-            <span className="stage-badge">{direction==='to-sign'?'Anny 数字人':'实时试用 · 谢谢'}</span>
+            <span className="stage-label">{direction === 'to-sign' ? <><span className="status-dot" />数字人空间</> : <><Camera size={15} />手语录像</>}</span>
+            <span className="stage-badge">{direction==='to-sign'?'Anny 数字人':'录制后识别'}</span>
           </div>
 
           {direction === 'to-sign' ? <>
@@ -177,13 +177,13 @@ export default function App() {
             <div className="stage-greeting"><span className="greeting-line" /><span>你好，我是语桥</span><small>很高兴与你见面</small></div>
             <Avatar ref={avatar} preview={activePreview} autoPlay requestId={playbackRequest} displayText={submittedText} onControl={sendDisplayControl} />
             {!activePreview&&<div className="avatar-caption"><span className="caption-dot" />{matching?'正在准备动作…':submittedText?'请修改内容后重试':'准备好，开始一段交流'}</div>}
-          </> : <div className="realtime-placeholder"><Hand size={42}/><h2>实时手语试用</h2><p>开启摄像头，先尝试“谢谢”。<br/>持续处理画面，不需要录制或保存。</p><a className="primary-button" href="/realtime.html">进入实时试用<ArrowRight size={17}/></a><a className="text-button" href="/learning.html">前往手语学习</a></div>}
+          </> : <div className="realtime-placeholder"><Hand size={42}/><h2>手语转文字</h2><p>录下整段手语，确认后转成文字。</p><a className="primary-button" href="/realtime.html">录制手语<ArrowRight size={17}/></a><a className="secondary-button" href="/live-recognition.html">实时识别</a><a className="text-button" href="/learning.html">前往手语学习</a></div>}
 
           <div className="stage-bottomline"><span>{direction === 'to-sign' ? '左键旋转 · 右键平移 · 滚轮缩放' : '单动作练习请进入手语学习'}</span><div>{direction === 'to-sign' && <button className="icon-button" title="恢复正面位置与缩放" aria-label="恢复正面视角" onClick={() => avatar.current?.resetView()}><RotateCcw size={16} /></button>}<button className="icon-button" title="全屏查看" aria-label="全屏查看" onClick={() => void fullscreen()}><Maximize2 size={16} /></button></div></div>
         </section>
 
         <aside className="interaction-panel">
-          <div className="panel-heading"><span className="section-kicker">{direction === 'to-sign' ? '你的表达' : '你的手语'}</span><h2>{direction === 'to-sign' ? '想说些什么？' : '先试一次“谢谢”'}</h2><p>{direction === 'to-sign' ? '用你习惯的方式，开启这段对话。' : '实时试用支持按停顿记入“谢谢”，结果需要核对。'}</p></div>
+          <div className="panel-heading"><span className="section-kicker">{direction === 'to-sign' ? '你的表达' : '你的手语'}</span><h2>{direction === 'to-sign' ? '想说些什么？' : '录一段手语'}</h2><p>{direction === 'to-sign' ? '用你习惯的方式，开启这段对话。' : '录完并确认后，系统会整理整段文字。'}</p></div>
 
 
           {direction === 'to-sign' ? <>
@@ -194,7 +194,7 @@ export default function App() {
               <button className="primary-button submit-button" disabled={!text.trim()||matching} onClick={()=>void matchText(text)}>{matching?'正在准备…':'提交文字'}<ArrowRight size={18} /></button>
               <button className="secondary-button save-text-button" disabled={saving || !text.trim() || savedText === text.trim()} onClick={() => void saveRecord('text')}><Save size={16} />{saving ? '正在保存…' : savedText === text.trim() && text.trim() ? '文字已保存' : user ? '保存文字到我的记录' : '登录并保存文字'}</button>
             </> : <VoiceInput media={media} loggedIn={Boolean(user)} saving={saving} savedText={savedText} matching={matching} onInvalidate={invalidateMatch} onMatch={value=>void matchText(value)} onSave={value => void saveRecord('text', value)} onUseText={value => { invalidateMatch();setText(value); media.clear(); setInputKind('text'); setNotice('已转入文字输入，可继续修改，提交后会自动播放。'); }} />}
-          </> : <div className="realtime-note"><p>实时试用先只尝试“谢谢”，不要求登录或保存录像。</p><p>做完后让双手移出画面约一秒，候选稳定才记入文字；不是连续整句翻译，不自动播报。</p><p>四词录制练习、词典示范与个人反馈仍在手语学习中。</p></div>}
+          </> : <div className="realtime-note"><p>可以先回看录像，再确认识别。识别完成后可选择朗读整段。</p></div>}
 
           {displayNotice && <div className="inline-notice" role="status">{displayNotice}</div>}
           {(media.error || notice) && <div className={`inline-notice ${media.error ? 'notice-error' : ''}`} role="status" data-testid="input-feedback">{media.error || notice}</div>}
@@ -214,7 +214,7 @@ export default function App() {
       <div className="dialog-heading"><span className="section-kicker">欢迎使用语桥</span><button className="icon-button" aria-label="关闭使用说明" onClick={() => help.current?.close()}><X size={20} /></button></div><h2 id="help-title">先试试这三个地方</h2>
       <div className="help-item"><Check size={19} /><div><strong>自由查看数字人</strong><p>在人物区域左键拖动旋转，右键拖动上下、左右平移，滚轮放大缩小；可查看侧面和背面。点击复位按钮恢复正面位置和缩放。触屏使用单指旋转、双指平移或缩放。</p></div></div>
       <div className="help-item"><Keyboard size={19} /><div><strong>整句输入，一次播放</strong><p>提交文字后，数字人会在准备好动作后自动播放完整段。语音输入先核对转写文字，确认后自动播放。可以暂停、重播或调速；修改文字或清空会立即停止旧动作。暂时无法完整表达的内容会提示重试，原话始终保留。</p></div></div>
-      <div className="help-item"><Camera size={19} /><div><strong>进入手语学习</strong><p>点击页面顶部“手语学习”，每次录一个完整动作，回看并确认保存后，独立点击识别获取四词候选。学习页已提供词典示范与个人反馈；实时试用入口只尝试“谢谢”，不录制视频。</p></div></div>
+      <div className="help-item"><Camera size={19} /><div><strong>进入手语学习</strong><p>手语学习用于单个动作的练习、回看和反馈。需要把一段手语转成文字时，从首页进入录制手语。</p></div></div>
       <div className="help-note"><ShieldCheck size={18} /><p>录制时内容先保存在浏览器内存中。只有点击保存，文字或录像才会写入本机项目里的当前账号。清空页面不会删除已保存记录；可在“我的记录”中单独删除。语音录音暂不保存。首页动作试播无需登录，内容仍待核对。</p></div>
       <button className="primary-button" onClick={() => help.current?.close()}>开始体验<ArrowRight size={17} /></button>
     </dialog>

@@ -1,3 +1,4 @@
+import {withTrainingReassessment} from './training-report-view.mjs';
 import {recordingBundle} from './recording-catalog.mjs';
 import {ModelRegistry} from './model-registry.mjs';
 import {mkdirSync,readFileSync,writeFileSync,renameSync,unlinkSync,existsSync,realpathSync,statSync} from 'node:fs';
@@ -19,7 +20,19 @@ export class TrainingStore{
  directory(owner){if(typeof owner!=='string'||!owner)throw fail('请先登录。',401);return resolve(this.base,hash(owner));}
  read(owner){const dir=this.directory(owner);mkdirSync(dir,{recursive:true});const file=resolve(dir,'state.json');const state=existsSync(file)?JSON.parse(readFileSync(file,'utf8')):{revision:0,actions:[],jobs:[],seenTraining:[],seenTests:[]};if(!this.running)for(const job of state.jobs)if(['running','queued'].includes(job.status)){job.status='interrupted';job.message='服务已重启，本次任务中断。原片和旧模型保留。';}return state;}
  save(owner,state){state.revision++;const file=resolve(this.directory(owner),'state.json'),temp=file+'.tmp';writeFileSync(temp,JSON.stringify(state));renameSync(temp,file);}
- publicState(owner){const s=this.read(owner);return {runtimeMode:'unified-tcn',revision:s.revision,archivedActions:s.archivedActions??[],actions:s.actions.map(a=>({...a,samples:a.samples.map(x=>({...x,testUsed:s.seenTests.includes(x.sourceHash)}))})),jobs:s.jobs.map(({planPath,...j})=>j),busy:!!this.running,scope:'global',globalModels:[],limits:{maxActions:collection.maxActions,maxSamples:200,clipSeconds:null,maxVideoSeconds:30,testPerClass:20}};}
+ removeRecord(owner,recordId){
+  const file=resolve(this.directory(owner),'state.json');if(!existsSync(file))return;
+  const state=this.read(owner);let changed=false;
+  for(const action of [...state.actions,...(state.archivedActions??[])]){
+   const removed=action.samples.filter(s=>s.recordId===recordId);if(!removed.length)continue;
+   state.excludedBackgroundHashes=[...new Set([...(state.excludedBackgroundHashes??[]),...removed.map(s=>s.sourceHash)])];
+   action.samples=action.samples.filter(s=>s.recordId!==recordId);action.revision++;if(!action.archivedAt)action.state='collecting';changed=true;
+  }
+  // Keep historical reports and seen-source hashes: deleting a recording must
+  // not turn previously used data into a supposedly independent test source.
+  if(changed)this.save(owner,state);
+ }
+ publicState(owner){const s=this.read(owner);return {runtimeMode:'unified-tcn',revision:s.revision,trainingResetAt:s.trainingResetAt??null,collectionPlan:s.collectionPlan??null,archivedActions:s.archivedActions??[],actions:s.actions.map(a=>({...a,samples:a.samples.map(x=>({...x,testUsed:s.seenTests.includes(x.sourceHash)}))})),jobs:s.jobs.map(({planPath,...j})=>withTrainingReassessment(j,this.directory(owner))),busy:!!this.running,scope:'global',globalModels:[],limits:{maxActions:collection.maxActions,maxSamples:200,clipSeconds:null,maxVideoSeconds:30,testPerClass:null,minimumTestPositive:collection.minTestPositive,minimumTestNegative:collection.minTestNegative}};}
  action(state,id){const a=state.actions.find(x=>x.id===id);if(!a)throw fail('找不到这个动作任务。',404);return a;}
  dictionary(query='',category='',page=0,owner=null){const occupied=new Set([...(owner?[...this.read(owner).actions,...(this.read(owner).archivedActions??[])].map(x=>x.text):[])]);const entries=JSON.parse(readFileSync(resolve(this.root,'shared/sign-dictionary.json'),'utf8')).entries;const matches=entries.filter(e=>!occupied.has(e.text)&&(!query||e.text.includes(query.slice(0,40)))&&(!category||e.category===category));const pages=Math.max(1,Math.ceil(matches.length/10)),index=Math.max(0,Math.min(Number.isInteger(page)?page:0,pages-1));return {entries:matches.slice(index*10,index*10+10).map(e=>({id:e.id,text:e.text,description:e.description,category:e.category||'项目词条'})),categories:[...new Set(entries.map(e=>e.category||'项目词条'))],page:index,pages,total:matches.length};}
  source(owner,id){const r=this.db.prepare('SELECT id,kind,text,media_file,duration FROM records WHERE id=? AND user_id=?').get(id,owner);if(!r||r.kind!=='video')throw fail('录像不存在或不属于当前账号。',404);const base=realpathSync(resolve(this.data,'media')),file=realpathSync(resolve(base,r.media_file));if(!file.startsWith(base+sep)||!statSync(file).isFile())throw fail('录像路径无效。');return {...r,path:file,sha256:hash(readFileSync(file))};}
@@ -49,7 +62,7 @@ export class TrainingStore{
     if(a.samples.some(x=>x.sourceHash===r.sha256&&trainingDataset(x.split)!==trainingDataset(body.split)))throw fail('同一录像不能同时用于训练集和测试集。');
     if(body.split==='regression'&&!['谢谢','帮助','需要','我',...state.actions.filter(x=>x.activeVersion&&x.id!==a.id).map(x=>x.text)].includes(body.expectedWord))throw fail('回归样本请选择实际的已有动作。');
     if(a.samples.length>=200&&!a.samples.some(x=>x.recordId===r.id))throw fail('单个动作最多200条样本。');
-    state.excludedBackgroundHashes=(state.excludedBackgroundHashes??[]).filter(h=>h!==r.sha256);a.samples=a.samples.filter(x=>x.recordId!==r.id);a.samples.push({recordId:r.id,sourceHash:r.sha256,legacyRevision:old?.revision??0,start:body.start,end:body.end,label:body.split==='regression'?0:body.label,group,groupSource:automatic?'automatic':'user_confirmed',realGroupConfirmed:!automatic,...(automatic?{batchId:body.batchId}:{}),split:body.split,expectedWord:body.split==='regression'?body.expectedWord:null});a.revision++;a.state='collecting';
+    state.excludedBackgroundHashes=(state.excludedBackgroundHashes??[]).filter(h=>h!==r.sha256);a.samples=a.samples.filter(x=>x.recordId!==r.id);a.samples.push({recordId:r.id,sourceHash:r.sha256,qualityUpdatedAt:Date.now(),legacyRevision:old?.revision??0,start:body.start,end:body.end,label:body.split==='regression'?0:body.label,group,groupSource:automatic?'automatic':'user_confirmed',realGroupConfirmed:!automatic,...(automatic?{batchId:body.batchId}:{}),split:body.split,expectedWord:body.split==='regression'?body.expectedWord:null});a.revision++;a.state='collecting';
    }else throw fail('不支持的操作。');
   }this.save(owner,state);return this.publicState(owner);
  }

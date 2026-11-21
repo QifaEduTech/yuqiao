@@ -15,6 +15,9 @@ test('实际录像解码和统一推理使用同一模型快照，空白录像�
  const path=join(dir,'blank.mp4');
  await promisify(execFile)(service.python(),['-c',"import cv2,numpy as np,sys; w=cv2.VideoWriter(sys.argv[1],cv2.VideoWriter_fourcc(*'mp4v'),30,(64,64)); assert w.isOpened(); [w.write(np.zeros((64,64,3),np.uint8)) for _ in range(45)]; w.release()",path],{windowsHide:true});
  const result=await service.recognize(await readFile(path),'video/mp4');assert.equal(result.status,'no_hands');assert.equal(result.engine,'unified-tcn');assert.equal(result.pipeline_id,'unified-body178-recording-v1');assert.equal(result.modelSnapshot.pipelineModels.length,1);assert.equal(result.modelSnapshot.modelSha256,recordingBundle(resolve('.')).models[0].modelSha256);
+ const paragraph=await service.recognize(await readFile(path),'video/mp4',undefined,{paragraph:true});
+ assert.equal(paragraph.kind,'recorded-sign-paragraph');assert.equal(paragraph.status,'no_hands');assert.equal(paragraph.paragraph,null);
+ assert.equal(paragraph.modelSnapshot.modelSha256,result.modelSnapshot.modelSha256);
 });
 
 test('训练页保留资料入口，统一模式禁止旧逐词训练和启用',async t=>{

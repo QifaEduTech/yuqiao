@@ -9,7 +9,7 @@ export type AuthEntry='normal'|'avatar'|'camera';
 export const authEntries:Record<AuthEntry,{name:string;description:string}> = {
   normal:{name:'正常端',description:'输入文字或语音，数字人播放对应动作；也可以查看记录、词典和练习。'},
   avatar:{name:'数字人端',description:'登录后只显示数字人；动作由正常端发送，本端不提供输入或识别。'},
-  camera:{name:'摄像头端',description:'登录后直接开启摄像头，识别到手语即播报；不保存日常音视频。'},
+  camera:{name:'摄像头端',description:'开启摄像头录一段手语，确认后转成整段文字。'},
 };
 
 export function AuthForm({ onSignedIn, entry='normal', storageHint }: { onSignedIn: (user: User) => void; entry?: AuthEntry; storageHint?: string }) {
