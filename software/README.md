@@ -2,6 +2,18 @@
 
 本目录是软件项目根，所有命令先进入`software`。目标Windows 10/11 x64；ARM、Linux、macOS和原生安卓不在本次验证范围。
 
+## 2026-11-22 MediaPipe视频实操
+
+[详细操作手册](docs/mediapipe-demo/MediaPipe视频选段与骨架提取详细操作手册.md)和[逐字稿修改版](docs/mediapipe-demo/逐字稿_MediaPipe选段与骨架演示修改版.docx)已按用户要求收录。先进入本software目录并准备本机`.venv-sign`，再运行：
+
+```powershell
+& ".\.venv-sign\Scripts\python.exe" -B ".\scripts\mediapipe-demo.py" check
+```
+
+脚本提供可视化select、按秒mark、骨架extract和同步play；详细命令与每个按键见手册。导出原片段、骨架叠加、左右对照、截图和178维特征，不调用数据库、不自动训练、不改活动权重。真人媒体只保存在本机data目录。正式训练仍通过现有训练页面，由后台重新校验原片与分区。
+
+验证：`tests/python/check-mediapipe-demo.py`使用程序生成的非人物录像，检查范围、覆盖保护、哈希、三路视频、特征和镜像转换，已在公开副本通过。逐字稿通过12页渲染检查。GUI窗口按键、真实摄像头与真人跟踪未完成现场验收。
+
 ## 2026-11-21 更新
 
 - 手语转文字提供录像确认识别和独立实时识别。整段中文由后台整理。

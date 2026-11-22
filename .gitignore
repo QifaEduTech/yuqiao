@@ -25,6 +25,7 @@ data/
 .workbuddy/
 *.doc
 *.docx
+!software/docs/mediapipe-demo/逐字稿_MediaPipe选段与骨架演示修改版.docx
 *.pptx
 *.sqlite*
 *.db
