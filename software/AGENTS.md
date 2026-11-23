@@ -4,7 +4,7 @@
 
 - 本次是公开源码交付，不携带原作者数据库、账号、录像、密钥、环境或私有Git历史。旧Gitee私有备份规则不适用于这里。
 - `web`前端、`server`后端、`shared`词典/动作协议、`models`本机模型（不含新训练权重）、`scripts`运行与构建、`tests`隔离测试。React/TypeScript、Node、Python、MySQL；生产栈没有迁移为Spring或FastAPI，`server/service/fastapi_workflow.py`只是独立演示。
-- 四岗独立演示代码：`server/llm/minicpm_camera.py`（MiniCPM观察）、`server/vision/yolo_segmentation.py`（YOLO分割）、`server/service/fastapi_workflow.py`（FastAPI编排）、`scripts/project_cockpit.py`（项目驾驶舱）。四者互不import，`--demo`各自可跑，产出在`outputs/four-role/`；不进入正式Web、数据库或实时识别链路。文件地址、展示行和需敲行见`docs/四岗独立代码.md`与`docs/四岗代码摘录.md`。
+- 四岗独立演示代码：`server/llm/minicpm_camera.py`（MiniCPM观察）、`scripts/mediapipe-demo.py`（MediaPipe骨架与时序特征）、`server/service/fastapi_workflow.py`（FastAPI编排）、`scripts/project_cockpit.py`（项目驾驶舱）。视觉岗使用check/select/extract/play，结果见data/mediapipe-demo/output；其余岗位按README运行；不进入正式Web、数据库或实时识别链路。文件地址、展示行和需敲行见`docs/四岗独立代码.md`与`docs/四岗代码摘录.md`。
 - Nginx默认HTTP `0.0.0.0:8080`，同一局域网可访问；`-Https`可选8443+本地CA，`-Dev`回Vite 5173；`Start-Public.cmd`/`-Public`为Cloudflare隧道；`Stop-Yuqiao.cmd`停cloudflared/Nginx/Node。Node只监听127.0.0.1:5174；默认Cookie非Secure，HTTPS/公网为Secure；`APP_ORIGINS`含本机+LAN IP/域名。运行目录必须是ASCII `%LOCALAPPDATA%\Yuqiao\nginx-runtime`，`runtime/web`为指向`web/dist`的junction；配置由`scripts/prepare-nginx.mjs`生成。手机HTTP可打开页面但摄像头受浏览器限制，手机摄像头需`-Https`并信任本地CA。防火墙脚本需管理员。
 - 项目经理演示只依赖 Python 标准库；用 `Run-ProjectCockpit.cmd` 或 `py -3 scripts/project_cockpit.py`。不要复制其他电脑的 `.venv`/`.venv-sign`/`.venv-anny`，它们写死了原机器 Python 绝对路径，换机后用 Deploy-Web.cmd 重建。
 - 当前训练仅训练集/测试集；64资料任务，单一统一模型随机初始化联合训练。逐类90%召回及原精确率/误报门槛保留，取消固定20条训练与测试数量；达标移除卡片、保留原片。无旧四词必需前置。

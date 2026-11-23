@@ -35,7 +35,7 @@
 | 角色 | 文件地址 | 独立运行 |
 |---|---|---|
 | 大模型工程师 | `server/llm/minicpm_camera.py` | `python server/llm/minicpm_camera.py --demo` |
-| 视觉工程师 | `server/vision/yolo_segmentation.py` | `python server/vision/yolo_segmentation.py --demo` |
+| 视觉工程师 | `scripts/mediapipe-demo.py` | `.\.venv-sign\Scripts\python.exe -B scripts/mediapipe-demo.py check` |
 | AI应用工程师 | `server/service/fastapi_workflow.py` | `python server/service/fastapi_workflow.py --demo` |
 | 项目经理 | `scripts/project_cockpit.py` | `Run-ProjectCockpit.cmd` 或 `py -3 scripts/project_cockpit.py` |
 
@@ -45,7 +45,7 @@
 - 不要把其他电脑的 `.venv`、`.venv-sign`、`.venv-anny` 整个复制过来；这些目录写死了原机器的 Python 绝对路径，换机后会报 `did not find executable ...`。新机按本 README 重新安装依赖。
 - 出现 `did not find executable at C:/Users/.../python.exe` 时，说明用了旧的虚拟环境；改用 `Run-ProjectCockpit.cmd` 或系统 Python 即可。
 
-运行产出在`outputs/four-role/`，已被Git忽略。完整代码、文件地址和展示行号见[docs/四岗独立代码.md](docs/四岗独立代码.md)；现场需要敲出的行见[docs/四岗代码摘录.md](docs/四岗代码摘录.md)，源码内用`# [敲]`标记。真实MiniCPM、YOLO和FastAPI服务需要各自依赖和模型；`--demo`只用标准库。不能把demo结果称为识别准确率或医院现场验收。
+视觉岗的选段与导出步骤见[操作手册](docs/mediapipe-demo/MediaPipe视频选段与骨架提取详细操作手册.md)，其他岗位的产出位于`outputs/four-role/`。完整代码、文件地址和展示行号见[docs/四岗独立代码.md](docs/四岗独立代码.md)；现场需要敲出的行见[docs/四岗代码摘录.md](docs/四岗代码摘录.md)，源码内用`# [敲]`标记。视觉岗使用 .venv-sign 中的 MediaPipe、OpenCV 和 NumPy。不能把demo结果称为识别准确率或医院现场验收。
 
 医院互助30词训练计划见[项目计划/医院互助场景训练计划_30动作_2026-11-11.xlsx](项目计划/医院互助场景训练计划_30动作_2026-11-11.xlsx)；`项目计划/项目进度数据.json`只是公开摘要，完整项目台账不随源码发布。数字人资产保留，固定场景已取消；识别范围由本机训练模型决定。
 

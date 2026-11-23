@@ -199,13 +199,23 @@ def read_plan(path: Path) -> dict[str, Any]:
 
 
 def read_module_outputs(root: Path) -> list[dict[str, Any]]:
+    vision_dir = root / "data/mediapipe-demo/output"
+    vision_report = max(
+        vision_dir.glob("*/summary.json"),
+        key=lambda path: (path.stat().st_mtime_ns, path.name, path.parent.name),
+        default=None,
+    )
     candidates = [
         ("大模型工程师", root / "outputs/four-role/01_大模型工程师/observation.json"),
-        ("视觉工程师", root / "outputs/four-role/02_视觉工程师/segmentation.json"),
+        ("视觉工程师", vision_report),
         ("AI应用工程师", root / "outputs/four-role/03_AI应用工程师/workflow.json"),
     ]
     result = []
     for role, path in candidates:
+        if path is None:
+            result.append({"role": role, "path": "data/mediapipe-demo/output/*/summary.json",
+                           "exists": False, "summary": "", "mtime": None})
+            continue
         exists = path.exists()
         summary = ""
         if exists:
@@ -299,7 +309,6 @@ def main(argv: list[str] | None = None) -> int:
     if args.live:
         health = check_health([
             ("大模型工程师", "http://127.0.0.1:8011/health"),
-            ("视觉工程师", "http://127.0.0.1:8012/health"),
             ("AI应用工程师", "http://127.0.0.1:8010/health"),
         ])
 

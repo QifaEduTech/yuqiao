@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11",
+  "generatedAt": "2026-11-23",
   "modules": [
     {
       "id": "01",
@@ -282,376 +282,56 @@
     {
       "id": "02",
       "role": "视觉工程师",
-      "path": "server/vision/yolo_segmentation.py",
+      "path": "server/unified_observation.py",
       "run": [
-        "python server/vision/yolo_segmentation.py --demo",
-        "python server/vision/yolo_segmentation.py --source 0 --model yolo11n-seg.pt"
+        ".\\.venv-sign\\Scripts\\python.exe -B scripts/mediapipe-demo.py check"
       ],
       "outputs": [
-        "outputs/four-role/02_视觉工程师/segmentation.json",
-        "outputs/four-role/02_视觉工程师/segmentation.md",
-        "outputs/four-role/02_视觉工程师/annotated.jpg"
+        "data/mediapipe-demo/output/<本轮目录>/comparison.avi",
+        "data/mediapipe-demo/output/<本轮目录>/features.npy",
+        "data/mediapipe-demo/output/<本轮目录>/summary.json"
       ],
-      "boundary": "COCO 预训练类别不含 hand；人物/物分割不等于手部实例分割，也不是手语词义。",
-      "startLine": 94,
-      "endLine": 149,
+      "boundary": "Hands和Pose逐帧提取观测，TCN使用连续帧识别动作。",
+      "startLine": 5,
+      "endLine": 9,
       "typedLines": [
-        96,
-        97,
-        98,
-        99,
-        102,
-        103,
-        104,
-        105,
-        115,
-        116,
-        117,
-        118,
-        121,
-        122,
-        123,
-        145,
-        148
+        6,
+        7,
+        8
       ],
       "lines": [
         {
-          "line": 94,
-          "text": "def summarize_result(result, image_path: str, model_path: str) -> dict[str, Any]:",
-          "marked": "def summarize_result(result, image_path: str, model_path: str) -> dict[str, Any]:",
+          "line": 5,
+          "text": "def observe_unified_bgr(frame,hands,pose,delta):",
+          "marked": "def observe_unified_bgr(frame,hands,pose,delta):",
           "typed": false
         },
         {
-          "line": 95,
-          "text": "    \"\"\"核心流程：逐实例取框、类别、mask → 统一 JSON。\"\"\"",
-          "marked": "    \"\"\"核心流程：逐实例取框、类别、mask → 统一 JSON。\"\"\"",
-          "typed": false
-        },
-        {
-          "line": 96,
-          "text": "    names = result.names or {}",
-          "marked": "    names = result.names or {}                                           # [敲]",
+          "line": 6,
+          "text": "    rgb=cv2.cvtColor(cv2.flip(frame,1),cv2.COLOR_BGR2RGB)",
+          "marked": "    rgb=cv2.cvtColor(cv2.flip(frame,1),cv2.COLOR_BGR2RGB)  # [敲]",
           "typed": true
         },
         {
-          "line": 97,
-          "text": "    height, width = result.orig_shape[:2]",
-          "marked": "    height, width = result.orig_shape[:2]                                # [敲]",
+          "line": 7,
+          "text": "    observation=hands.process({'image':rgb});body=pose.process({'image':rgb})",
+          "marked": "    observation=hands.process({'image':rgb});body=pose.process({'image':rgb})  # [敲]",
           "typed": true
         },
         {
-          "line": 98,
-          "text": "    boxes = result.boxes",
-          "marked": "    boxes = result.boxes                                               # [敲]",
+          "line": 8,
+          "text": "    vector=body_training_frame(observation,body,delta,frame.shape[0]/frame.shape[1])",
+          "marked": "    vector=body_training_frame(observation,body,delta,frame.shape[0]/frame.shape[1])  # [敲]",
           "typed": true
         },
         {
-          "line": 99,
-          "text": "    masks = result.masks",
-          "marked": "    masks = result.masks                                               # [敲]",
-          "typed": true
-        },
-        {
-          "line": 100,
-          "text": "",
-          "marked": "",
-          "typed": false
-        },
-        {
-          "line": 101,
-          "text": "    instances: list[dict[str, Any]] = []",
-          "marked": "    instances: list[dict[str, Any]] = []",
-          "typed": false
-        },
-        {
-          "line": 102,
-          "text": "    for index in range(len(boxes)):",
-          "marked": "    for index in range(len(boxes)):                                       # [敲]",
-          "typed": true
-        },
-        {
-          "line": 103,
-          "text": "        cls_id = int(boxes.cls[index].item())",
-          "marked": "        cls_id = int(boxes.cls[index].item())                             # [敲]",
-          "typed": true
-        },
-        {
-          "line": 104,
-          "text": "        confidence = float(boxes.conf[index].item())",
-          "marked": "        confidence = float(boxes.conf[index].item())                      # [敲]",
-          "typed": true
-        },
-        {
-          "line": 105,
-          "text": "        xyxy = [round(float(v), 2) for v in boxes.xyxy[index].tolist()]",
-          "marked": "        xyxy = [round(float(v), 2) for v in boxes.xyxy[index].tolist()]   # [敲]",
-          "typed": true
-        },
-        {
-          "line": 106,
-          "text": "        instance = {",
-          "marked": "        instance = {",
-          "typed": false
-        },
-        {
-          "line": 107,
-          "text": "            \"id\": index + 1,",
-          "marked": "            \"id\": index + 1,",
-          "typed": false
-        },
-        {
-          "line": 108,
-          "text": "            \"class\": str(names.get(cls_id, cls_id)),",
-          "marked": "            \"class\": str(names.get(cls_id, cls_id)),",
-          "typed": false
-        },
-        {
-          "line": 109,
-          "text": "            \"class_id\": cls_id,",
-          "marked": "            \"class_id\": cls_id,",
-          "typed": false
-        },
-        {
-          "line": 110,
-          "text": "            \"confidence\": round(confidence, 4),",
-          "marked": "            \"confidence\": round(confidence, 4),",
-          "typed": false
-        },
-        {
-          "line": 111,
-          "text": "            \"box\": xyxy,",
-          "marked": "            \"box\": xyxy,",
-          "typed": false
-        },
-        {
-          "line": 112,
-          "text": "            \"mask_area\": None,",
-          "marked": "            \"mask_area\": None,",
-          "typed": false
-        },
-        {
-          "line": 113,
-          "text": "            \"mask_polygon\": [],",
-          "marked": "            \"mask_polygon\": [],",
-          "typed": false
-        },
-        {
-          "line": 114,
-          "text": "        }",
-          "marked": "        }",
-          "typed": false
-        },
-        {
-          "line": 115,
-          "text": "        if masks is not None and masks.data is not None and index < len(masks.data):",
-          "marked": "        if masks is not None and masks.data is not None and index < len(masks.data):  # [敲]",
-          "typed": true
-        },
-        {
-          "line": 116,
-          "text": "            mask = masks.data[index].detach().cpu().numpy()",
-          "marked": "            mask = masks.data[index].detach().cpu().numpy()                # [敲]",
-          "typed": true
-        },
-        {
-          "line": 117,
-          "text": "            instance[\"mask_area\"] = int((mask > 0.5).sum())",
-          "marked": "            instance[\"mask_area\"] = int((mask > 0.5).sum())                # [敲]",
-          "typed": true
-        },
-        {
-          "line": 118,
-          "text": "            instance[\"mask_polygon\"] = mask_to_polygon(mask, width, height)",
-          "marked": "            instance[\"mask_polygon\"] = mask_to_polygon(mask, width, height)  # [敲]",
-          "typed": true
-        },
-        {
-          "line": 119,
-          "text": "        instances.append(instance)",
-          "marked": "        instances.append(instance)",
-          "typed": false
-        },
-        {
-          "line": 120,
-          "text": "",
-          "marked": "",
-          "typed": false
-        },
-        {
-          "line": 121,
-          "text": "    counts: dict[str, int] = {}",
-          "marked": "    counts: dict[str, int] = {}                                            # [敲]",
-          "typed": true
-        },
-        {
-          "line": 122,
-          "text": "    for item in instances:",
-          "marked": "    for item in instances:                                                 # [敲]",
-          "typed": true
-        },
-        {
-          "line": 123,
-          "text": "        counts[item[\"class\"]] = counts.get(item[\"class\"], 0) + 1",
-          "marked": "        counts[item[\"class\"]] = counts.get(item[\"class\"], 0) + 1           # [敲]",
-          "typed": true
-        },
-        {
-          "line": 124,
-          "text": "",
-          "marked": "",
-          "typed": false
-        },
-        {
-          "line": 125,
-          "text": "    return {",
-          "marked": "    return {",
-          "typed": false
-        },
-        {
-          "line": 126,
-          "text": "        \"schema_version\": SCHEMA_VERSION,",
-          "marked": "        \"schema_version\": SCHEMA_VERSION,",
-          "typed": false
-        },
-        {
-          "line": 127,
-          "text": "        \"module\": MODULE_ID,",
-          "marked": "        \"module\": MODULE_ID,",
-          "typed": false
-        },
-        {
-          "line": 128,
-          "text": "        \"mode\": \"yolo_instance_segmentation\",",
-          "marked": "        \"mode\": \"yolo_instance_segmentation\",",
-          "typed": false
-        },
-        {
-          "line": 129,
-          "text": "        \"source\": str(image_path),",
-          "marked": "        \"source\": str(image_path),",
-          "typed": false
-        },
-        {
-          "line": 130,
-          "text": "        \"model\": str(model_path),",
-          "marked": "        \"model\": str(model_path),",
-          "typed": false
-        },
-        {
-          "line": 131,
-          "text": "        \"image\": {\"width\": width, \"height\": height},",
-          "marked": "        \"image\": {\"width\": width, \"height\": height},",
-          "typed": false
-        },
-        {
-          "line": 132,
-          "text": "        \"instances\": instances,",
-          "marked": "        \"instances\": instances,",
-          "typed": false
-        },
-        {
-          "line": 133,
-          "text": "        \"counts\": counts,",
-          "marked": "        \"counts\": counts,",
-          "typed": false
-        },
-        {
-          "line": 134,
-          "text": "        \"notes\": [",
-          "marked": "        \"notes\": [",
-          "typed": false
-        },
-        {
-          "line": 135,
-          "text": "            \"COCO 预训练类别不含 hand；手部区域需另接 MediaPipe 或自定义模型。\",",
-          "marked": "            \"COCO 预训练类别不含 hand；手部区域需另接 MediaPipe 或自定义模型。\",",
-          "typed": false
-        },
-        {
-          "line": 136,
-          "text": "            \"mask 多边形为轮廓简化结果，不是像素级精确边界。\",",
-          "marked": "            \"mask 多边形为轮廓简化结果，不是像素级精确边界。\",",
-          "typed": false
-        },
-        {
-          "line": 137,
-          "text": "            \"分割结果不是手语词义，也不做身份识别。\",",
-          "marked": "            \"分割结果不是手语词义，也不做身份识别。\",",
-          "typed": false
-        },
-        {
-          "line": 138,
-          "text": "        ],",
-          "marked": "        ],",
-          "typed": false
-        },
-        {
-          "line": 139,
-          "text": "        \"created_at\": time.strftime(\"%Y-%m-%dT%H:%M:%S%z\"),",
-          "marked": "        \"created_at\": time.strftime(\"%Y-%m-%dT%H:%M:%S%z\"),",
-          "typed": false
-        },
-        {
-          "line": 140,
-          "text": "    }",
-          "marked": "    }",
-          "typed": false
-        },
-        {
-          "line": 141,
-          "text": "",
-          "marked": "",
-          "typed": false
-        },
-        {
-          "line": 142,
-          "text": "",
-          "marked": "",
-          "typed": false
-        },
-        {
-          "line": 143,
-          "text": "def run_yolo(model, image_path: str, conf: float = 0.25):",
-          "marked": "def run_yolo(model, image_path: str, conf: float = 0.25):",
-          "typed": false
-        },
-        {
-          "line": 144,
-          "text": "    \"\"\"只推理一次，同时返回结构化结果和原始结果供标注图复用。\"\"\"",
-          "marked": "    \"\"\"只推理一次，同时返回结构化结果和原始结果供标注图复用。\"\"\"",
-          "typed": false
-        },
-        {
-          "line": 145,
-          "text": "    results = model.predict(source=image_path, conf=conf, verbose=False)",
-          "marked": "    results = model.predict(source=image_path, conf=conf, verbose=False)  # [敲]",
-          "typed": true
-        },
-        {
-          "line": 146,
-          "text": "    if not results:",
-          "marked": "    if not results:",
-          "typed": false
-        },
-        {
-          "line": 147,
-          "text": "        raise VisionError(\"YOLO 没有返回结果。\")",
-          "marked": "        raise VisionError(\"YOLO 没有返回结果。\")",
-          "typed": false
-        },
-        {
-          "line": 148,
-          "text": "    raw = results[0]",
-          "marked": "    raw = results[0]                                                     # [敲]",
-          "typed": true
-        },
-        {
-          "line": 149,
-          "text": "    return summarize_result(raw, image_path, getattr(model, \"ckpt_path\", DEFAULT_MODEL)), raw",
-          "marked": "    return summarize_result(raw, image_path, getattr(model, \"ckpt_path\", DEFAULT_MODEL)), raw",
+          "line": 9,
+          "text": "    return observation,{'frame':vector}",
+          "marked": "    return observation,{'frame':vector}",
           "typed": false
         }
-      ]
+      ],
+      "entry": "scripts/mediapipe-demo.py"
     },
     {
       "id": "03",
