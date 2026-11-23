@@ -284,6 +284,48 @@ def extract(args):
     print('骨架质量通过：'+str(result['quality']['passed'])+'（不是动作识别准确率）')
 
 
+def test_model(args):
+    import numpy as np
+    from joint_evaluation import evaluate_joint
+    from joint_model import JointTCN
+    from me_training_features import FEATURE_ID
+    from unified_runtime import CONFIG
+
+    run = Path(args.export_dir)
+    model_dir = Path(args.model)
+    summary = json.loads((run / 'summary.json').read_text(encoding='utf-8'))
+    if summary.get('status') != 'completed' or summary.get('featureId') != FEATURE_ID:
+        raise ValueError('请使用完整导出且特征格式一致的 MediaPipe 目录。')
+    meta = json.loads((model_dir / 'model.json').read_text(encoding='utf-8'))
+    labels = meta['labels']
+    words = [label['text'] for label in labels]
+    if args.expect not in words and args.expect != '背景':
+        raise ValueError(f'该模型词表没有“{args.expect}”。当前词表：{"、".join(words)}')
+    frames = np.load(run / 'features.npy', allow_pickle=False)
+    tracked = json.loads((run / 'landmarks.json').read_text(encoding='utf-8'))
+    times = [frame['clipSeconds'] for frame in tracked['frames']]
+    if (frames.shape != (len(times), 178) or list(frames.shape) != summary['featureShape'] or
+            not 2 <= len(times) <= CONFIG['maxFrames'] or not np.isfinite(frames).all() or
+            not all(math.isfinite(t) and t >= 0 for t in times) or
+            any(end <= start for start, end in zip(times, times[1:]))):
+        raise ValueError('特征帧与时间戳不匹配，或选段超出模型支持范围。')
+    model = JointTCN(model_dir)
+    policy = json.loads((ROOT / 'shared/unified-training.json').read_text(encoding='utf-8'))
+    expected = 0 if args.expect == '背景' else words.index(args.expect) + 1
+    rows = [{'split': 'test', 'recordId': 'demo-clip', 'times': times, 'frames': frames, 'label': expected}]
+    detail = evaluate_joint(rows, model, labels, policy)['details'][0]
+    report = {'scope': '单条录像演示', 'model': model_dir.name, 'weightsSha256': meta['sha256'],
+              'sourceSha256': summary['sourceSha256'], 'trackingQuality': summary['quality'],
+              'expected': args.expect,
+              'classification': words[detail['classificationLabel']-1] if detail['classificationLabel'] else None,
+              'recordingWords': [words[index-1] for index in detail['recordingEvents']],
+              'automaticWords': [words[index-1] for index in detail['automaticEvents']],
+              'recordingCorrect': detail['recordingCorrect'], 'automaticCorrect': detail['correct'],
+              'reason': detail['reason']}
+    write_new(run / 'test.json', report)
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+
+
 def play(args):
     import cv2
     cap = cv2.VideoCapture(str(Path(args.video).resolve()))
@@ -353,13 +395,18 @@ def main():
     extraction.add_argument('--selection',required=True)
     extraction.add_argument('--out',required=True)
     extraction.set_defaults(run=extract)
+    testing = commands.add_parser('test', help='载入指定统一TCN，对已提取的单条录像测试')
+    testing.add_argument('--run', dest='export_dir', required=True, help='含 summary.json、features.npy 和 landmarks.json 的导出目录')
+    testing.add_argument('--model', required=True, help='含 model.json 和 weights.npz 的模型目录')
+    testing.add_argument('--expect', required=True, help='人工确认的目标词，或“背景”')
+    testing.set_defaults(run=test_model)
     playback = commands.add_parser('play',help='播放导出视频；空格暂停、R重播、Q退出')
     playback.add_argument('--video',required=True)
     playback.set_defaults(run=play)
     args = parser.parse_args()
     # MediaPipe graph assets in a Chinese Windows workspace require this cwd.
     # Resolve all user paths first, so invocation from any cwd is unambiguous.
-    for key in ('video','selection','out'):
+    for key in ('video','selection','out','model','export_dir'):
         if hasattr(args,key):
             setattr(args,key,str(Path(getattr(args,key)).resolve()))
     os.chdir(ROOT)

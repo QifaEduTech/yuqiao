@@ -10,7 +10,7 @@
 & ".\.venv-sign\Scripts\python.exe" -B ".\scripts\mediapipe-demo.py" check
 ```
 
-脚本提供可视化select、按秒mark、骨架extract和同步play；详细命令与每个按键见手册。导出原片段、骨架叠加、左右对照、截图和178维特征，不调用数据库、不自动训练、不改活动权重。真人媒体只保存在本机data目录。正式训练仍通过现有训练页面，由后台重新校验原片与分区。
+脚本提供可视化select、按秒mark、骨架extract、模型test和同步play；详细命令与每个按键见手册。导出原片段、骨架叠加、左右对照、截图和178维特征，不调用数据库、不自动训练、不改活动权重。真人媒体只保存在本机data目录。正式训练仍通过现有训练页面，由后台重新校验原片与分区。
 
 验证：`tests/python/check-mediapipe-demo.py`使用程序生成的非人物录像，检查范围、覆盖保护、哈希、三路视频、特征和镜像转换，已在公开副本通过。逐字稿通过12页渲染检查。GUI窗口按键、真实摄像头与真人跟踪未完成现场验收。
 
@@ -26,17 +26,17 @@
 
 `web`页面、`server`后端、`shared`词典动作协议、`models`本机自行配置的识别模型、`scripts`运行下载工具、`tests`隔离检查、`database/schema.sql`10张空表。
 
-实时识别不选动作，类别以本机有效模型为准。词典词数、数字人动作数与识别词数不同；不得将开发成绩当独立准确率。达标自训练结果有共用模型库逻辑，任务和原片按账号保存。公开包不含作者训练权重及私人任务。可先采集和联合训练；缺模型时识别明确不可用，不伪装已识别。
+实时识别不选动作，类别以本机有效模型为准。词典词数、数字人动作数与识别词数不同；不得将开发成绩当独立准确率。达标自训练结果有共用模型库逻辑，任务和原片按账号保存。交付分支含公开六词权重及v3g实验版本。模型详情见[权重说明](models/unified-sign/README.md)。可先采集和联合训练；缺模型时识别明确不可用，不伪装已识别。
 
 ## 四岗独立演示代码
 
-这四个模块是独立演示，不进入正式Web、数据库或实时识别链路，互不import。命令先在`software`目录执行：
+演示入口复用项目的分区、模型评估和文字匹配。命令先在`software`目录执行。
 
 | 角色 | 文件地址 | 独立运行 |
 |---|---|---|
-| 大模型工程师 | `server/llm/minicpm_camera.py` | `python server/llm/minicpm_camera.py --demo` |
+| 大模型工程师 | `scripts/four-role-samples.mjs` | `node scripts/four-role-samples.mjs --help` |
 | 视觉工程师 | `scripts/mediapipe-demo.py` | `.\.venv-sign\Scripts\python.exe -B scripts/mediapipe-demo.py check` |
-| AI应用工程师 | `server/service/fastapi_workflow.py` | `python server/service/fastapi_workflow.py --demo` |
+| AI应用工程师 | `scripts/four-role-avatar.mjs` | `node scripts/four-role-avatar.mjs --text "我需要帮助"`（需启动语桥后端） |
 | 项目经理 | `scripts/project_cockpit.py` | `Run-ProjectCockpit.cmd` 或 `py -3 scripts/project_cockpit.py` |
 
 ### Windows 换机运行（四岗演示代码）

@@ -4,278 +4,158 @@
     {
       "id": "01",
       "role": "大模型工程师",
-      "path": "server/llm/minicpm_camera.py",
+      "path": "scripts/four-role-samples.mjs",
       "run": [
-        "python server/llm/minicpm_camera.py --demo",
-        "python server/llm/minicpm_camera.py --camera 0",
-        "python server/llm/minicpm_camera.py --image xxx.jpg --endpoint http://127.0.0.1:8000/v1"
+        "node scripts/four-role-samples.mjs ./data/mediapipe-demo/selections/samples.json"
       ],
       "outputs": [
-        "outputs/four-role/01_大模型工程师/observation.json",
-        "outputs/four-role/01_大模型工程师/observation.md",
-        "outputs/four-role/01_大模型工程师/capture.jpg"
+        "outputs/four-role/01_大模型工程师/observation.json"
       ],
-      "boundary": "MiniCPM-V 只做视觉观察和候选提示，不是手语翻译结论；无可见证据不出词，必须人工确认。",
-      "startLine": 271,
-      "endLine": 311,
+      "boundary": "读取正式分区函数的结果。上台同时打开 server/joint-dataset-split.mjs 中对 sourceHash 的判断。",
+      "startLine": 38,
+      "endLine": 60,
       "typedLines": [
-        273,
-        277,
-        280,
-        286,
-        288,
-        290,
-        294,
-        299,
-        307,
-        309
+        53,
+        59
       ],
       "lines": [
         {
-          "line": 271,
-          "text": "def analyze_frame(source: str, args: argparse.Namespace, out_dir: Path) -> dict[str, Any]:",
-          "marked": "def analyze_frame(source: str, args: argparse.Namespace, out_dir: Path) -> dict[str, Any]:",
-          "typed": false
+          "line": 38,
+          "text": "async function run(manifestPath) {",
+          "typed": false,
+          "marked": "async function run(manifestPath) {"
         },
         {
-          "line": 272,
-          "text": "    \"\"\"核心流程：取帧 → 提示词 → MiniCPM → JSON 解析 → 证据闸门。\"\"\"",
-          "marked": "    \"\"\"核心流程：取帧 → 提示词 → MiniCPM → JSON 解析 → 证据闸门。\"\"\"",
-          "typed": false
+          "line": 39,
+          "text": "  const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));",
+          "typed": false,
+          "marked": "  const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));"
         },
         {
-          "line": 273,
-          "text": "    mode = \"demo\"",
-          "marked": "    mode = \"demo\"                                        # [敲]",
-          "typed": true
+          "line": 40,
+          "text": "  const labels = Array.isArray(manifest.words) ? manifest.words.map(text => ({ text })) : [];",
+          "typed": false,
+          "marked": "  const labels = Array.isArray(manifest.words) ? manifest.words.map(text => ({ text })) : [];"
         },
         {
-          "line": 274,
-          "text": "    image_path: Path | None = None",
-          "marked": "    image_path: Path | None = None",
-          "typed": false
+          "line": 41,
+          "text": "  const words = labels.map(({ text }) => text);",
+          "typed": false,
+          "marked": "  const words = labels.map(({ text }) => text);"
         },
         {
-          "line": 275,
-          "text": "    capture_info: dict[str, Any] = {}",
-          "marked": "    capture_info: dict[str, Any] = {}",
-          "typed": false
+          "line": 42,
+          "text": "  if (!labels.length || labels.length > 64 || words.some(word => typeof word !== 'string' || !word.trim() || word.trim() !== word || word === '背景') ||",
+          "typed": false,
+          "marked": "  if (!labels.length || labels.length > 64 || words.some(word => typeof word !== 'string' || !word.trim() || word.trim() !== word || word === '背景') ||"
         },
         {
-          "line": 276,
-          "text": "",
-          "marked": "",
-          "typed": false
+          "line": 43,
+          "text": "      new Set(words).size !== labels.length || !Array.isArray(manifest.samples) || !manifest.samples.length || manifest.samples.length > 3000) {",
+          "typed": false,
+          "marked": "      new Set(words).size !== labels.length || !Array.isArray(manifest.samples) || !manifest.samples.length || manifest.samples.length > 3000) {"
         },
         {
-          "line": 277,
-          "text": "    if source == \"--camera\":",
-          "marked": "    if source == \"--camera\":                             # [敲]",
-          "typed": true
+          "line": 44,
+          "text": "    throw Error('清单需要 1—64 个不同的动作词和 1—3000 条样本。');",
+          "typed": false,
+          "marked": "    throw Error('清单需要 1—64 个不同的动作词和 1—3000 条样本。');"
         },
         {
-          "line": 278,
-          "text": "        image_path, capture_info = capture_frame(args.camera, out_dir)",
-          "marked": "        image_path, capture_info = capture_frame(args.camera, out_dir)",
-          "typed": false
+          "line": 45,
+          "text": "  }",
+          "typed": false,
+          "marked": "  }"
         },
         {
-          "line": 279,
-          "text": "        mode = \"local\" if not args.endpoint else \"endpoint\"",
-          "marked": "        mode = \"local\" if not args.endpoint else \"endpoint\"",
-          "typed": false
+          "line": 46,
+          "text": "  const policy = JSON.parse(await readFile(resolve(root, 'shared/unified-training.json'), 'utf8'));",
+          "typed": false,
+          "marked": "  const policy = JSON.parse(await readFile(resolve(root, 'shared/unified-training.json'), 'utf8'));"
         },
         {
-          "line": 280,
-          "text": "    elif source == \"--image\":",
-          "marked": "    elif source == \"--image\":                            # [敲]",
-          "typed": true
+          "line": 47,
+          "text": "  const samples = [];",
+          "typed": false,
+          "marked": "  const samples = [];"
         },
         {
-          "line": 281,
-          "text": "        image_path = Path(args.image).expanduser().resolve()",
-          "marked": "        image_path = Path(args.image).expanduser().resolve()",
-          "typed": false
+          "line": 48,
+          "text": "  for (const [index, entry] of manifest.samples.entries()) {",
+          "typed": false,
+          "marked": "  for (const [index, entry] of manifest.samples.entries()) {"
         },
         {
-          "line": 282,
-          "text": "        if not image_path.exists():",
-          "marked": "        if not image_path.exists():",
-          "typed": false
+          "line": 49,
+          "text": "    samples.push(await sampleFromSelection(dirname(manifestPath), entry, labels, index));",
+          "typed": false,
+          "marked": "    samples.push(await sampleFromSelection(dirname(manifestPath), entry, labels, index));"
         },
         {
-          "line": 283,
-          "text": "            raise ObservationError(f\"图片不存在：{image_path}\")",
-          "marked": "            raise ObservationError(f\"图片不存在：{image_path}\")",
-          "typed": false
+          "line": 50,
+          "text": "  }",
+          "typed": false,
+          "marked": "  }"
         },
         {
-          "line": 284,
-          "text": "        mode = \"local\" if not args.endpoint else \"endpoint\"",
-          "marked": "        mode = \"local\" if not args.endpoint else \"endpoint\"",
-          "typed": false
+          "line": 51,
+          "text": "  const report = { status: '分区已检查', scope: '选段与分区演示', samples, checkedAt: new Date().toISOString() };",
+          "typed": false,
+          "marked": "  const report = { status: '分区已检查', scope: '选段与分区演示', samples, checkedAt: new Date().toISOString() };"
         },
         {
-          "line": 285,
-          "text": "",
-          "marked": "",
-          "typed": false
+          "line": 52,
+          "text": "  try {",
+          "typed": false,
+          "marked": "  try {"
         },
         {
-          "line": 286,
-          "text": "    prompt = build_prompt(args.scene)",
-          "marked": "    prompt = build_prompt(args.scene)                    # [敲]",
-          "typed": true
+          "line": 53,
+          "text": "    const plan = splitJointTrainingPool(samples, labels, policy);",
+          "typed": true,
+          "marked": "    const plan = splitJointTrainingPool(samples, labels, policy);  // [敲]"
         },
         {
-          "line": 287,
-          "text": "",
-          "marked": "",
-          "typed": false
+          "line": 54,
+          "text": "    report.samples = plan.samples;",
+          "typed": false,
+          "marked": "    report.samples = plan.samples;"
         },
         {
-          "line": 288,
-          "text": "    if mode == \"demo\":",
-          "marked": "    if mode == \"demo\":                                   # [敲]",
-          "typed": true
+          "line": 55,
+          "text": "    report.summary = plan.summary;",
+          "typed": false,
+          "marked": "    report.summary = plan.summary;"
         },
         {
-          "line": 289,
-          "text": "        raw = demo_raw()",
-          "marked": "        raw = demo_raw()",
-          "typed": false
+          "line": 56,
+          "text": "  } catch (error) {",
+          "typed": false,
+          "marked": "  } catch (error) {"
         },
         {
-          "line": 290,
-          "text": "    elif mode == \"endpoint\":",
-          "marked": "    elif mode == \"endpoint\":                             # [敲]",
-          "typed": true
+          "line": 57,
+          "text": "    if (error.status !== 400) throw error;",
+          "typed": false,
+          "marked": "    if (error.status !== 400) throw error;"
         },
         {
-          "line": 291,
-          "text": "        assert image_path is not None",
-          "marked": "        assert image_path is not None",
-          "typed": false
+          "line": 58,
+          "text": "    report.status = '分区未通过';",
+          "typed": false,
+          "marked": "    report.status = '分区未通过';"
         },
         {
-          "line": 292,
-          "text": "        text = call_endpoint(args.endpoint, args.model, image_path, prompt, args.timeout)",
-          "marked": "        text = call_endpoint(args.endpoint, args.model, image_path, prompt, args.timeout)",
-          "typed": false
+          "line": 59,
+          "text": "    report.reason = error.message;",
+          "typed": true,
+          "marked": "    report.reason = error.message;  // [敲]"
         },
         {
-          "line": 293,
-          "text": "        raw = parse_json_response(text)",
-          "marked": "        raw = parse_json_response(text)",
-          "typed": false
-        },
-        {
-          "line": 294,
-          "text": "    else:",
-          "marked": "    else:                                                # [敲]",
-          "typed": true
-        },
-        {
-          "line": 295,
-          "text": "        assert image_path is not None",
-          "marked": "        assert image_path is not None",
-          "typed": false
-        },
-        {
-          "line": 296,
-          "text": "        text = call_local(args.model, image_path, prompt)",
-          "marked": "        text = call_local(args.model, image_path, prompt)",
-          "typed": false
-        },
-        {
-          "line": 297,
-          "text": "        raw = parse_json_response(text)",
-          "marked": "        raw = parse_json_response(text)",
-          "typed": false
-        },
-        {
-          "line": 298,
-          "text": "",
-          "marked": "",
-          "typed": false
-        },
-        {
-          "line": 299,
-          "text": "    observation = normalize_observation(",
-          "marked": "    observation = normalize_observation(                 # [敲]",
-          "typed": true
-        },
-        {
-          "line": 300,
-          "text": "        raw,",
-          "marked": "        raw,",
-          "typed": false
-        },
-        {
-          "line": 301,
-          "text": "        source=str(image_path) if image_path else \"demo://hospital_mutual_aid\",",
-          "marked": "        source=str(image_path) if image_path else \"demo://hospital_mutual_aid\",",
-          "typed": false
-        },
-        {
-          "line": 302,
-          "text": "        mode=mode,",
-          "marked": "        mode=mode,",
-          "typed": false
-        },
-        {
-          "line": 303,
-          "text": "    )",
-          "marked": "    )",
-          "typed": false
-        },
-        {
-          "line": 304,
-          "text": "    if capture_info:",
-          "marked": "    if capture_info:",
-          "typed": false
-        },
-        {
-          "line": 305,
-          "text": "        observation[\"capture\"] = capture_info",
-          "marked": "        observation[\"capture\"] = capture_info",
-          "typed": false
-        },
-        {
-          "line": 306,
-          "text": "",
-          "marked": "",
-          "typed": false
-        },
-        {
-          "line": 307,
-          "text": "    if observation[\"dropped_candidates\"]:",
-          "marked": "    if observation[\"dropped_candidates\"]:                # [敲]",
-          "typed": true
-        },
-        {
-          "line": 308,
-          "text": "        print(f\"[闸门] 丢弃 {len(observation['dropped_candidates'])} 条无证据候选\")",
-          "marked": "        print(f\"[闸门] 丢弃 {len(observation['dropped_candidates'])} 条无证据候选\")",
-          "typed": false
-        },
-        {
-          "line": 309,
-          "text": "    if not observation[\"sign_candidates\"]:",
-          "marked": "    if not observation[\"sign_candidates\"]:               # [敲]",
-          "typed": true
-        },
-        {
-          "line": 310,
-          "text": "        print(\"[闸门] 本次只输出视觉观察，不输出任何词\")",
-          "marked": "        print(\"[闸门] 本次只输出视觉观察，不输出任何词\")",
-          "typed": false
-        },
-        {
-          "line": 311,
-          "text": "    return observation",
-          "marked": "    return observation",
-          "typed": false
+          "line": 60,
+          "text": "  }",
+          "typed": false,
+          "marked": "  }"
         }
       ]
     },
@@ -287,11 +167,10 @@
         ".\\.venv-sign\\Scripts\\python.exe -B scripts/mediapipe-demo.py check"
       ],
       "outputs": [
-        "data/mediapipe-demo/output/<本轮目录>/comparison.avi",
-        "data/mediapipe-demo/output/<本轮目录>/features.npy",
-        "data/mediapipe-demo/output/<本轮目录>/summary.json"
+        "data/mediapipe-demo/output/<本轮目录>/summary.json",
+        "data/mediapipe-demo/output/<本轮目录>/test.json"
       ],
-      "boundary": "Hands和Pose逐帧提取观测，TCN使用连续帧识别动作。",
+      "boundary": "用现成的 MediaPipe Hands 和 Pose 提取每帧178维特征。单条测试打开 scripts/mediapipe-demo.py 的 test_model 函数，对照整段分类、录像出词和自动收尾。",
       "startLine": 5,
       "endLine": 9,
       "typedLines": [
@@ -303,466 +182,155 @@
         {
           "line": 5,
           "text": "def observe_unified_bgr(frame,hands,pose,delta):",
-          "marked": "def observe_unified_bgr(frame,hands,pose,delta):",
-          "typed": false
+          "typed": false,
+          "marked": "def observe_unified_bgr(frame,hands,pose,delta):"
         },
         {
           "line": 6,
           "text": "    rgb=cv2.cvtColor(cv2.flip(frame,1),cv2.COLOR_BGR2RGB)",
-          "marked": "    rgb=cv2.cvtColor(cv2.flip(frame,1),cv2.COLOR_BGR2RGB)  # [敲]",
-          "typed": true
+          "typed": true,
+          "marked": "    rgb=cv2.cvtColor(cv2.flip(frame,1),cv2.COLOR_BGR2RGB)  # [敲]"
         },
         {
           "line": 7,
           "text": "    observation=hands.process({'image':rgb});body=pose.process({'image':rgb})",
-          "marked": "    observation=hands.process({'image':rgb});body=pose.process({'image':rgb})  # [敲]",
-          "typed": true
+          "typed": true,
+          "marked": "    observation=hands.process({'image':rgb});body=pose.process({'image':rgb})  # [敲]"
         },
         {
           "line": 8,
           "text": "    vector=body_training_frame(observation,body,delta,frame.shape[0]/frame.shape[1])",
-          "marked": "    vector=body_training_frame(observation,body,delta,frame.shape[0]/frame.shape[1])  # [敲]",
-          "typed": true
+          "typed": true,
+          "marked": "    vector=body_training_frame(observation,body,delta,frame.shape[0]/frame.shape[1])  # [敲]"
         },
         {
           "line": 9,
           "text": "    return observation,{'frame':vector}",
-          "marked": "    return observation,{'frame':vector}",
-          "typed": false
+          "typed": false,
+          "marked": "    return observation,{'frame':vector}"
         }
-      ],
-      "entry": "scripts/mediapipe-demo.py"
+      ]
     },
     {
       "id": "03",
       "role": "AI应用工程师",
-      "path": "server/service/fastapi_workflow.py",
+      "path": "scripts/four-role-avatar.mjs",
       "run": [
-        "python server/service/fastapi_workflow.py --demo",
-        "python server/service/fastapi_workflow.py --serve --port 8010"
+        "node scripts/four-role-avatar.mjs --text \"我需要帮助\""
       ],
       "outputs": [
         "outputs/four-role/03_AI应用工程师/workflow.json"
       ],
-      "boundary": "只编排观察流程；01/02 当前为 CLI，未内置 HTTP 服务，默认 mock 独立跑；不诊断、不决定挂号/检查/接诊；无证据候选直接丢弃。",
-      "startLine": 134,
-      "endLine": 199,
+      "boundary": "调用首页使用的后端接口并记录动作顺序。播放和取消代码在 web/src/App.tsx，现场用首页演示。",
+      "startLine": 29,
+      "endLine": 45,
       "typedLines": [
-        146,
-        147,
-        149,
-        150,
-        152,
-        153,
-        155,
-        156,
-        158,
-        159,
-        162,
-        163,
-        165,
-        172,
-        173,
-        175,
-        183,
-        198
+        30,
+        32,
+        42
       ],
       "lines": [
         {
-          "line": 134,
-          "text": "async def run_hospital_workflow(",
-          "marked": "async def run_hospital_workflow(",
-          "typed": false
+          "line": 29,
+          "text": "  const input = values.text.trim();",
+          "typed": false,
+          "marked": "  const input = values.text.trim();"
         },
         {
-          "line": 135,
-          "text": "    image_bytes: bytes,",
-          "marked": "    image_bytes: bytes,",
-          "typed": false
+          "line": 30,
+          "text": "  const response = await fetch(new URL('/api/sign/resolve', base), {",
+          "typed": true,
+          "marked": "  const response = await fetch(new URL('/api/sign/resolve', base), {  // [敲]"
         },
         {
-          "line": 136,
-          "text": "    vision_url: str = \"\",",
-          "marked": "    vision_url: str = \"\",",
-          "typed": false
+          "line": 31,
+          "text": "    method: 'POST', headers: { 'content-type': 'application/json', origin, 'x-yuqiao-request': '1' },",
+          "typed": false,
+          "marked": "    method: 'POST', headers: { 'content-type': 'application/json', origin, 'x-yuqiao-request': '1' },"
         },
         {
-          "line": 137,
-          "text": "    llm_url: str = \"\",",
-          "marked": "    llm_url: str = \"\",",
-          "typed": false
+          "line": 32,
+          "text": "    body: JSON.stringify({ text: input, mode: 'playback' }), redirect: 'error', signal: AbortSignal.timeout(105000),",
+          "typed": true,
+          "marked": "    body: JSON.stringify({ text: input, mode: 'playback' }), redirect: 'error', signal: AbortSignal.timeout(105000),  // [敲]"
         },
         {
-          "line": 138,
-          "text": "    timeout: float = DEFAULT_TIMEOUT,",
-          "marked": "    timeout: float = DEFAULT_TIMEOUT,",
-          "typed": false
+          "line": 33,
+          "text": "  });",
+          "typed": false,
+          "marked": "  });"
         },
         {
-          "line": 139,
-          "text": ") -> dict[str, Any]:",
-          "marked": ") -> dict[str, Any]:",
-          "typed": false
+          "line": 34,
+          "text": "  const result = await response.json();",
+          "typed": false,
+          "marked": "  const result = await response.json();"
         },
         {
-          "line": 140,
-          "text": "    \"\"\"核心流程：并行调用 → 合并 → 策略闸门 → 统一结果。\"\"\"",
-          "marked": "    \"\"\"核心流程：并行调用 → 合并 → 策略闸门 → 统一结果。\"\"\"",
-          "typed": false
+          "line": 35,
+          "text": "  if (!response.ok) throw Error(`动作匹配请求失败（HTTP ${response.status}）：${result.error?.message ?? result.message ?? result.detail ?? '请核对语桥后端地址和模型服务'}`);",
+          "typed": false,
+          "marked": "  if (!response.ok) throw Error(`动作匹配请求失败（HTTP ${response.status}）：${result.error?.message ?? result.message ?? result.detail ?? '请核对语桥后端地址和模型服务'}`);"
         },
         {
-          "line": 141,
-          "text": "    if not image_bytes:",
-          "marked": "    if not image_bytes:",
-          "typed": false
+          "line": 36,
+          "text": "  if (!result || typeof result.status !== 'string' || !('preview' in result)) {",
+          "typed": false,
+          "marked": "  if (!result || typeof result.status !== 'string' || !('preview' in result)) {"
         },
         {
-          "line": 142,
-          "text": "        raise WorkflowError(\"图片为空。\")",
-          "marked": "        raise WorkflowError(\"图片为空。\")",
-          "typed": false
+          "line": 37,
+          "text": "    throw Error('该服务未返回语桥的动作匹配结果。');",
+          "typed": false,
+          "marked": "    throw Error('该服务未返回语桥的动作匹配结果。');"
         },
         {
-          "line": 143,
-          "text": "    if len(image_bytes) > 8 * 1024 * 1024:",
-          "marked": "    if len(image_bytes) > 8 * 1024 * 1024:",
-          "typed": false
+          "line": 38,
+          "text": "  }",
+          "typed": false,
+          "marked": "  }"
         },
         {
-          "line": 144,
-          "text": "        raise WorkflowError(\"图片超过 8MB。\")",
-          "marked": "        raise WorkflowError(\"图片超过 8MB。\")",
-          "typed": false
+          "line": 39,
+          "text": "  const catalog = JSON.parse(await readFile(resolve(root, 'shared/sign-motion-catalog.json'), 'utf8'));",
+          "typed": false,
+          "marked": "  const catalog = JSON.parse(await readFile(resolve(root, 'shared/sign-motion-catalog.json'), 'utf8'));"
         },
         {
-          "line": 145,
-          "text": "",
-          "marked": "",
-          "typed": false
+          "line": 40,
+          "text": "  const names = new Map(catalog.entries.map(({ id, label }) => [id, label]));",
+          "typed": false,
+          "marked": "  const names = new Map(catalog.entries.map(({ id, label }) => [id, label]));"
         },
         {
-          "line": 146,
-          "text": "    workflow_id = uuid.uuid4().hex[:12]",
-          "marked": "    workflow_id = uuid.uuid4().hex[:12]                                  # [敲]",
-          "typed": true
+          "line": 41,
+          "text": "  const previews = result.preview?.kind === 'sequence' ? result.preview.steps : result.preview ? [result.preview] : [];",
+          "typed": false,
+          "marked": "  const previews = result.preview?.kind === 'sequence' ? result.preview.steps : result.preview ? [result.preview] : [];"
         },
         {
-          "line": 147,
-          "text": "    started = time.perf_counter()",
-          "marked": "    started = time.perf_counter()                                       # [敲]",
-          "typed": true
+          "line": 42,
+          "text": "  const steps = previews.map(({ id, version, label }) => ({ id, version, text: names.get(id) ?? label ?? id }));",
+          "typed": true,
+          "marked": "  const steps = previews.map(({ id, version, label }) => ({ id, version, text: names.get(id) ?? label ?? id }));  // [敲]"
         },
         {
-          "line": 148,
-          "text": "",
-          "marked": "",
-          "typed": false
+          "line": 43,
+          "text": "  const report = { status: steps.length ? '已匹配动作' : '未生成播放计划', input, steps,",
+          "typed": false,
+          "marked": "  const report = { status: steps.length ? '已匹配动作' : '未生成播放计划', input, steps,"
         },
         {
-          "line": 149,
-          "text": "    vision_task = call_vision(image_bytes, vision_url, timeout)",
-          "marked": "    vision_task = call_vision(image_bytes, vision_url, timeout)          # [敲]",
-          "typed": true
+          "line": 44,
+          "text": "    responseStatus: result.status, reason: result.reason ?? null, missing: result.missing ?? [],",
+          "typed": false,
+          "marked": "    responseStatus: result.status, reason: result.reason ?? null, missing: result.missing ?? [],"
         },
         {
-          "line": 150,
-          "text": "    llm_task = call_llm(image_bytes, llm_url, timeout)",
-          "marked": "    llm_task = call_llm(image_bytes, llm_url, timeout)                   # [敲]",
-          "typed": true
-        },
-        {
-          "line": 151,
-          "text": "    try:",
-          "marked": "    try:",
-          "typed": false
-        },
-        {
-          "line": 152,
-          "text": "        vision, observation = await asyncio.wait_for(",
-          "marked": "        vision, observation = await asyncio.wait_for(                       # [敲]",
-          "typed": true
-        },
-        {
-          "line": 153,
-          "text": "            asyncio.gather(vision_task, llm_task), timeout=timeout",
-          "marked": "            asyncio.gather(vision_task, llm_task), timeout=timeout          # [敲]",
-          "typed": true
-        },
-        {
-          "line": 154,
-          "text": "        )",
-          "marked": "        )",
-          "typed": false
-        },
-        {
-          "line": 155,
-          "text": "    except asyncio.TimeoutError as exc:",
-          "marked": "    except asyncio.TimeoutError as exc:                                  # [敲]",
-          "typed": true
-        },
-        {
-          "line": 156,
-          "text": "        raise WorkflowError(f\"工作流超时（>{timeout:.0f}s）。\") from exc",
-          "marked": "        raise WorkflowError(f\"工作流超时（>{timeout:.0f}s）。\") from exc    # [敲]",
-          "typed": true
-        },
-        {
-          "line": 157,
-          "text": "",
-          "marked": "",
-          "typed": false
-        },
-        {
-          "line": 158,
-          "text": "    candidates, dropped = [], []",
-          "marked": "    candidates, dropped = [], []                                         # [敲]",
-          "typed": true
-        },
-        {
-          "line": 159,
-          "text": "    for item in observation.get(\"sign_candidates\", []) or []:",
-          "marked": "    for item in observation.get(\"sign_candidates\", []) or []:           # [敲]",
-          "typed": true
-        },
-        {
-          "line": 160,
-          "text": "        word = str(item.get(\"word\", \"\")).strip()",
-          "marked": "        word = str(item.get(\"word\", \"\")).strip()",
-          "typed": false
-        },
-        {
-          "line": 161,
-          "text": "        evidence = str(item.get(\"evidence\", \"\")).strip()",
-          "marked": "        evidence = str(item.get(\"evidence\", \"\")).strip()",
-          "typed": false
-        },
-        {
-          "line": 162,
-          "text": "        if not word or not evidence:",
-          "marked": "        if not word or not evidence:                                     # [敲]",
-          "typed": true
-        },
-        {
-          "line": 163,
-          "text": "            dropped.append({\"word\": word, \"reason\": \"no_evidence\"})",
-          "marked": "            dropped.append({\"word\": word, \"reason\": \"no_evidence\"})      # [敲]",
-          "typed": true
-        },
-        {
-          "line": 164,
-          "text": "            continue",
-          "marked": "            continue",
-          "typed": false
-        },
-        {
-          "line": 165,
-          "text": "        candidates.append({",
-          "marked": "        candidates.append({                                              # [敲]",
-          "typed": true
-        },
-        {
-          "line": 166,
-          "text": "            \"word\": word,",
-          "marked": "            \"word\": word,",
-          "typed": false
-        },
-        {
-          "line": 167,
-          "text": "            \"evidence\": evidence,",
-          "marked": "            \"evidence\": evidence,",
-          "typed": false
-        },
-        {
-          "line": 168,
-          "text": "            \"confidence\": max(0.0, min(1.0, float(item.get(\"confidence\", 0) or 0))),",
-          "marked": "            \"confidence\": max(0.0, min(1.0, float(item.get(\"confidence\", 0) or 0))),",
-          "typed": false
-        },
-        {
-          "line": 169,
-          "text": "            \"status\": \"candidate_requires_human_review\",",
-          "marked": "            \"status\": \"candidate_requires_human_review\",",
-          "typed": false
-        },
-        {
-          "line": 170,
-          "text": "        })",
-          "marked": "        })",
-          "typed": false
-        },
-        {
-          "line": 171,
-          "text": "",
-          "marked": "",
-          "typed": false
-        },
-        {
-          "line": 172,
-          "text": "    if observation.get(\"medical_advice\"):",
-          "marked": "    if observation.get(\"medical_advice\"):                                # [敲]",
-          "typed": true
-        },
-        {
-          "line": 173,
-          "text": "        dropped.append({\"word\": None, \"reason\": \"medical_advice_blocked\"})",
-          "marked": "        dropped.append({\"word\": None, \"reason\": \"medical_advice_blocked\"})  # [敲]",
-          "typed": true
-        },
-        {
-          "line": 174,
-          "text": "",
-          "marked": "",
-          "typed": false
-        },
-        {
-          "line": 175,
-          "text": "    merged = {",
-          "marked": "    merged = {                                                           # [敲]",
-          "typed": true
-        },
-        {
-          "line": 176,
-          "text": "        \"scene\": \"hospital_mutual_aid\",",
-          "marked": "        \"scene\": \"hospital_mutual_aid\",",
-          "typed": false
-        },
-        {
-          "line": 177,
-          "text": "        \"instances\": vision.get(\"instances\", []),",
-          "marked": "        \"instances\": vision.get(\"instances\", []),",
-          "typed": false
-        },
-        {
-          "line": 178,
-          "text": "        \"counts\": vision.get(\"counts\", {}),",
-          "marked": "        \"counts\": vision.get(\"counts\", {}),",
-          "typed": false
-        },
-        {
-          "line": 179,
-          "text": "        \"observed\": observation.get(\"observed\", []),",
-          "marked": "        \"observed\": observation.get(\"observed\", []),",
-          "typed": false
-        },
-        {
-          "line": 180,
-          "text": "        \"unknowns\": observation.get(\"unknowns\", []),",
-          "marked": "        \"unknowns\": observation.get(\"unknowns\", []),",
-          "typed": false
-        },
-        {
-          "line": 181,
-          "text": "        \"sign_candidates\": candidates,",
-          "marked": "        \"sign_candidates\": candidates,",
-          "typed": false
-        },
-        {
-          "line": 182,
-          "text": "    }",
-          "marked": "    }",
-          "typed": false
-        },
-        {
-          "line": 183,
-          "text": "    result = {",
-          "marked": "    result = {                                                           # [敲]",
-          "typed": true
-        },
-        {
-          "line": 184,
-          "text": "        \"schema_version\": SCHEMA_VERSION,",
-          "marked": "        \"schema_version\": SCHEMA_VERSION,",
-          "typed": false
-        },
-        {
-          "line": 185,
-          "text": "        \"module\": MODULE_ID,",
-          "marked": "        \"module\": MODULE_ID,",
-          "typed": false
-        },
-        {
-          "line": 186,
-          "text": "        \"workflow_id\": workflow_id,",
-          "marked": "        \"workflow_id\": workflow_id,",
-          "typed": false
-        },
-        {
-          "line": 187,
-          "text": "        \"status\": \"completed\",",
-          "marked": "        \"status\": \"completed\",",
-          "typed": false
-        },
-        {
-          "line": 188,
-          "text": "        \"result\": merged,",
-          "marked": "        \"result\": merged,",
-          "typed": false
-        },
-        {
-          "line": 189,
-          "text": "        \"policy\": {",
-          "marked": "        \"policy\": {",
-          "typed": false
-        },
-        {
-          "line": 190,
-          "text": "            \"medical_advice\": False,",
-          "marked": "            \"medical_advice\": False,",
-          "typed": false
-        },
-        {
-          "line": 191,
-          "text": "            \"human_review_required\": True,",
-          "marked": "            \"human_review_required\": True,",
-          "typed": false
-        },
-        {
-          "line": 192,
-          "text": "            \"dropped_candidates\": dropped,",
-          "marked": "            \"dropped_candidates\": dropped,",
-          "typed": false
-        },
-        {
-          "line": 193,
-          "text": "            \"no_evidence_no_word\": True,",
-          "marked": "            \"no_evidence_no_word\": True,",
-          "typed": false
-        },
-        {
-          "line": 194,
-          "text": "        },",
-          "marked": "        },",
-          "typed": false
-        },
-        {
-          "line": 195,
-          "text": "        \"timings_ms\": {\"total\": round((time.perf_counter() - started) * 1000, 1)},",
-          "marked": "        \"timings_ms\": {\"total\": round((time.perf_counter() - started) * 1000, 1)},",
-          "typed": false
-        },
-        {
-          "line": 196,
-          "text": "        \"created_at\": now(),",
-          "marked": "        \"created_at\": now(),",
-          "typed": false
-        },
-        {
-          "line": 197,
-          "text": "    }",
-          "marked": "    }",
-          "typed": false
-        },
-        {
-          "line": 198,
-          "text": "    JOBS[workflow_id] = {\"status\": \"completed\", \"result\": result}",
-          "marked": "    JOBS[workflow_id] = {\"status\": \"completed\", \"result\": result}       # [敲]",
-          "typed": true
-        },
-        {
-          "line": 199,
-          "text": "    return result",
-          "marked": "    return result",
-          "typed": false
+          "line": 45,
+          "text": "    scope: '实际后端接口响应，播放器表现由首页现场核对', checkedAt: new Date().toISOString() };",
+          "typed": false,
+          "marked": "    scope: '实际后端接口响应，播放器表现由首页现场核对', checkedAt: new Date().toISOString() };"
         }
       ]
     },
