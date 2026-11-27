@@ -25,6 +25,29 @@ async function record(page:Page){
  await expect.poll(()=>page.evaluate(()=>(window as Window & {recordedTracks?:MediaStreamTrack[]}).recordedTracks?.map(t=>t.readyState))).toEqual(['ended']);
 }
 
+for (const {name, words, output} of [
+ {name:'仅识别医生',words:['医生'],output:'医生，我发烧了，我需要帮助'},
+ {name:'只识别到好',words:['好'],output:'谢谢'},
+ {name:'无手部画面',words:[],output:'谢谢'}
+]) {
+ test(`医院互助录像演示自动输出：${name}`,async({page})=>{
+  let requests=0;
+  await page.route('**/api/sign/paragraph',route=>{
+   requests++;
+   return route.fulfill({json:{
+    ...result,status:words.length?'recognized':'no_hands',
+    paragraph:words.length?{...result.paragraph,words,wordCount:words.length,text:words.join('')+'。'}:null
+   }});
+  });
+  await page.goto('/realtime.html?demo=hospital');
+  await expect(page.getByRole('heading',{name:'医院互助录像演示'})).toBeVisible();
+  await record(page);
+  await expect(page.getByTestId('hospital-demo-output')).toHaveText(output);
+  await expect(button(page,'确认识别')).toHaveCount(0);
+  expect(requests).toBe(1);
+ });
+}
+
 for(const entry of ['/realtime.html','/camera','/android.html?tab=live']){
  test(`${entry} 录制和回看期间不分析，确认后一次返回整段文字`,async({page})=>{
   let analysis=0,live=0;

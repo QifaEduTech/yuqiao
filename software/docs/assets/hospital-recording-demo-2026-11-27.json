@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-27",
+  "entry": "/realtime.html?demo=hospital",
+  "trigger": "recording_finished",
+  "acceptedWords": ["医生", "我", "发烧", "需要", "帮助"],
+  "matchedOutput": "医生，我发烧了，我需要帮助",
+  "unmatchedOutput": "谢谢",
+  "failedRequest": "show_retry",
+  "checks": {
+    "productionBuild": true,
+    "browserScenarios": 10,
+    "accountSetup": 1,
+    "demoEntryHttp": 200,
+    "databaseHealth": "mysql"
+  },
+  "humanSigningRetested": false,
+  "modelChanged": false
+}
